@@ -124,10 +124,10 @@ const Header = ({
                         </div>
                     </div>
                 </div> */}
-                <div className="header-middle header-middle-ptb-1 d-none d-lg-block">
-                    <div className="container">
-                        <div className="header-wrap">
-                            <div className="logo logo-width-1 mb-1">
+                <div className="header-middle d-none d-lg-block">
+                    <div className="container ">
+                        <div className="header-wrap ">
+                            <div className="logo logo-width-1">
                                 <Link href="/">
                                     <a>
                                         <img
@@ -141,6 +141,8 @@ const Header = ({
                                 {/* <div className="search-style-2">
                                     <Search />
                                 </div> */}
+                                <div className="header-right">
+                                </div>
                                 <div className="header-action-right">
                                     <div className="header-action-2">
                                         {/* <div className="header-action-icon-2">
@@ -171,7 +173,7 @@ const Header = ({
                                                 </a>
                                             </Link>
                                         </div> */}
-                                        {/* <div className="header-action-icon-2">
+                                         <div className="header-action-icon-2">
                                             <Link href="/shop-cart">
                                                 <a className="mini-cart-icon">
                                                     <img
@@ -183,7 +185,7 @@ const Header = ({
                                                     </span>
                                                 </a>
                                             </Link>
-                                        </div> */}
+                                        </div> 
                                     </div>
                                 </div>
                             </div>
@@ -199,7 +201,7 @@ const Header = ({
                 >
                     <div className="container">
                         <div className="header-wrap header-space-between position-relative">
-                            <div className="logo logo-width-1 d-block d-lg-none my-2">
+                            <div className="logo logo-width-1 d-block d-lg-none">
                                 <Link href="/">
                                     <a>
                                         <img
@@ -1435,7 +1437,7 @@ const Header = ({
                                         </Link>
                                     </div> */}
                                     <div className="header-action-icon-2">
-                                        {/* <Link href="/shop-cart">
+                                         <Link href="/shop-cart">
                                             <a className="mini-cart-icon">
                                                 <img
                                                     alt="Evara"
@@ -1445,7 +1447,7 @@ const Header = ({
                                                     {totalCartItems}
                                                 </span>
                                             </a>
-                                        </Link> */}
+                                        </Link> 
                                         {/* <div className="cart-dropdown-wrap cart-dropdown-hm2">
                                             <ul>
                                                 <li>
