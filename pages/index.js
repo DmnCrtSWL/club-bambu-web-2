@@ -17,6 +17,7 @@ import Intro1 from "./../components/sliders/Intro1";
 import NewArrival from "./../components/sliders/NewArrival";
 
 export default function Home() {
+
   return (
     <>
       <Layout noBreadcrumb="d-none" headerStyle="header-style-1">

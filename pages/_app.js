@@ -16,8 +16,11 @@ import Preloader from "./../components/elements/Preloader";
 
 function MyApp({ Component, pageProps }) {
     const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         setLoading(true);
+        const carrito = window.localStorage.getItem("Carrito")
+
         setTimeout(() => {
             setLoading(false);
         }, 2000);
@@ -27,6 +30,9 @@ function MyApp({ Component, pageProps }) {
         }
         new WOW.WOW().init();
     }, []);
+
+   
+
     return (
         <>
             {!loading ? (

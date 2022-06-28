@@ -4,6 +4,7 @@ import Breadcrumb from "./Breadcrumb";
 import Footer from "./Footer";
 import Header from "./Header";
 import MobileMenu from "./MobileMenu";
+import Carrito from "../carrito/Carrito";
 
 const Layout = ({
   children,
@@ -52,6 +53,8 @@ const Layout = ({
         />
         {children}
       </main>
+      <Carrito/>
+
       <Footer />
     </>
   );

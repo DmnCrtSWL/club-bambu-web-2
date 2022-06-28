@@ -39,6 +39,7 @@ const SingleProduct = ({
         addToWishlist(product);
         toast.success("Add to Wishlist !");
     };
+
     return (
         <>
 
@@ -57,15 +58,15 @@ const SingleProduct = ({
                                     src={product.images[0].img}
                                     alt=""
                                 />
-                                <img
+                                {/* <img
                                     className="hover-img"
                                     src={product.images[1].img}
                                     alt=""
-                                />
+                                /> */}
                             </a>
                         </Link>
                     </div>
-                    <div className="product-action-1">
+                    {/* <div className="product-action-1">
                         <a
                             aria-label="Quick view"
                             className="action-btn hover-up"
@@ -88,24 +89,24 @@ const SingleProduct = ({
                         >
                             <i className="fi-rs-shuffle"></i>
                         </a>
-                    </div>
+                    </div> */}
 
-                    <div className="product-badges product-badges-position product-badges-mrg">
+                    {/* <div className="product-badges product-badges-position product-badges-mrg">
                         {product.trending ? <span className="hot">Hot</span>:null }
                         {product.created ? <span className="new">New</span>:null }
                         {product.totalSell > 100 ? <span className="best">Best Sell</span>:null }
                         {product.discount.isActive ? <span className="sale">Sale</span>:null }
                         {product.discount.percentage >= 5 ? <span className="hot">{product.discount.percentage}%</span>:null }
-                    </div>
+                    </div> */}
                 </div>
                 <div className="product-content-wrap">
-                    <div className="product-category">
+                    {/* <div className="product-category">
                     <Link href="/products">
                                                             <a>
                                                                 {product.brand}
                                                             </a>
                                                         </Link>
-                    </div>
+                    </div> */}
                     <h2>
                     <Link
                             href="/products/[slug]"
@@ -114,16 +115,16 @@ const SingleProduct = ({
                             <a>{product.title}</a>
                             </Link>
                     </h2>
-                    <div className="rating-result" title="90%">
+                    {/* <div className="rating-result" title="90%">
                         <span>
                             <span>{product.ratingScore}%</span>
                         </span>
-                    </div>
+                    </div> */}
                     <div className="product-price">
                         <span>${product.price} </span>
                         <span className="old-price">{product.oldPrice ? `$ ${product.oldPrice}`:null}</span>
                     </div>
-                    <div className="product-action-1 show">
+                    {/* <div className="product-action-1 show">
                         <a
                             aria-label="Add To Cart"
                             className="action-btn hover-up"
@@ -131,7 +132,7 @@ const SingleProduct = ({
                         >
                             <i className="fi-rs-shopping-bag-add"></i>
                         </a>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 
