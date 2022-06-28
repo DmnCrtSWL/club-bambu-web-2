@@ -12,6 +12,7 @@ import { addToWishlist } from "../../redux/action/wishlistAction";
 import ProductTab from "../elements/ProductTab";
 import RelatedSlider from "../sliders/Related";
 import ThumbSlider from "../sliders/Thumb";
+import Carrito from "../carrito/Carrito";
 
 const ProductDetails = ({
     product,
@@ -371,6 +372,8 @@ const ProductDetails = ({
                         </div>
                     </div>
                 </div>
+      <Carrito/>
+
             </section>
         </>
     );

@@ -127,7 +127,7 @@ const Header = ({
                 <div className="header-middle header-middle-ptb-1 d-none d-lg-block">
                     <div className="container">
                         <div className="header-wrap">
-                            <div className="logo logo-width-1">
+                            <div className="logo logo-width-1 mb-1">
                                 <Link href="/">
                                     <a>
                                         <img
@@ -199,7 +199,7 @@ const Header = ({
                 >
                     <div className="container">
                         <div className="header-wrap header-space-between position-relative">
-                            <div className="logo logo-width-1 d-block d-lg-none">
+                            <div className="logo logo-width-1 d-block d-lg-none my-2">
                                 <Link href="/">
                                     <a>
                                         <img
