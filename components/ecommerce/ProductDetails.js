@@ -121,7 +121,7 @@ const ProductDetails = ({
                                                         </Link>
                                                     </span>
                                                 </div>
-                                                <div className="product-rate-cover text-end">
+                                                {/* <div className="product-rate-cover text-end">
                                                     <div className="product-rate d-inline-block">
                                                         <div
                                                             className="product-rating"
@@ -133,7 +133,7 @@ const ProductDetails = ({
                                                     <span className="font-small ml-5 text-muted">
                                                         (25 reviews)
                                                     </span>
-                                                </div>
+                                                </div> */}
                                             </div>
                                             <div className="clearfix product-price-cover">
                                                 <div className="product-price primary-color float-left">
@@ -283,7 +283,7 @@ const ProductDetails = ({
                                                     >
                                                         Add to cart
                                                     </button>
-                                                    <a
+                                                    {/* <a
                                                         aria-label="Add To Wishlist"
                                                         className="action-btn hover-up"
                                                         onClick={(e) =>
@@ -304,7 +304,7 @@ const ProductDetails = ({
                                                         }
                                                     >
                                                         <i className="fi-rs-shuffle"></i>
-                                                    </a>
+                                                    </a> */}
                                                 </div>
                                             </div>
                                             <ul className="product-meta font-xs color-grey mt-50">
