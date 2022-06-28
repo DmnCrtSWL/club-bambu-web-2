@@ -17,7 +17,7 @@ const Intro1 = () => {
                     prevEl: ".custom_prev_i1",
                     nextEl: ".custom_next_i1",
                 }}
-                className="hero-slider-1 dot-style-1 dot-style-1-position-1"
+                className="hero-slider-1 dot-style-1 dot-style-1-position-1 mt-10"
             >
                 <SwiperSlide>
                     <div className="single-hero-slider single-animation-wrap">

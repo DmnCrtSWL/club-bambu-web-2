@@ -12,6 +12,7 @@ import { addToWishlist } from "../../redux/action/wishlistAction";
 import ProductTab from "../elements/ProductTab";
 import RelatedSlider from "../sliders/Related";
 import ThumbSlider from "../sliders/Thumb";
+import Carrito from "../carrito/Carrito";
 
 const ProductDetails = ({
     product,
@@ -41,8 +42,6 @@ const ProductDetails = ({
     };
 
     const inCart = cartItems.find((cartItem) => cartItem.id === product.id);
-
-    console.log(inCart);
 
     return (
         <>
@@ -270,13 +269,16 @@ const ProductDetails = ({
                                                 </div>
                                                 <div className="product-extra-link2">
                                                     <button
-                                                        onClick={(e) =>
+                                                        onClick={(e) =>{
+
                                                             handleCart({
                                                                 ...product,
                                                                 quantity:
                                                                     quantity ||
                                                                     1,
                                                             })
+                                                        }
+
                                                         }
                                                         className="button button-add-to-cart"
                                                     >
@@ -370,6 +372,8 @@ const ProductDetails = ({
                         </div>
                     </div>
                 </div>
+      <Carrito/>
+
             </section>
         </>
     );

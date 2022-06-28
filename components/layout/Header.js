@@ -27,7 +27,7 @@ const Header = ({
     return (
         <>
             <header className={`header-area ${headerStyle} header-height-2`}>
-                <div className="header-top header-top-ptb-1 d-none d-lg-block">
+                {/* <div className="header-top header-top-ptb-1 d-none d-lg-block">
                     <div className="container">
                         <div className="row align-items-center">
                             <div className="col-xl-3 col-lg-4">
@@ -123,11 +123,11 @@ const Header = ({
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <div className="header-middle header-middle-ptb-1 d-none d-lg-block">
                     <div className="container">
                         <div className="header-wrap">
-                            <div className="logo logo-width-1">
+                            <div className="logo logo-width-1 mb-1">
                                 <Link href="/">
                                     <a>
                                         <img
@@ -138,12 +138,12 @@ const Header = ({
                                 </Link>
                             </div>
                             <div className="header-right">
-                                <div className="search-style-2">
+                                {/* <div className="search-style-2">
                                     <Search />
-                                </div>
+                                </div> */}
                                 <div className="header-action-right">
                                     <div className="header-action-2">
-                                        <div className="header-action-icon-2">
+                                        {/* <div className="header-action-icon-2">
                                             <Link href="/shop-compare">
                                                 <a>
                                                     <img
@@ -170,8 +170,8 @@ const Header = ({
                                                     </span>
                                                 </a>
                                             </Link>
-                                        </div>
-                                        <div className="header-action-icon-2">
+                                        </div> */}
+                                        {/* <div className="header-action-icon-2">
                                             <Link href="/shop-cart">
                                                 <a className="mini-cart-icon">
                                                     <img
@@ -183,7 +183,7 @@ const Header = ({
                                                     </span>
                                                 </a>
                                             </Link>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>
@@ -199,7 +199,7 @@ const Header = ({
                 >
                     <div className="container">
                         <div className="header-wrap header-space-between position-relative">
-                            <div className="logo logo-width-1 d-block d-lg-none">
+                            <div className="logo logo-width-1 d-block d-lg-none my-2">
                                 <Link href="/">
                                     <a>
                                         <img
@@ -209,7 +209,7 @@ const Header = ({
                                     </a>
                                 </Link>
                             </div>
-                            <div className="header-nav d-none d-lg-flex">
+                            {/* <div className="header-nav d-none d-lg-flex">
                                 <div className="main-categori-wrap d-none d-lg-block">
                                     <a
                                         className="categori-button-active"
@@ -1328,7 +1328,7 @@ const Header = ({
                                                     </li>
                                                 </ul>
                                             </li>
-                                            <li>
+                                             <li>
                                                 <Link href="/#">
                                                     <a>
                                                         Pages
@@ -1390,12 +1390,12 @@ const Header = ({
                                                 <Link href="/page-contact">
                                                     <a>Contact</a>
                                                 </Link>
-                                            </li>
+                                            </li> 
                                         </ul>
                                     </nav>
                                 </div>
-                            </div>
-                            <div className="hotline d-none d-lg-block">
+                            </div> */}
+                            {/* <div className="hotline d-none d-lg-block">
                                 <p>
                                     <i className="fi-rs-headset"></i>
                                     <span>Hotline</span> 1900 - 888
@@ -1405,10 +1405,10 @@ const Header = ({
                                 Happy
                                 <span className="text-brand">Mother's Day</span>
                                 . Big Sale Up to 40%
-                            </p>
+                            </p> */}
                             <div className="header-action-right d-block d-lg-none">
                                 <div className="header-action-2">
-                                    <div className="header-action-icon-2">
+                                    {/* <div className="header-action-icon-2">
                                         <Link href="/shop-wishlist">
                                             <a>
                                                 <img
@@ -1420,8 +1420,8 @@ const Header = ({
                                                 </span>
                                             </a>
                                         </Link>
-                                    </div>
-                                    <div className="header-action-icon-2">
+                                    </div> */}
+                                    {/* <div className="header-action-icon-2">
                                         <Link href="/shop-wishlist">
                                             <a>
                                                 <img
@@ -1433,9 +1433,9 @@ const Header = ({
                                                 </span>
                                             </a>
                                         </Link>
-                                    </div>
+                                    </div> */}
                                     <div className="header-action-icon-2">
-                                        <Link href="/shop-cart">
+                                        {/* <Link href="/shop-cart">
                                             <a className="mini-cart-icon">
                                                 <img
                                                     alt="Evara"
@@ -1445,8 +1445,8 @@ const Header = ({
                                                     {totalCartItems}
                                                 </span>
                                             </a>
-                                        </Link>
-                                        <div className="cart-dropdown-wrap cart-dropdown-hm2">
+                                        </Link> */}
+                                        {/* <div className="cart-dropdown-wrap cart-dropdown-hm2">
                                             <ul>
                                                 <li>
                                                     <div className="shopping-cart-img">
@@ -1532,9 +1532,9 @@ const Header = ({
                                                     </Link>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
-                                    <div className="header-action-icon-2 d-block d-lg-none">
+                                    {/* <div className="header-action-icon-2 d-block d-lg-none">
                                         <div
                                             className="burger-icon burger-icon-white"
                                             onClick={toggleClick}
@@ -1543,7 +1543,7 @@ const Header = ({
                                             <span className="burger-icon-mid"></span>
                                             <span className="burger-icon-bottom"></span>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
