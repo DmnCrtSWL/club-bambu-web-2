@@ -2172,7 +2172,8 @@ label {
 }
 
 .swiper-pagination-bullet-active {
-  background: #088178 !important;
+  /*background: #088178 !important;*/
+  background: var(--verdeBambu1) !important;
 }
 
 /*COMPONENTS -> CARD*/
@@ -4970,12 +4971,15 @@ table .product-thumbnail img {
 }
 
 .input-range__slider {
-  background: #088178 !important;
-  border: 1px solid #088178 !important;
+  /*background: #088178 !important;
+  border: 1px solid #088178 !important;*/
+  background: var(--verdeBambu1) !important;
+  border: 1px solid var(--verdeBambu1) !important;
 }
 
 .input-range__track--active {
-  background: #088178 !important;
+  /*background: #088178 !important;*/
+  background: var(--verdeBambu1) !important;
 }
 
 /*BLOG*/
