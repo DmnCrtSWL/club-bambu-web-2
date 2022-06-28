@@ -4,7 +4,8 @@ import Link from "next/link";
 function Carrito() {
     return (
        
-                    <div style={{
+                    <div 
+                        style={{
                         position: "fixed", top:"90%", backgroundColor:"#367474", borderRadius:15,right:"5%", width:"20%", height:50,
                         alignItems:"center", display:"flex", justifyContent:"center"
                     }}>
