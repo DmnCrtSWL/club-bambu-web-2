@@ -1,3 +1,4 @@
+import Carrito from "../components/carrito/Carrito";
 import FeatchTab from "../components/ecommerce/fetchTab";
 import FeatchTab2 from "../components/ecommerce/fetchTabSlider";
 import Banner2 from "../components/elements/Banner2";
@@ -141,6 +142,7 @@ export default function Home() {
 
         <QuickView />
       </Layout>
+      <Carrito/>
     </>
   );
 }
