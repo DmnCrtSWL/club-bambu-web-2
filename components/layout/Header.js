@@ -124,8 +124,8 @@ const Header = ({
                         </div>
                     </div>
                 </div> */}
-                <div className="header-middle d-none d-lg-block">
-                    <div className="container ">
+                <div className="header-middle d-none d-lg-block mx-3">
+                    <div className="container">
                         <div className="header-wrap ">
                             <div className="logo logo-width-1">
                                 <Link href="/">
