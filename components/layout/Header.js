@@ -137,7 +137,7 @@ const Header = ({
                                     </a>
                                 </Link>
                             </div>
-                            <div className="header-right">
+                            <div className="header-right p-3">
                                 {/* <div className="search-style-2">
                                     <Search />
                                 </div> */}
