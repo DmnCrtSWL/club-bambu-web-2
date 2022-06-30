@@ -46,7 +46,11 @@ const Intro1 = () => {
                                     </div>
                                 </div>
                                 <div className="col-lg-7 col-md-6 col-sm-6">
+<<<<<<< HEAD
                                     <div className="single-slider-img single-slider-img-1 ">
+=======
+                                    <div className="single-slider-img single-slider-img-1">
+>>>>>>> f22461419630cc39e1b8e222f845dd32cccfa12c
                                         <img
                                             className="animated slider-1-1"
                                             src="assets/imgs/slider/slider-1.png"
@@ -62,7 +66,7 @@ const Intro1 = () => {
                     <div className="single-hero-slider single-animation-wrap">
                         <div className="container">
                             <div className="row align-items-center slider-animated-1">
-                                <div className="col-lg-5 col-md-6">
+                                <div className="col-lg-5 col-md-6 col-sm-6">
                                     <div className="hero-slider-content-2">
                                         <h4 className="animated">
                                             Hot promotions
@@ -84,7 +88,7 @@ const Intro1 = () => {
                                         </Link>
                                     </div>
                                 </div>
-                                <div className="col-lg-7 col-md-6">
+                                <div className="col-lg-7 col-md-6 col-sm-6">
                                     <div className="single-slider-img single-slider-img-1">
                                         <img
                                             className="animated slider-1-2"
@@ -101,7 +105,7 @@ const Intro1 = () => {
                     <div className="single-hero-slider single-animation-wrap">
                         <div className="container">
                             <div className="row align-items-center slider-animated-1">
-                                <div className="col-lg-5 col-md-6">
+                                <div className="col-lg-5 col-md-6 col-sm-6">
                                     <div className="hero-slider-content-2">
                                         <h4 className="animated">
                                             Upcoming Offer
@@ -122,7 +126,7 @@ const Intro1 = () => {
                                         </Link>
                                     </div>
                                 </div>
-                                <div className="col-lg-7 col-md-6">
+                                <div className="col-lg-7 col-md-6 col-sm-6">
                                     <div className="single-slider-img single-slider-img-1">
                                         <img
                                             className="animated slider-1-3"
