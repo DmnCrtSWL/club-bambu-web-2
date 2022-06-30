@@ -23,7 +23,7 @@ const Intro1 = () => {
                     <div className="single-hero-slider single-animation-wrap">
                         <div className="container">
                             <div className="row align-items-center slider-animated-1">
-                                <div className="col-lg-5 col-md-6">
+                                <div className="col-lg-5 col-md-6 col-sm-6">
                                     <div className="hero-slider-content-2">
                                         <h4 className="animated">
                                             Trade-in offer
@@ -40,13 +40,13 @@ const Intro1 = () => {
                                         </p>
                                         <Link href="/products/shop-grid-right">
                                             <a className="animated btn btn-brush btn-brush-3">
-                                                Shop Now
+                                                Comprar Ahora
                                             </a>
                                         </Link>
                                     </div>
                                 </div>
-                                <div className="col-lg-7 col-md-6">
-                                    <div className="single-slider-img single-slider-img-1">
+                                <div className="col-lg-7 col-md-6 col-sm-6">
+                                    <div className="single-slider-img single-slider-img-1 ">
                                         <img
                                             className="animated slider-1-1"
                                             src="assets/imgs/slider/slider-1.png"
