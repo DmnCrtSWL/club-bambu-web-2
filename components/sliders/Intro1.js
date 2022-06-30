@@ -46,11 +46,7 @@ const Intro1 = () => {
                                     </div>
                                 </div>
                                 <div className="col-lg-7 col-md-6 col-sm-6">
-<<<<<<< HEAD
                                     <div className="single-slider-img single-slider-img-1 ">
-=======
-                                    <div className="single-slider-img single-slider-img-1">
->>>>>>> f22461419630cc39e1b8e222f845dd32cccfa12c
                                         <img
                                             className="animated slider-1-1"
                                             src="assets/imgs/slider/slider-1.png"
