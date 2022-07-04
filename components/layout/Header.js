@@ -183,7 +183,7 @@ const Header = ({
                                     <Search />
                                 </div> */}
                 <div className="header-right mx-10 mb-20 justify-evenly">
-                  {categories.map((category, i) => (
+                  {/* {categories.map((category, i) => (
                     <div key={i} className="flex-row h-px">
                       <Link
                         href={{
@@ -200,7 +200,7 @@ const Header = ({
                         <a>{category.name}</a>
                       </Link>
                     </div>
-                  ))}
+                  ))} */}
                 </div>
                 <div className="header-action-right">
                   <div className="header-action-2">
@@ -244,6 +244,14 @@ const Header = ({
                           </span>
                         </a>
                       </Link>
+                    </div>
+                    <div
+                      className="burger-icon burger-icon-white"
+                      onClick={toggleClick}
+                    >
+                      <span className="burger-icon-top"></span>
+                      <span className="burger-icon-mid"></span>
+                      <span className="burger-icon-bottom"></span>
                     </div>
                   </div>
                 </div>
