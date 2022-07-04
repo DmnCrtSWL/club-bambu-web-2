@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useState } from "react";
+import ButtonBottom from "../elements/ButtonBottom";
 import Breadcrumb from "./Breadcrumb";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -36,7 +37,7 @@ const Layout = ({
       {isToggled && (
         <div className="body-overlay-1" onClick={toggleClick}></div>
       )}
-
+  
       <Header
         headerStyle={headerStyle}
         isToggled={isToggled}
@@ -52,7 +53,9 @@ const Layout = ({
         />
         {children}
       </main>
+     
       <Footer />
+      <ButtonBottom />
     </>
   );
 };

@@ -1,3 +1,5 @@
+import { Button } from "react-bootstrap";
+import Link from "next/link";
 import FeatchTab from "../components/ecommerce/fetchTab";
 import FeatchTab2 from "../components/ecommerce/fetchTabSlider";
 import Banner2 from "../components/elements/Banner2";
@@ -15,6 +17,7 @@ import BrandSlider from "./../components/sliders/Brand";
 import CategorySlider from "./../components/sliders/Category";
 import Intro1 from "./../components/sliders/Intro1";
 import NewArrival from "./../components/sliders/NewArrival";
+import ButtonBottom from "../components/elements/ButtonBottom";
 
 export default function Home() {
 
@@ -138,7 +141,6 @@ export default function Home() {
         </section>
 
         <Bottom />
-
         <QuickView />
       </Layout>
     </>
