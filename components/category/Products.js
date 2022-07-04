@@ -1,9 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { server } from "../../config/index";
-import FeaturedTab from "../elements/FeaturedTab";
-import NewArrivalTab from "../elements/NewArrivalTab";
-import TrendingTab from "../elements/TrendingTab";
-import Link from "next/link";
+import React from "react";
 import ProductsCategory from "./ProductsCategory";
 
 function Products() {

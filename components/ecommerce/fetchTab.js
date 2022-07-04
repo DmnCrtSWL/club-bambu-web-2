@@ -52,6 +52,13 @@ function FeatchTab() {
               Productos destacados
             </button>
           </li>
+          <div className="nav-item" role="presentation">
+            <Link href="/products/allProducts">
+              <a className={active === "2" ? "nav-link active" : "nav-link"}>
+                Ver más
+              </a>
+            </Link>
+          </div>
           {/* <li className="nav-item" role="presentation">
             <button
               className={active === "2" ? "nav-link active" : "nav-link"}
