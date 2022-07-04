@@ -12,67 +12,12 @@ function ProductsCategory() {
     (async () => {
       const productos = await ecwid.getProducts();
       setProducts(productos.items);
-      console.log(productos);
-      console.log(slug);
     })();
   }, []);
 
-  const ProductsCategory = [
-    {
-      id: 1,
-      slug: "comida",
-      brand: "Barra Espresso",
-      price: 50,
-      title: "Nombre del platillo",
-    },
-    {
-      id: 2,
-      slug: "comida",
-      brand: "Barra Espresso",
-
-      price: 50,
-      title: "Nombre del platillo",
-    },
-    {
-      id: 3,
-      slug: "comida",
-      brand: "Barra Espresso",
-
-      price: 50,
-      title: "Nombre del platillo",
-    },
-    {
-      id: 4,
-      slug: "comida",
-      brand: "Barra Espresso",
-
-      price: 50,
-      title: "Nombre del platillo",
-    },
-    {
-      id: 5,
-      slug: "comida",
-      brand: "Categoría",
-      price: 50,
-      title: "Nombre del platillo",
-    },
-    {
-      id: 6,
-      slug: "comida",
-      brand: "Categoría",
-      price: 50,
-      title: "Nombre del platillo",
-    },
-    {
-      id: 7,
-      slug: "comida",
-      brand: "Categoría",
-      price: 50,
-      title: "Nombre del platillo",
-    },
-  ];
-
-  const currentCategory = products.filter((category) => category.url === slug);
+  const currentCategory = products.filter(
+    (category) => category.defaultCategoryId === id
+  );
 
   return (
     <>
@@ -85,11 +30,7 @@ function ProductsCategory() {
                   <div className="product-img product-img-zoom">
                     <Link href="/products/[slug]" as={`/products/${l.slug}`}>
                       <a>
-                        <img
-                          className="default-img"
-                          src="/assets/imgs/shop/category-thumb-1.jpg"
-                          alt=""
-                        />
+                        <img className="default-img" src={l.imageUrl} alt="" />
                       </a>
                     </Link>
                   </div>
@@ -97,12 +38,12 @@ function ProductsCategory() {
                 <div className="product-content-wrap">
                   <div className="product-category">
                     <Link href="/products">
-                      <a>{l.brand}</a>
+                      <a>{l.googleItemCondition}</a>
                     </Link>
                   </div>
                   <h2>
                     <Link href="/products/[slug]" as={`/products/${l.slug}`}>
-                      <a>{l.title}</a>
+                      <a>{l.name}</a>
                     </Link>
                   </h2>
 
