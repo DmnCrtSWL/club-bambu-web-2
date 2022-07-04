@@ -5552,7 +5552,7 @@ h6.post-title {
   align-items: center;
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 .logo a {
@@ -5560,7 +5560,7 @@ h6.post-title {
 }
 
 .logo.logo-width-1 {
-  margin-right: 123px;
+  margin-right: 0px;
 }
 
 .logo.logo-width-1 a img {

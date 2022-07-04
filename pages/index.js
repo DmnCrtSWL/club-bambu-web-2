@@ -28,13 +28,13 @@ export default function Home() {
           <Intro1 />
         </section>
 
-        <section className="featured section-padding position-relative">
+        {/* <section className="featured section-padding position-relative">
           <div className="container">
             <div className="row">
               <BannerFeatures />
             </div>
           </div>
-        </section>
+        </section> */}
 
         <section className="product-tabs section-padding position-relative wow fadeIn animated">
           <div className="container">
