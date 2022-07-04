@@ -24,12 +24,12 @@ const Cart = ({ openCart, cartItems, activeCart, closeCart, increaseQuantity, de
                                     <table className={cartItems.length > 0 ? "table shopping-summery text-center clean" : "d-none"}>
                                         <thead>
                                             <tr className="main-heading">
-                                                <th scope="col">Image</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Price</th>
-                                                <th scope="col">Quantity</th>
+                                                <th scope="col">Imagen</th>
+                                                <th scope="col">Producto</th>
+                                                <th scope="col">Precio</th>
+                                                <th scope="col">Cantidad</th>
                                                 <th scope="col">Subtotal</th>
-                                                <th scope="col">Remove</th>
+                                                <th scope="col">Eliminar</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -46,8 +46,7 @@ const Cart = ({ openCart, cartItems, activeCart, closeCart, increaseQuantity, de
                                                             </Link>
                                                         </h5>
                                                         <p className="font-xs">
-                                                            Maboriosam in a tonto nesciung eget
-                                                            <br /> distingy magndapibus.
+                                                            {item.desc}
                                                         </p>
                                                     </td>
                                                     <td className="price" data-title="Price">
@@ -79,7 +78,7 @@ const Cart = ({ openCart, cartItems, activeCart, closeCart, increaseQuantity, de
                                                     {cartItems.length > 0 && (
                                                         <a onClick={clearCart} className="text-muted">
                                                             <i className="fi-rs-cross-small"></i>
-                                                            Clear Cart
+                                                            Limpiar Carrito
                                                         </a>
                                                     )}
                                                 </td>
@@ -90,7 +89,7 @@ const Cart = ({ openCart, cartItems, activeCart, closeCart, increaseQuantity, de
                                 <div className="cart-action text-end">
                                     <a className="btn ">
                                         <i className="fi-rs-shopping-bag mr-10"></i>
-                                        Continue Shopping
+                                        Continuar Comprando
                                     </a>
                                 </div>
                                 <div className="divider center_icon mt-50 mb-50">
@@ -99,16 +98,16 @@ const Cart = ({ openCart, cartItems, activeCart, closeCart, increaseQuantity, de
                                 <div className="row mb-50">
                                     <div className="col-lg-6 col-md-12">
                                         <div className="heading_s1 mb-3">
-                                            <h4>Calculate Shipping</h4>
+                                            <h4>Calcular Envío</h4>
                                         </div>
                                         <p className="mt-15 mb-30">
-                                            Flat rate:
+                                            Costo extra:
                                             <span className="font-xl text-brand fw-900">5%</span>
                                         </p>
                                         <form className="field_form shipping_calculator">
                                             <div className="form-row">
                                                 <div className="form-group col-lg-12">
-                                                    <div className="custom_select">
+                                                    {/*<div className="custom_select">
                                                         <select className="form-control select-active">
                                                             <option value="">Choose a option...</option>
                                                             <option value="AX">Aland Islands</option>
@@ -356,29 +355,29 @@ const Cart = ({ openCart, cartItems, activeCart, closeCart, increaseQuantity, de
                                                             <option value="ZM">Zambia</option>
                                                             <option value="ZW">Zimbabwe</option>
                                                         </select>
-                                                    </div>
+                                                    </div>*/}
                                                 </div>
                                             </div>
                                             <div className="form-row row">
                                                 <div className="form-group col-lg-6">
-                                                    <input required="required" placeholder="State / Country" name="name" type="text" />
+                                                    <input required="required" placeholder="Npumero, Calle y colonia" name="name" type="text" />
                                                 </div>
                                                 <div className="form-group col-lg-6">
-                                                    <input required="required" placeholder="PostCode / ZIP" name="name" type="text" />
+                                                    <input required="required" placeholder="Codigo Postal" name="name" type="text" />
                                                 </div>
                                             </div>
                                             <div className="form-row">
                                                 <div className="form-group col-lg-12">
                                                     <button className="btn  btn-sm">
                                                         <i className="fi-rs-shuffle mr-10"></i>
-                                                        Update
+                                                        Actualizar Dirección
                                                     </button>
                                                 </div>
                                             </div>
                                         </form>
                                         <div className="mb-30 mt-50">
                                             <div className="heading_s1 mb-3">
-                                                <h4>Apply Coupon</h4>
+                                                <h4>Tengo un cupón</h4>
                                             </div>
                                             <div className="total-amount">
                                                 <div className="left">
@@ -386,12 +385,12 @@ const Cart = ({ openCart, cartItems, activeCart, closeCart, increaseQuantity, de
                                                         <form action="#" target="_blank">
                                                             <div className="form-row row justify-content-center">
                                                                 <div className="form-group col-lg-6">
-                                                                    <input className="font-medium" name="Coupon" placeholder="Enter Your Coupon" />
+                                                                    <input className="font-medium" name="Coupon" placeholder="Pon el código de cupón" />
                                                                 </div>
                                                                 <div className="form-group col-lg-6">
                                                                     <button className="btn  btn-sm">
                                                                         <i className="fi-rs-label mr-10"></i>
-                                                                        Apply
+                                                                        Aplicar
                                                                     </button>
                                                                 </div>
                                                             </div>
@@ -404,22 +403,22 @@ const Cart = ({ openCart, cartItems, activeCart, closeCart, increaseQuantity, de
                                     <div className="col-lg-6 col-md-12">
                                         <div className="border p-md-4 p-30 border-radius cart-totals">
                                             <div className="heading_s1 mb-3">
-                                                <h4>Cart Totals</h4>
+                                                <h4>Total del pedido</h4>
                                             </div>
                                             <div className="table-responsive">
                                                 <table className="table">
                                                     <tbody>
                                                         <tr>
-                                                            <td className="cart_total_label">Cart Subtotal</td>
+                                                            <td className="cart_total_label">Subtotal</td>
                                                             <td className="cart_total_amount">
                                                                 <span className="font-lg fw-900 text-brand">$ {price()}</span>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td className="cart_total_label">Shipping</td>
+                                                            <td className="cart_total_label">Envío</td>
                                                             <td className="cart_total_amount">
                                                                 <i className="ti-gift mr-5"></i>
-                                                                Free Shipping
+                                                                Envío Gratis
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -435,7 +434,7 @@ const Cart = ({ openCart, cartItems, activeCart, closeCart, increaseQuantity, de
                                             </div>
                                             <a href="#" className="btn ">
                                                 <i className="fi-rs-box-alt mr-10"></i>
-                                                Proceed To CheckOut
+                                                Ir al Pago
                                             </a>
                                         </div>
                                     </div>

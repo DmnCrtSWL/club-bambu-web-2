@@ -30,15 +30,15 @@ const ProductDetails = ({
         toast.success("Add to Cart !");
     };
 
-    const handleCompare = (product) => {
+    /*const handleCompare = (product) => {
         addToCompare(product);
         toast.success("Add to Compare !");
-    };
+    };*/
 
-    const handleWishlist = (product) => {
+    /*const handleWishlist = (product) => {
         addToWishlist(product);
         toast.success("Add to Wishlist !");
-    };
+    };*/
 
     const inCart = cartItems.find((cartItem) => cartItem.id === product.id);
 
@@ -67,7 +67,7 @@ const ProductDetails = ({
                                             <ul className="text-grey-5 d-inline-block">
                                                 <li>
                                                     <strong className="mr-10">
-                                                        Share this:
+                                                        Compartir esto:
                                                     </strong>
                                                 </li>
                                                 <li className="social-facebook">
@@ -94,14 +94,14 @@ const ProductDetails = ({
                                                         />
                                                     </a>
                                                 </li>
-                                                <li className="social-linkedin">
+                                                {/*<li className="social-linkedin">
                                                     <a href="#">
                                                         <img
                                                             src="/assets/imgs/theme/icons/icon-pinterest.svg"
                                                             alt=""
                                                         />
                                                     </a>
-                                                </li>
+                                                </li>*/}
                                             </ul>
                                         </div>
                                     </div>
@@ -113,10 +113,10 @@ const ProductDetails = ({
                                             <div className="product-detail-rating">
                                                 <div className="pro-details-brand">
                                                     <span>
-                                                        Brands:
+                                                        Categoría:
                                                         <Link href="/products">
                                                             <a>
-                                                                {product.brand}
+                                                                 {` ${product.brand}`}
                                                             </a>
                                                         </Link>
                                                     </span>
@@ -152,15 +152,15 @@ const ProductDetails = ({
                                                             product.discount
                                                                 .percentage
                                                         }
-                                                        % Off
+                                                        % Descuento
                                                     </span>
                                                 </div>
                                             </div>
                                             <div className="bt-1 border-color-1 mt-15 mb-15"></div>
                                             <div className="short-desc mb-30">
-                                                <p>{product.desc}</p>
+                                                <p>{product.desciption}</p>
                                             </div>
-                                            <div className="product_sort_info font-xs mb-30">
+                                            {/*<div className="product_sort_info font-xs mb-30">
                                                 <ul>
                                                     <li className="mb-10">
                                                         <i className="fi-rs-crown mr-5"></i>
@@ -177,8 +177,8 @@ const ProductDetails = ({
                                                         available
                                                     </li>
                                                 </ul>
-                                            </div>
-                                            <div className="attr-detail attr-color mb-15">
+                                            </div>*/}
+                                            {/*<div className="attr-detail attr-color mb-15">
                                                 <strong className="mr-10">
                                                     Color
                                                 </strong>
@@ -195,13 +195,13 @@ const ProductDetails = ({
                                                         )
                                                     )}
                                                 </ul>
-                                            </div>
+                                            </div>*/}
                                             <div className="attr-detail attr-size">
                                                 <strong className="mr-10">
-                                                    Size
+                                                    Opciones
                                                 </strong>
                                                 <ul className="list-filter size-filter font-small">
-                                                    {/* {product.sizes.map(
+                                                     {/*{product.options.map(
                                                         (size, i) => (
                                                             <li>
                                                                 <a href="#">
@@ -209,8 +209,7 @@ const ProductDetails = ({
                                                                 </a>
                                                             </li>
                                                         )
-                                                    )} */}
-
+                                                        )}*/}
                                                     <li className="active">
                                                         <a>M</a>
                                                     </li>
@@ -222,7 +221,7 @@ const ProductDetails = ({
                                                     </li>
                                                     <li>
                                                         <a>XXL</a>
-                                                    </li>
+                                                </li>
                                                 </ul>
                                             </div>
                                             <div className="bt-1 border-color-1 mt-30 mb-30"></div>
@@ -281,7 +280,7 @@ const ProductDetails = ({
                                                         }
                                                         className="button button-add-to-cart"
                                                     >
-                                                        Add to cart
+                                                        Agregar a Carrito
                                                     </button>
                                                     {/* <a
                                                         aria-label="Add To Wishlist"
@@ -308,7 +307,7 @@ const ProductDetails = ({
                                                 </div>
                                             </div>
                                             <ul className="product-meta font-xs color-grey mt-50">
-                                                <li className="mb-5">
+                                                {/*<li className="mb-5">
                                                     SKU:
                                                     <a href="#">FWM15VKT</a>
                                                 </li>
@@ -321,12 +320,10 @@ const ProductDetails = ({
                                                     >
                                                         Cloth,
                                                     </a>
-                                                </li>
+                                                </li>*/}
                                                 <li>
-                                                    Availability:
                                                     <span className="in-stock text-success ml-5">
-                                                        {product.stock} Items In
-                                                        Stock
+                                                        {product.stock} Disponible
                                                     </span>
                                                 </li>
                                             </ul>
@@ -334,6 +331,7 @@ const ProductDetails = ({
                                     </div>
                                 </div>
 
+                                {/*
                                 {quickView ? null : (
                                     <>
                                         <ProductTab />
@@ -366,7 +364,7 @@ const ProductDetails = ({
                                             </div>
                                         </div>
                                     </>
-                                )}
+                                )}*/}
                             </div>
                         </div>
                     </div>
