@@ -18,12 +18,16 @@ import CategorySlider from "./../components/sliders/Category";
 import Intro1 from "./../components/sliders/Intro1";
 import NewArrival from "./../components/sliders/NewArrival";
 import ButtonBottom from "../components/elements/ButtonBottom";
+import HeaderCategory from "../components/category/HeaderCategory";
+import IconsCategory from "../components/category/IconsCategory";
 
 export default function Home() {
-
   return (
     <>
       <Layout noBreadcrumb="d-none" headerStyle="header-style-1">
+        <section className="home-slider position-relative">
+          <HeaderCategory />
+        </section>
         <section className="home-slider position-relative pt-50">
           <Intro1 />
         </section>
@@ -35,6 +39,13 @@ export default function Home() {
             </div>
           </div>
         </section> */}
+        <section className="product-tabs section-padding position-relative wow fadeIn animated">
+          <div className="container">
+            <div className="col-lg-12">
+              <IconsCategory />
+            </div>
+          </div>
+        </section>
 
         <section className="product-tabs section-padding position-relative wow fadeIn animated">
           <div className="container">
@@ -50,7 +61,7 @@ export default function Home() {
           </div>
       </section>*/}
 
-       {/* <section className="popular-categories section-padding mt-15 mb-25">
+        {/* <section className="popular-categories section-padding mt-15 mb-25">
           <div className="container wow fadeIn animated">
             <h3 className="section-title mb-20">
               <span>Popular</span> Categories
@@ -111,8 +122,6 @@ export default function Home() {
             </div>
           </div>
     </section>*/}
-
-       
 
         {/*<section className="section-padding">
           <div className="container pt-25 pb-20">

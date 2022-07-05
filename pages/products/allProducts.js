@@ -9,9 +9,16 @@ function allProducts() {
   const { slug, title, id } = router.query;
   const [products, setProducts] = useState([]);
   const [active, setActive] = useState("1");
+  const [scroll, setScroll] = useState(0);
 
   useEffect(() => {
     (async () => {
+      document.addEventListener("scroll", () => {
+        const scrollCheck = window.scrollY >= 100;
+        if (scrollCheck !== scroll) {
+          setScroll(scrollCheck);
+        }
+      });
       if (active === "2") {
         const todosProductos = await ecwid.getProducts();
         setProducts(todosProductos.items);
@@ -19,7 +26,7 @@ function allProducts() {
         const productosDestacados = await ecwid.getProducts();
         const filtro = productosDestacados.items;
         const currentCategory = filtro.filter(
-          (category) => category.googleItemCondition === "TOP"
+          (category) => category.googleItemCondition === "NEW"
         );
         setProducts(currentCategory);
       }
@@ -37,26 +44,58 @@ function allProducts() {
   return (
     <>
       <Layout noBreadcrumb="d-none" headerStyle="header-style-1">
-        <div className="tab-header m-10">
-          <ul className="nav nav-tabs" id="myTab" role="tablist">
-            <li className="nav-item" role="presentation">
-              <button
-                className={active === "1" ? "nav-link active" : "nav-link"}
-                onClick={featuredProduct}
-              >
-                Productos destacados
-              </button>
-            </li>
-            <li className="nav-item" role="presentation">
-              <button
-                className={active === "2" ? "nav-link active" : "nav-link"}
-                onClick={allProduct}
-              >
-                Todos los productos
-              </button>
-            </li>
-          </ul>
-        </div>
+        <section className="product-tabs section-padding position-relative wow fadeIn animated">
+          <div className="container">
+            <div className="col-lg-12">
+              <div className="tab-header">
+                <ul className="nav nav-tabs" id="myTab" role="tablist">
+                  <li className="nav-item" role="presentation">
+                    <button
+                      className={
+                        active === "1" ? "nav-link active" : "nav-link"
+                      }
+                      onClick={featuredProduct}
+                    >
+                      Productos destacados
+                    </button>
+                  </li>
+                  <li className="nav-item" role="presentation">
+                    <button
+                      className={
+                        active === "2" ? "nav-link active" : "nav-link"
+                      }
+                      onClick={allProduct}
+                    >
+                      Ver más
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+        {/* <div className="col-lg-12">
+          <div className="tab-header m-10 col-lg-12">
+            <ul className="nav nav-tabs" id="myTab" role="tablist">
+              <li className="nav-item" role="presentation">
+                <button
+                  className={active === "1" ? "nav-link active" : "nav-link"}
+                  onClick={featuredProduct}
+                >
+                  Productos destacados
+                </button>
+              </li>
+              <li className="nav-item" role="presentation">
+                <button
+                  className={active === "2" ? "nav-link active" : "nav-link"}
+                  onClick={allProduct}
+                >
+                  Ver todo
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div> */}
         <section className="product-tabs section-padding position-relative wow fadeIn animated">
           <div className="container">
             <div className="col-lg-12">
@@ -115,7 +154,7 @@ function allProducts() {
                         {active === "2" ? (
                           <div className="col-12">
                             <div className=" bg-slate-200 h-20 rounded-xl justify-center flex items-center p-1">
-                              <h4 className="text-center">
+                              <h4 className="text-center text-xs">
                                 Cargando productos destacados
                               </h4>
                             </div>
@@ -123,7 +162,7 @@ function allProducts() {
                         ) : (
                           <div className="col-12">
                             <div className=" bg-slate-200 h-20 rounded-xl justify-center flex items-center p-1">
-                              <h4 className="text-center">
+                              <h4 className="text-center text-xs">
                                 Cargando productos Bambu
                               </h4>
                             </div>

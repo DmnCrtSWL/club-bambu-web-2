@@ -11,7 +11,6 @@ const FeaturedTab = () => {
     (async () => {
       const productos = await ecwid.getProducts();
       setProducts(productos.items);
-      console.log(productos.items);
     })();
   }, []);
 
@@ -61,7 +60,7 @@ const FeaturedTab = () => {
       ) : (
         <div className="col-12">
           <div className=" bg-slate-100 h-20 rounded-xl justify-center flex items-center p-1">
-            <h4 className="text-center">Cargando Productos Bambu</h4>
+            <h4 className="text-center text-xs">Cargando Productos Bambu</h4>
           </div>
         </div>
       )}
