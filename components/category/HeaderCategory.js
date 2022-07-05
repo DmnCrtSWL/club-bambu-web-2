@@ -21,9 +21,23 @@ function HeaderCategory() {
         <div className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide ">
           <>
             {categorias.map((l, i) => (
-              <div className="w-[220px] inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300 ">
+              <div
+                key={i}
+                className="w-[220px] inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300 "
+              >
                 <div className="flex-row">
-                  <Link href="/products/[slug]" as={`/products/${l.slug}`}>
+                  <Link
+                    href={{
+                      pathname: "/categories/[slug]",
+                      query: {
+                        id: l.id,
+                        title: l.name,
+                        slug: l.url,
+                      },
+                    }}
+                    // "/categories/[slug]"
+                    // as={`/categories/${category.slug}`}
+                  >
                     <a>{l.name}</a>
                   </Link>
                 </div>

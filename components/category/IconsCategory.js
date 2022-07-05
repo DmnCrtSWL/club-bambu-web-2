@@ -31,14 +31,29 @@ function IconsCategory() {
                     <div className="product-cart-wrap mb-20 ">
                       <div className="product-content-wrap ">
                         <div className="product-category">
-                          <Link href="/products">
+                          <Link
+                            href={{
+                              pathname: "/categories/[slug]",
+                              query: {
+                                id: l.id,
+                                title: l.name,
+                                slug: l.url,
+                              },
+                            }}
+                          >
                             <a>Categoría</a>
                           </Link>
                         </div>
                         <h2>
                           <Link
-                            href="/products/[slug]"
-                            as={`/products/${l.slug}`}
+                            href={{
+                              pathname: "/categories/[slug]",
+                              query: {
+                                id: l.id,
+                                title: l.name,
+                                slug: l.url,
+                              },
+                            }}
                           >
                             <a>{l.name}</a>
                           </Link>
