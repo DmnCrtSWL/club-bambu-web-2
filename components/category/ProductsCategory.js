@@ -7,23 +7,24 @@ function ProductsCategory() {
   const router = useRouter();
   const { id, title, slug } = router.query;
   const [products, setProducts] = useState([]);
-  let categoriasproductos = [];
 
   useEffect(() => {
     (async () => {
       const productos = await ecwid.getProducts();
       const filtro = productos.items;
       const number = Number(id);
-      const currentCategory = filtro.filter(
-        (category) => category.categoryIds[0] === 133695893
-      );
-      // const currentCategory = filtro.map((category) => category.categoryIds);
-      setProducts(currentCategory);
-      console.log("*********");
-      console.log(number);
-      console.log("*********");
-      console.log(currentCategory);
-      console.log("*********");
+      const number2 = Number(slug);
+      if (number) {
+        const currentCategory = filtro.filter(
+          (category) => category.categoryIds[0] === number
+        );
+        setProducts(currentCategory);
+      } else {
+        const currentCategory = filtro.filter(
+          (category) => category.categoryIds[0] === number2
+        );
+        setProducts(currentCategory);
+      }
     })();
   }, [id]);
 
@@ -66,8 +67,8 @@ function ProductsCategory() {
       ) : (
         <div className="col-12">
           <div className=" bg-slate-200 h-20 rounded-xl justify-center flex items-center p-1">
-            <h4 className="text-center">
-              No hay productos en la categoría {title}
+            <h4 className="text-center text-xs">
+              Cargando productos de {title}
             </h4>
           </div>
         </div>

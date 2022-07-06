@@ -35,9 +35,9 @@ function IconsCategory() {
                             href={{
                               pathname: "/categories/[slug]",
                               query: {
-                                id: l.id,
+                                id: l.parentId,
                                 title: l.name,
-                                slug: l.url,
+                                slug: l.id,
                               },
                             }}
                           >
@@ -49,9 +49,9 @@ function IconsCategory() {
                             href={{
                               pathname: "/categories/[slug]",
                               query: {
-                                id: l.id,
+                                id: l.parentId,
                                 title: l.name,
-                                slug: l.url,
+                                slug: l.id,
                               },
                             }}
                           >
