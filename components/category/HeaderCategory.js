@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import ecwid from "../../util/ecwid";
 
 function HeaderCategory() {
-  const router = useRouter();
-  const { slug, title, id } = router.query;
   const [categorias, setCategorias] = useState([]);
 
   useEffect(() => {
@@ -38,7 +35,7 @@ function HeaderCategory() {
                     // "/categories/[slug]"
                     // as={`/categories/${category.slug}`}
                   >
-                    <a>{l.name}</a>
+                    <a className="font-bold">{l.name}</a>
                   </Link>
                 </div>
               </div>

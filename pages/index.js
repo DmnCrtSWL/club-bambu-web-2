@@ -106,11 +106,11 @@ export default function Home() {
           </div>
       </section>*/}
 
-        <section className="bg-grey-9 section-padding">
+        {/* <section className="bg-grey-9 section-padding">
           <div className="container pt-25 pb-25">
             <FeatchTab2 />
           </div>
-        </section>
+        </section> */}
         {/*
         <section className="section-padding">
           <div className="container">

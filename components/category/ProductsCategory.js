@@ -5,25 +5,33 @@ import ecwid from "../../util/ecwid";
 
 function ProductsCategory() {
   const router = useRouter();
-  const { slug, title, id } = router.query;
+  const { id, title, slug } = router.query;
   const [products, setProducts] = useState([]);
+  let categoriasproductos = [];
 
   useEffect(() => {
     (async () => {
       const productos = await ecwid.getProducts();
-      setProducts(productos.items);
+      const filtro = productos.items;
+      const number = Number(id);
+      const currentCategory = filtro.filter(
+        (category) => category.categoryIds[0] === 133695893
+      );
+      // const currentCategory = filtro.map((category) => category.categoryIds);
+      setProducts(currentCategory);
+      console.log("*********");
+      console.log(number);
+      console.log("*********");
+      console.log(currentCategory);
+      console.log("*********");
     })();
-  }, []);
-
-  const currentCategory = products.filter(
-    (category) => category.defaultCategoryId === id
-  );
+  }, [id]);
 
   return (
     <>
-      {currentCategory.length > 0 ? (
+      {products.length > 0 ? (
         <>
-          {currentCategory.map((l, i) => (
+          {products.map((l, i) => (
             <div key={i} className="col-lg-3 col-md-5 col-12 col-sm-6">
               <div className="product-cart-wrap mb-30">
                 <div className="product-img-action-wrap">
