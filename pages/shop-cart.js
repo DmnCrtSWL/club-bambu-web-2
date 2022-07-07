@@ -46,7 +46,7 @@ const Cart = ({ openCart, cartItems, activeCart, closeCart, increaseQuantity, de
                                                             </Link>
                                                         </h5>
                                                         <p className="font-xs">
-                                                            {item.description}
+                                                            {item.description.slice(3,-4)}
                                                         </p>
                                                     </td>
                                                     <td className="price" data-title="Price">

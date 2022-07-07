@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import {
@@ -9,12 +9,14 @@ import {
 } from "../../redux/action/cart";
 import { addToCompare } from "../../redux/action/compareAction";
 import { addToWishlist } from "../../redux/action/wishlistAction";
-import ProductTab from "../elements/ProductTab";
-import RelatedSlider from "../sliders/Related";
+import { size } from "lodash";
+//import ProductTab from "../elements/ProductTab";
+//import RelatedSlider from "../sliders/Related";
 import ThumbSlider from "../sliders/Thumb";
+import ecwid from "../../util/ecwid";
 
 const ProductDetails = ({
-    product,
+    
     cartItems,
     addToCompare,
     addToCart,
@@ -22,10 +24,11 @@ const ProductDetails = ({
     increaseQuantity,
     decreaseQuantity,
     quickView,
+    id
 }) => {
    
     const [quantity, setQuantity] = useState(1);
-
+    const [product, setProduct] = useState([]);
     const handleCart = (product) => {
         addToCart(product);
         toast.success("Add to Cart !");
@@ -42,6 +45,16 @@ const ProductDetails = ({
     };*/
 
     const inCart = cartItems.find((cartItem) => cartItem.id === product.id);
+
+    useEffect(() => {
+        (async() => {
+          const producto = await ecwid.getProduct(id);
+          setProduct(producto);
+          console.log("Producto id entrando a [id]: " + id)
+          console.log("Datos: " )
+          console.log(product)
+        })();
+      }, []);
 
     return (
         <>
@@ -159,7 +172,7 @@ const ProductDetails = ({
                                             </div>
                                             <div className="bt-1 border-color-1 mt-15 mb-15"></div>
                                             <div className="short-desc mb-30">
-                                                {product.description}
+                                                {product.description ? product.description.slice(3,-4): <div></div>}
                                             </div>
                                             {/*<div className="product_sort_info font-xs mb-30">
                                                 <ul>
@@ -198,35 +211,23 @@ const ProductDetails = ({
                                                 </ul>
                                             </div>*/}
                                             <div className="attr-detail attr-size">
-                                                <strong className="mr-10">
-                                                    Opciones
-                                                </strong>
+                                                
                                                 <ul className="list-filter size-filter font-small">
-                                                   {/*console.log(product.options[0])}
-                                                   { console.log(product.options[0].name)}
-                                                   { console.log(product.options[0].choices)}
-                                                   { console.log(product.options[0].choices[1])}
-                                                   {/*console.log(JSON.stringify(product.options))*/}
-                                                   {/*console.log(product.options[0])}
-                                                   {/* product.options[0].choices.map((opcion,i)=>{
-                                                        <li key={i}>
-                                                            <a href="#">
-                                                                {opcion.text}
-                                                            </a>
-                                                        </li>
-                                                   })
-                                                    */}
-                                                   
-                                                    {/*{product.options.map(
-                                                        (size, i) => (
-                                                            <li key={i}>
-                                                                <a href="#">
-                                                                    {size}
-                                                                </a>
-                                                            </li>
-                                                        )
-                                                        )}*/}
-                                                        
+                                                     {size(product.options) > 0 && (
+                                                        <>
+                                                            <strong className="mr-10">
+                                                                Opciones
+                                                            </strong>
+                                                            {product.options[0].choices.map(
+                                                                (opcion,i)=>(
+                                                                <li key={i}>
+                                                                    <a href="#">{opcion.text}</a>
+                                                                </li>
+                                                       
+                                                        ))} 
+                                                        </>
+                                                     )
+                                                    }                            
                                                     {/*<li className="active">
                                                         <a>M</a>
                                                     </li>
@@ -238,7 +239,7 @@ const ProductDetails = ({
                                                     </li>
                                                     <li>
                                                         <a>XXL</a>
-                                                    </li>*/}
+                                                        </li>*/}
                                                 </ul>
                                             </div>
                                             <div className="bt-1 border-color-1 mt-30 mb-30"></div>

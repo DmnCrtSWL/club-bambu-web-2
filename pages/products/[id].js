@@ -11,8 +11,6 @@ const ProductId = () => {
   const { id } = router.query;
   const [product, setProduct] = useState([]);
 
-  console.log("Producto id entrando a [id]: " + id)
-
   useEffect(() => {
     if (!router.isReady) return;
   }, [router.isReady]);
@@ -21,8 +19,9 @@ const ProductId = () => {
     (async() => {
       const producto = await ecwid.getProduct(id);
       setProduct(producto);
-      console.log("Obteniendo producto por id en Ecwid:")
-      console.log(producto);
+      console.log("Producto id entrando a [id]: " + id)
+      console.log("Datos: " )
+      console.log(product)
     })();
   }, []);
 
@@ -30,7 +29,7 @@ const ProductId = () => {
     <>
       <Layout parent="Home" sub="Shop" subChild={product.id}>
         <div className="container">
-          <ProductDetails product={product} />
+          <ProductDetails product={product} id={id}/>
         </div>
       </Layout>
     </>
@@ -47,5 +46,6 @@ ProductId.getInitialProps = async (params) => {
   return { product: data[index] };
 };
 */
+
 
 export default ProductId;
