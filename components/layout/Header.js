@@ -182,7 +182,10 @@ const Header = ({
                 {/* <div className="search-style-2">
                                     <Search />
                                 </div> */}
-                <div className="header-right mx-10 mb-20 justify-evenly">
+                <div className="header-right justify-evenly">
+                  <div className="w-96">
+                    <Search />
+                  </div>
                   {/* {categories.map((category, i) => (
                     <div key={i} className="flex-row h-px">
                       <Link
@@ -245,14 +248,14 @@ const Header = ({
                         </a>
                       </Link>
                     </div>
-                    <div
+                    {/* <div
                       className="burger-icon burger-icon-white"
                       onClick={toggleClick}
                     >
                       <span className="burger-icon-top"></span>
                       <span className="burger-icon-mid"></span>
                       <span className="burger-icon-bottom"></span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

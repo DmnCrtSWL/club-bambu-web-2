@@ -5,25 +5,34 @@ import ecwid from "../../util/ecwid";
 
 function ProductsCategory() {
   const router = useRouter();
-  const { slug, title, id } = router.query;
+  const { id, title, slug } = router.query;
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     (async () => {
       const productos = await ecwid.getProducts();
-      setProducts(productos.items);
+      const filtro = productos.items;
+      const number = Number(id);
+      const number2 = Number(slug);
+      if (number) {
+        const currentCategory = filtro.filter(
+          (category) => category.categoryIds[0] === number
+        );
+        setProducts(currentCategory);
+      } else {
+        const currentCategory = filtro.filter(
+          (category) => category.categoryIds[0] === number2
+        );
+        setProducts(currentCategory);
+      }
     })();
-  }, []);
-
-  const currentCategory = products.filter(
-    (category) => category.defaultCategoryId === id
-  );
+  }, [id]);
 
   return (
     <>
-      {currentCategory.length > 0 ? (
+      {products.length > 0 ? (
         <>
-          {currentCategory.map((l, i) => (
+          {products.map((l, i) => (
             <div key={i} className="col-lg-3 col-md-5 col-12 col-sm-6">
               <div className="product-cart-wrap mb-30">
                 <div className="product-img-action-wrap">
@@ -58,8 +67,8 @@ function ProductsCategory() {
       ) : (
         <div className="col-12">
           <div className=" bg-slate-200 h-20 rounded-xl justify-center flex items-center p-1">
-            <h4 className="text-center">
-              No hay productos en la categoría {title}
+            <h4 className="text-center text-xs">
+              Cargando productos de {title}
             </h4>
           </div>
         </div>

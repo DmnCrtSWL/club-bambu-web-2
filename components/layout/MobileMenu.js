@@ -86,12 +86,12 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
                       href={{
                         pathname: "/categories/[slug]",
                         query: {
-                          id: category.id,
+                          id: category.parentId,
                           title: category.name,
-                          slug: category.url,
+                          slug: category.id,
                         },
                       }}
-                      as={`/categories/${category.slug}`}
+                      //   as={`/categories/${category.slug}`}
                     >
                       <a>{category.name}</a>
                     </Link>
