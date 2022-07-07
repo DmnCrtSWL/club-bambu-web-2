@@ -16,12 +16,12 @@ const ProductId = () => {
   }, [router.isReady]);
 
   useEffect(() => {
-    (async() => {
+    (async () => {
       const producto = await ecwid.getProduct(id);
       setProduct(producto);
-      console.log("Producto id entrando a [id]: " + id)
-      console.log("Datos: " )
-      console.log(product)
+      console.log("Producto id entrando a [id]: " + id);
+      console.log("Datos: ");
+      console.log(product);
     })();
   }, []);
 
@@ -29,7 +29,7 @@ const ProductId = () => {
     <>
       <Layout parent="Home" sub="Shop" subChild={product.id}>
         <div className="container">
-          <ProductDetails product={product} id={id}/>
+          <ProductDetails />
         </div>
       </Layout>
     </>
@@ -46,6 +46,5 @@ ProductId.getInitialProps = async (params) => {
   return { product: data[index] };
 };
 */
-
 
 export default ProductId;

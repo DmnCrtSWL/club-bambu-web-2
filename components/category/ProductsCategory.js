@@ -51,7 +51,16 @@ function ProductsCategory() {
                     </Link>
                   </div>
                   <h2>
-                    <Link href="/products/[id]" as={`/products/${l.id}`}>
+                    <Link
+                      // href="/products/[id]"
+                      // as={`/products/${l.id}`}
+                      href={{
+                        pathname: "/products/[id]",
+                        query: {
+                          id: l.id,
+                        },
+                      }}
+                    >
                       <a>{l.name}</a>
                     </Link>
                   </h2>

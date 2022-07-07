@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import {
-    addToCart,
-    decreaseQuantity,
-    increaseQuantity
+  addToCart,
+  decreaseQuantity,
+  increaseQuantity,
 } from "../../redux/action/cart";
 import { addToCompare } from "../../redux/action/compareAction";
 import { addToWishlist } from "../../redux/action/wishlistAction";
@@ -14,101 +14,94 @@ import { size } from "lodash";
 //import RelatedSlider from "../sliders/Related";
 import ThumbSlider from "../sliders/Thumb";
 import ecwid from "../../util/ecwid";
+import { useRouter } from "next/router";
 
 const ProductDetails = ({
-    
-    cartItems,
-    addToCompare,
-    addToCart,
-    addToWishlist,
-    increaseQuantity,
-    decreaseQuantity,
-    quickView,
-    id
+  cartItems,
+  addToCompare,
+  addToCart,
+  addToWishlist,
+  increaseQuantity,
+  decreaseQuantity,
+  quickView,
 }) => {
-   
-    const [quantity, setQuantity] = useState(1);
-    const [product, setProduct] = useState([]);
-    const handleCart = (product) => {
-        addToCart(product);
-        toast.success("Add to Cart !");
-    };
+  const router = useRouter();
+  const { id } = router.query;
+  const [quantity, setQuantity] = useState(1);
+  const [product, setProduct] = useState([]);
+  const handleCart = (product) => {
+    addToCart(product);
+    toast.success("Add to Cart !");
+  };
 
-    /*const handleCompare = (product) => {
+  /*const handleCompare = (product) => {
         addToCompare(product);
         toast.success("Add to Compare !");
     };*/
 
-    /*const handleWishlist = (product) => {
+  /*const handleWishlist = (product) => {
         addToWishlist(product);
         toast.success("Add to Wishlist !");
     };*/
 
-    const inCart = cartItems.find((cartItem) => cartItem.id === product.id);
+  const inCart = cartItems.find((cartItem) => cartItem.id === product.id);
 
-    useEffect(() => {
-        (async() => {
-          const producto = await ecwid.getProduct(id);
-          setProduct(producto);
-          console.log("Producto id entrando a [id]: " + id)
-          console.log("Datos: " )
-          console.log(product)
-        })();
-      }, []);
+  useEffect(() => {
+    (async () => {
+      const producto = await ecwid.getProduct(id);
+      setProduct(producto);
+    })();
+  }, [id]);
 
-    return (
-        <>
-            <section className="mt-50 mb-50">
-                <div className="container">
-                    <div className="row flex-row-reverse">
-                        <div className="col-lg-12">
-                            <div className="product-detail accordion-detail">
-                                <div className="row mb-50">
-                                    <div className="col-md-6 col-sm-12 col-xs-12">
-                                        <div className="detail-gallery">
-                                            <span className="zoom-icon">
-                                                <i className="fi-rs-search"></i>
-                                            </span>
+  return (
+    <>
+      <section className="mt-50 mb-50">
+        <div className="container">
+          <div className="row flex-row-reverse">
+            <div className="col-lg-12">
+              <div className="product-detail accordion-detail">
+                <div className="row mb-50">
+                  <div className="col-md-6 col-sm-12 col-xs-12">
+                    <div className="detail-gallery">
+                      <span className="zoom-icon">
+                        <i className="fi-rs-search"></i>
+                      </span>
 
-                                            <div className="product-image-slider">
-                                                <ThumbSlider
-                                                    product={product}
-                                                />
-                                            </div>
-                                        </div>
+                      <div className="product-image-slider">
+                        <ThumbSlider product={product} />
+                      </div>
+                    </div>
 
-                                        <div className="social-icons single-share">
-                                            <ul className="text-grey-5 d-inline-block">
-                                                <li>
-                                                    <strong className="mr-10">
-                                                        Compartir esto:
-                                                    </strong>
-                                                </li>
-                                                <li className="social-facebook">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/assets/imgs/theme/icons/icon-facebook.svg"
-                                                            alt=""
-                                                        />
-                                                    </a>
-                                                </li>
-                                                <li className="social-twitter">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/assets/imgs/theme/icons/icon-twitter.svg"
-                                                            alt=""
-                                                        />
-                                                    </a>
-                                                </li>
-                                                <li className="social-instagram">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/assets/imgs/theme/icons/icon-instagram.svg"
-                                                            alt=""
-                                                        />
-                                                    </a>
-                                                </li>
-                                                {/*<li className="social-linkedin">
+                    <div className="social-icons single-share">
+                      <ul className="text-grey-5 d-inline-block">
+                        <li>
+                          <strong className="mr-10">Compartir esto:</strong>
+                        </li>
+                        <li className="social-facebook">
+                          <a href="#">
+                            <img
+                              src="/assets/imgs/theme/icons/icon-facebook.svg"
+                              alt=""
+                            />
+                          </a>
+                        </li>
+                        <li className="social-twitter">
+                          <a href="#">
+                            <img
+                              src="/assets/imgs/theme/icons/icon-twitter.svg"
+                              alt=""
+                            />
+                          </a>
+                        </li>
+                        <li className="social-instagram">
+                          <a href="#">
+                            <img
+                              src="/assets/imgs/theme/icons/icon-instagram.svg"
+                              alt=""
+                            />
+                          </a>
+                        </li>
+                        {/*<li className="social-linkedin">
                                                     <a href="#">
                                                         <img
                                                             src="/assets/imgs/theme/icons/icon-pinterest.svg"
@@ -116,16 +109,14 @@ const ProductDetails = ({
                                                         />
                                                     </a>
                                                 </li>*/}
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6 col-sm-12 col-xs-12">
-                                        <div className="detail-info">
-                                            <h2 className="title-detail">
-                                                {product.name}
-                                            </h2>
-                                            <div className="product-detail-rating">
-                                                {/*<div className="pro-details-brand">
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="col-md-6 col-sm-12 col-xs-12">
+                    <div className="detail-info">
+                      <h2 className="title-detail">{product.name}</h2>
+                      <div className="product-detail-rating">
+                        {/*<div className="pro-details-brand">
                                                     <span>
                                                         Categoría:
                                                         <Link href="/products">
@@ -135,7 +126,7 @@ const ProductDetails = ({
                                                         </Link>
                                                     </span>
                                                 </div>*/}
-                                                {/* <div className="product-rate-cover text-end">
+                        {/* <div className="product-rate-cover text-end">
                                                     <div className="product-rate d-inline-block">
                                                         <div
                                                             className="product-rating"
@@ -148,15 +139,15 @@ const ProductDetails = ({
                                                         (25 reviews)
                                                     </span>
                                                 </div> */}
-                                            </div>
-                                            <div className="clearfix product-price-cover">
-                                                <div className="product-price primary-color float-left">
-                                                    <ins>
-                                                        <span className="text-brand">
-                                                            Precio: ${product.price}
-                                                        </span>
-                                                    </ins>
-                                                    {/*<ins>
+                      </div>
+                      <div className="clearfix product-price-cover">
+                        <div className="product-price primary-color float-left">
+                          <ins>
+                            <span className="text-brand">
+                              Precio: ${product.price}
+                            </span>
+                          </ins>
+                          {/*<ins>
                                                         <span className="old-price font-md ml-15">
                                                             ${product.oldPrice}
                                                         </span>
@@ -168,13 +159,17 @@ const ProductDetails = ({
                                                         }
                                                         % Descuento
                                                     </span>*/}
-                                                </div>
-                                            </div>
-                                            <div className="bt-1 border-color-1 mt-15 mb-15"></div>
-                                            <div className="short-desc mb-30">
-                                                {product.description ? product.description.slice(3,-4): <div></div>}
-                                            </div>
-                                            {/*<div className="product_sort_info font-xs mb-30">
+                        </div>
+                      </div>
+                      <div className="bt-1 border-color-1 mt-15 mb-15"></div>
+                      <div className="short-desc mb-30">
+                        {product.description ? (
+                          product.description.slice(3, -4)
+                        ) : (
+                          <div></div>
+                        )}
+                      </div>
+                      {/*<div className="product_sort_info font-xs mb-30">
                                                 <ul>
                                                     <li className="mb-10">
                                                         <i className="fi-rs-crown mr-5"></i>
@@ -192,7 +187,7 @@ const ProductDetails = ({
                                                     </li>
                                                 </ul>
                                             </div>*/}
-                                            {/*<div className="attr-detail attr-color mb-15">
+                      {/*<div className="attr-detail attr-color mb-15">
                                                 <strong className="mr-10">
                                                     Color
                                                 </strong>
@@ -210,25 +205,19 @@ const ProductDetails = ({
                                                     )}
                                                 </ul>
                                             </div>*/}
-                                            <div className="attr-detail attr-size">
-                                                
-                                                <ul className="list-filter size-filter font-small">
-                                                     {size(product.options) > 0 && (
-                                                        <>
-                                                            <strong className="mr-10">
-                                                                Opciones
-                                                            </strong>
-                                                            {product.options[0].choices.map(
-                                                                (opcion,i)=>(
-                                                                <li key={i}>
-                                                                    <a href="#">{opcion.text}</a>
-                                                                </li>
-                                                       
-                                                        ))} 
-                                                        </>
-                                                     )
-                                                    }                            
-                                                    {/*<li className="active">
+                      <div className="attr-detail attr-size">
+                        <ul className="list-filter size-filter font-small">
+                          {size(product.options) > 0 && (
+                            <>
+                              <strong className="mr-10">Opciones</strong>
+                              {product.options[0].choices.map((opcion, i) => (
+                                <li key={i}>
+                                  <a href="#">{opcion.text}</a>
+                                </li>
+                              ))}
+                            </>
+                          )}
+                          {/*<li className="active">
                                                         <a>M</a>
                                                     </li>
                                                     <li>
@@ -240,67 +229,48 @@ const ProductDetails = ({
                                                     <li>
                                                         <a>XXL</a>
                                                         </li>*/}
-                                                </ul>
-                                            </div>
-                                            <div className="bt-1 border-color-1 mt-30 mb-30"></div>
-                                            <div className="detail-extralink">
-                                                <div className="detail-qty border radius">
-                                                    <a
-                                                        onClick={(e) =>
-                                                            !inCart
-                                                                ? setQuantity(
-                                                                      quantity >
-                                                                          1
-                                                                          ? quantity -
-                                                                                1
-                                                                          : 1
-                                                                  )
-                                                                : decreaseQuantity(
-                                                                      product?.id
-                                                                  )
-                                                        }
-                                                        className="qty-down"
-                                                    >
-                                                        <i className="fi-rs-angle-small-down"></i>
-                                                    </a>
-                                                    <span className="qty-val">
-                                                        {inCart?.quantity ||
-                                                            quantity}
-                                                    </span>
-                                                    <a
-                                                        onClick={() =>
-                                                            !inCart
-                                                                ? setQuantity(
-                                                                      quantity +
-                                                                          1
-                                                                  )
-                                                                : increaseQuantity(
-                                                                      product.id
-                                                                  )
-                                                        }
-                                                        className="qty-up"
-                                                    >
-                                                        <i className="fi-rs-angle-small-up"></i>
-                                                    </a>
-                                                </div>
-                                                <div className="product-extra-link2">
-                                                    <button
-                                                        onClick={(e) =>{
-
-                                                            handleCart({
-                                                                ...product,
-                                                                quantity:
-                                                                    quantity ||
-                                                                    1,
-                                                            })
-                                                        }
-
-                                                        }
-                                                        className="button button-add-to-cart"
-                                                    >
-                                                        Agregar a Carrito
-                                                    </button>
-                                                    {/* <a
+                        </ul>
+                      </div>
+                      <div className="bt-1 border-color-1 mt-30 mb-30"></div>
+                      <div className="detail-extralink">
+                        <div className="detail-qty border radius">
+                          <a
+                            onClick={(e) =>
+                              !inCart
+                                ? setQuantity(quantity > 1 ? quantity - 1 : 1)
+                                : decreaseQuantity(product?.id)
+                            }
+                            className="qty-down"
+                          >
+                            <i className="fi-rs-angle-small-down"></i>
+                          </a>
+                          <span className="qty-val">
+                            {inCart?.quantity || quantity}
+                          </span>
+                          <a
+                            onClick={() =>
+                              !inCart
+                                ? setQuantity(quantity + 1)
+                                : increaseQuantity(product.id)
+                            }
+                            className="qty-up"
+                          >
+                            <i className="fi-rs-angle-small-up"></i>
+                          </a>
+                        </div>
+                        <div className="product-extra-link2">
+                          <button
+                            onClick={(e) => {
+                              handleCart({
+                                ...product,
+                                quantity: quantity || 1,
+                              });
+                            }}
+                            className="button button-add-to-cart"
+                          >
+                            Agregar a Carrito
+                          </button>
+                          {/* <a
                                                         aria-label="Add To Wishlist"
                                                         className="action-btn hover-up"
                                                         onClick={(e) =>
@@ -322,10 +292,10 @@ const ProductDetails = ({
                                                     >
                                                         <i className="fi-rs-shuffle"></i>
                                                     </a> */}
-                                                </div>
-                                            </div>
-                                            <ul className="product-meta font-xs color-grey mt-50">
-                                                {/*<li className="mb-5">
+                        </div>
+                      </div>
+                      <ul className="product-meta font-xs color-grey mt-50">
+                        {/*<li className="mb-5">
                                                     SKU:
                                                     <a href="#">FWM15VKT</a>
                                                 </li>
@@ -339,17 +309,17 @@ const ProductDetails = ({
                                                         Cloth,
                                                     </a>
                                                 </li>*/}
-                                                <li>
-                                                    <span className="in-stock text-success ml-5">
-                                                        {product.stock} Disponible
-                                                    </span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                        <li>
+                          <span className="in-stock text-success ml-5">
+                            {product.stock} Disponible
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
 
-                                {/*
+                {/*
                                 {quickView ? null : (
                                     <>
                                         <ProductTab />
@@ -383,25 +353,25 @@ const ProductDetails = ({
                                         </div>
                                     </>
                                 )}*/}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </>
-    );
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
 };
 
 const mapStateToProps = (state) => ({
-    cartItems: state.cart,
+  cartItems: state.cart,
 });
 
 const mapDispatchToProps = {
-    addToCompare,
-    addToWishlist,
-    addToCart,
-    increaseQuantity,
-    decreaseQuantity,
+  addToCompare,
+  addToWishlist,
+  addToCart,
+  increaseQuantity,
+  decreaseQuantity,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);

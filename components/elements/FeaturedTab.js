@@ -32,13 +32,13 @@ const FeaturedTab = () => {
                   <div className="product-img product-img-zoom">
                     {/*<Link href="/products/[slug]" as={`/products/${l.id}`}>*/}
                     <Link
-                        href={{
-                          pathname: "/products/[id]",
-                          query: {
-                            id: l.id,
-                          },
-                        }}
-                      >
+                      href={{
+                        pathname: "/products/[id]",
+                        query: {
+                          id: l.id,
+                        },
+                      }}
+                    >
                       <a>
                         <img className="default-img" src={l.imageUrl} alt="" />
                       </a>
@@ -54,13 +54,13 @@ const FeaturedTab = () => {
                   <h2>
                     {/*<Link href="/products/[slug]" as={`/products/${l.id}`}>*/}
                     <Link
-                        href={{
-                          pathname: "/products/[slug]",
-                          query: {
-                            slug: l.id,
-                          },
-                        }}
-                      >
+                      href={{
+                        pathname: "/products/[id]",
+                        query: {
+                          id: l.id,
+                        },
+                      }}
+                    >
                       <a>{l.name}</a>
                     </Link>
                   </h2>
