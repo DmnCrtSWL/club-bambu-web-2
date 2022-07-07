@@ -23,6 +23,7 @@ const ProductDetails = ({
     decreaseQuantity,
     quickView,
 }) => {
+   
     const [quantity, setQuantity] = useState(1);
 
     const handleCart = (product) => {
@@ -108,10 +109,10 @@ const ProductDetails = ({
                                     <div className="col-md-6 col-sm-12 col-xs-12">
                                         <div className="detail-info">
                                             <h2 className="title-detail">
-                                                {product.title}
+                                                {product.name}
                                             </h2>
                                             <div className="product-detail-rating">
-                                                <div className="pro-details-brand">
+                                                {/*<div className="pro-details-brand">
                                                     <span>
                                                         Categoría:
                                                         <Link href="/products">
@@ -120,7 +121,7 @@ const ProductDetails = ({
                                                             </a>
                                                         </Link>
                                                     </span>
-                                                </div>
+                                                </div>*/}
                                                 {/* <div className="product-rate-cover text-end">
                                                     <div className="product-rate d-inline-block">
                                                         <div
@@ -139,10 +140,10 @@ const ProductDetails = ({
                                                 <div className="product-price primary-color float-left">
                                                     <ins>
                                                         <span className="text-brand">
-                                                            ${product.price}
+                                                            Precio: ${product.price}
                                                         </span>
                                                     </ins>
-                                                    <ins>
+                                                    {/*<ins>
                                                         <span className="old-price font-md ml-15">
                                                             ${product.oldPrice}
                                                         </span>
@@ -153,12 +154,12 @@ const ProductDetails = ({
                                                                 .percentage
                                                         }
                                                         % Descuento
-                                                    </span>
+                                                    </span>*/}
                                                 </div>
                                             </div>
                                             <div className="bt-1 border-color-1 mt-15 mb-15"></div>
                                             <div className="short-desc mb-30">
-                                                <p>{product.desciption}</p>
+                                                {product.description}
                                             </div>
                                             {/*<div className="product_sort_info font-xs mb-30">
                                                 <ul>
@@ -201,16 +202,32 @@ const ProductDetails = ({
                                                     Opciones
                                                 </strong>
                                                 <ul className="list-filter size-filter font-small">
-                                                     {/*{product.options.map(
+                                                   {/*console.log(product.options[0])}
+                                                   { console.log(product.options[0].name)}
+                                                   { console.log(product.options[0].choices)}
+                                                   { console.log(product.options[0].choices[1])}
+                                                   {/*console.log(JSON.stringify(product.options))*/}
+                                                   {/*console.log(product.options[0])}
+                                                   {/* product.options[0].choices.map((opcion,i)=>{
+                                                        <li key={i}>
+                                                            <a href="#">
+                                                                {opcion.text}
+                                                            </a>
+                                                        </li>
+                                                   })
+                                                    */}
+                                                   
+                                                    {/*{product.options.map(
                                                         (size, i) => (
-                                                            <li>
+                                                            <li key={i}>
                                                                 <a href="#">
                                                                     {size}
                                                                 </a>
                                                             </li>
                                                         )
                                                         )}*/}
-                                                    <li className="active">
+                                                        
+                                                    {/*<li className="active">
                                                         <a>M</a>
                                                     </li>
                                                     <li>
@@ -221,7 +238,7 @@ const ProductDetails = ({
                                                     </li>
                                                     <li>
                                                         <a>XXL</a>
-                                                </li>
+                                                    </li>*/}
                                                 </ul>
                                             </div>
                                             <div className="bt-1 border-color-1 mt-30 mb-30"></div>

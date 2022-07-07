@@ -11,7 +11,6 @@ const FeaturedTab = () => {
     (async () => {
       const productos = await ecwid.getProducts();
       setProducts(productos.items);
-      console.log(productos.items);
     })();
   }, []);
 
@@ -31,7 +30,15 @@ const FeaturedTab = () => {
               <div className="product-cart-wrap mb-30">
                 <div className="product-img-action-wrap">
                   <div className="product-img product-img-zoom">
-                    <Link href="/products/[slug]" as={`/products/${l.slug}`}>
+                    {/*<Link href="/products/[slug]" as={`/products/${l.id}`}>*/}
+                    <Link
+                        href={{
+                          pathname: "/products/[id]",
+                          query: {
+                            id: l.id,
+                          },
+                        }}
+                      >
                       <a>
                         <img className="default-img" src={l.imageUrl} alt="" />
                       </a>
@@ -45,7 +52,15 @@ const FeaturedTab = () => {
                     </Link>
                   </div>
                   <h2>
-                    <Link href="/products/[slug]" as={`/products/${l.slug}`}>
+                    {/*<Link href="/products/[slug]" as={`/products/${l.id}`}>*/}
+                    <Link
+                        href={{
+                          pathname: "/products/[slug]",
+                          query: {
+                            slug: l.id,
+                          },
+                        }}
+                      >
                       <a>{l.name}</a>
                     </Link>
                   </h2>

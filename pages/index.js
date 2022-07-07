@@ -97,7 +97,7 @@ export default function Home() {
 
         <section className="bg-grey-9 section-padding">
           <div className="container pt-25 pb-25">
-            <FeatchTab2 />
+          <FeatchTab2 />
           </div>
         </section>
         {/*

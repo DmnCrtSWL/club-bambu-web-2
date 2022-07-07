@@ -75,7 +75,7 @@ function allProducts() {
                                 <div className="product-img product-img-zoom">
                                   <Link
                                     href="/products/[slug]"
-                                    as={`/products/${l.slug}`}
+                                    as={`/products/${l.id}`}
                                   >
                                     <a>
                                       <img
@@ -96,7 +96,7 @@ function allProducts() {
                                 <h2>
                                   <Link
                                     href="/products/[slug]"
-                                    as={`/products/${l.slug}`}
+                                    as={`/products/${l.id}`}
                                   >
                                     <a>{l.name}</a>
                                   </Link>

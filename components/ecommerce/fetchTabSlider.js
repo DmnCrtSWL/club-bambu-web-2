@@ -98,7 +98,7 @@ function FeatchTabSlider() {
                                 Exclusivas
                             </h4>
 
-                            <Link href="/products">
+                            <Link href="/products/allProducts">
                                 <a className="text-white">
                                     ¡Pide Ya! <i className="fi-rs-arrow-right"></i>
                                 </a>

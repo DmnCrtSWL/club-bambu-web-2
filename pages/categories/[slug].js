@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/layout/Layout";
 import { server } from "../../config/index";
-import Products from "../../components/category/products";
+import Products from "../../components/category/Products";
 import { useRouter } from "next/router";
 
 const CategoryId = (props) => {

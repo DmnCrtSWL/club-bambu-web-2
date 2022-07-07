@@ -36,17 +36,17 @@ const Cart = ({ openCart, cartItems, activeCart, closeCart, increaseQuantity, de
                                             {cartItems.map((item, i) => (
                                                 <tr key={i}>
                                                     <td className="image product-thumbnail">
-                                                        <img src={item.images[0].img} />
+                                                        <img src={item.imageUrl} />
                                                     </td>
 
                                                     <td className="product-des product-name">
                                                         <h5 className="product-name">
                                                             <Link href="/products">
-                                                                <a>{item.title}</a>
+                                                                <a>{item.name}</a>
                                                             </Link>
                                                         </h5>
                                                         <p className="font-xs">
-                                                            {item.desc}
+                                                            {item.description}
                                                         </p>
                                                     </td>
                                                     <td className="price" data-title="Price">
@@ -360,7 +360,7 @@ const Cart = ({ openCart, cartItems, activeCart, closeCart, increaseQuantity, de
                                             </div>
                                             <div className="form-row row">
                                                 <div className="form-group col-lg-6">
-                                                    <input required="required" placeholder="Npumero, Calle y colonia" name="name" type="text" />
+                                                    <input required="required" placeholder="Número, Calle y Colonia" name="name" type="text" />
                                                 </div>
                                                 <div className="form-group col-lg-6">
                                                     <input required="required" placeholder="Codigo Postal" name="name" type="text" />
@@ -385,7 +385,7 @@ const Cart = ({ openCart, cartItems, activeCart, closeCart, increaseQuantity, de
                                                         <form action="#" target="_blank">
                                                             <div className="form-row row justify-content-center">
                                                                 <div className="form-group col-lg-6">
-                                                                    <input className="font-medium" name="Coupon" placeholder="Pon el código de cupón" />
+                                                                    <input className="font-medium" name="Coupon" placeholder="Código de cupón" />
                                                                 </div>
                                                                 <div className="form-group col-lg-6">
                                                                     <button className="btn  btn-sm">
