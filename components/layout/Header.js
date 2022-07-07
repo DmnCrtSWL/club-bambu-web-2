@@ -174,7 +174,7 @@ const Header = ({
               <div className="logo logo-width-1">
                 <Link href="/">
                   <a>
-                    <img src="/assets/imgs/theme/logo.svg" alt="logo" />
+                    <img src="/assets/imgs/theme/logo.svg" alt="logo"  min-width= "185px" />
                   </a>
                 </Link>
               </div>
