@@ -37,7 +37,14 @@ function ProductsCategory() {
               <div className="product-cart-wrap mb-30">
                 <div className="product-img-action-wrap">
                   <div className="product-img product-img-zoom">
-                    <Link href="/products/[id]" as={`/products/${l.id}`}>
+                    <Link
+                      href={{
+                        pathname: "/products/[id]",
+                        query: {
+                          id: l.id,
+                        },
+                      }}
+                    >
                       <a>
                         <img className="default-img" src={l.imageUrl} alt="" />
                       </a>

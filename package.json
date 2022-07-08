@@ -9,8 +9,14 @@
         "sass": "node-sass --watch public/assets/sass/main.scss public/assets/css/main.css --source-map public/assets/css/main.css.map"
     },
     "dependencies": {
+        "@date-io/date-fns": "1.x",
+        "@material-ui/core": "^4.12.4",
+        "@material-ui/pickers": "^3.3.10",
+        "@stripe/react-stripe-js": "^1.9.0",
+        "@stripe/stripe-js": "^1.32.0",
         "axios": "^0.27.2",
         "bootstrap": "^5.1.3",
+        "date-fns": "^2.0.0-beta.5",
         "ecwid": "^1.3.1",
         "isomorphic-unfetch": "^3.1.0",
         "lodash": "^4.17.21",
