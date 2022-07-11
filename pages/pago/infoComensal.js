@@ -15,6 +15,9 @@ import esLocale from "date-fns/locale/es";
 import { createTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { useLocalStorage } from "./useLocalStorage";
+import { isEmpty, size } from "lodash";
+import { toast } from "react-toastify";
+import { validateEmail } from "../../util/validations";
 
 function infoComensal() {
   const router = useRouter();
@@ -30,6 +33,28 @@ function infoComensal() {
   const [comments, setComments] = useLocalStorage("comments", "");
 
   // const stripePromise = loadStripe();
+
+  const sendForm = () => {
+    if (isEmpty(name)) {
+      toast.error("Ingresa tu nombre");
+    } else if (isEmpty(email)) {
+      toast.error("Ingresa tu correo electrónico");
+    } else if (isEmpty(phone)) {
+      toast.error("Ingresa tu celular");
+    } else if (isEmpty(adress)) {
+      toast.error("Ingresa tu dirección");
+    } else if (!validateEmail(email.replace(/ /g, ""))) {
+      toast.error("Ingresa un correo electrónico válido");
+    } else if (size(phone) != 10) {
+      toast.error("Ingresa un celular valido");
+    } else if (!/^\d+/.test(phone)) {
+      toast.error("Ingresa un celular valido");
+    } else if (!/^[0-9]+$/.test(phone)) {
+      toast.error("Ingresa un celular valido");
+    } else {
+      console.log("Todo correcto");
+    }
+  };
 
   return (
     <>
@@ -129,6 +154,7 @@ function infoComensal() {
                       onChange={(e) => setDate(e)}
                       name="date"
                       inputVariant="outlined"
+                      minDate={new Date()}
                     />
                   </ThemeProvider>
                   <h4 className="font-normal mb-6 my-4">Hora de entrega</h4>
@@ -138,6 +164,7 @@ function infoComensal() {
                       onChange={(e) => setHour(e)}
                       name="date"
                       inputVariant="outlined"
+                      minTime={new Date(0, 0, 0, 8)}
                     />
                   </ThemeProvider>
                   <h4 className="font-normal mb-5 my-4">
@@ -160,7 +187,7 @@ function infoComensal() {
                 <div className="cart-action text-end">
                   <Link
                     href={{
-                      pathname: "/pago/infoComensal",
+                      pathname: "/pago/infoProductos",
                       //   query: {
                       //     id: l.id,
                       //   },
