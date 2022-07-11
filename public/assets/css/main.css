@@ -997,7 +997,7 @@ button.submit, button[type='submit'] {
 
 button.submit:hover, button[type='submit']:hover {
   /*background-color: #046963 !important;*/
-  background-color: var(--verdeClaro1) !important;
+  background-color: var(--verdeClaro1) !important; 
 }
 
 .btn-brand:hover {
@@ -5374,8 +5374,12 @@ h6.post-title {
   border-bottom: 1px solid #e2e9e1;
   background-color: #f2f3f8;
   font-size: 14px;
-  background-image: url(../imgs/theme/topbar-bg.jpg);
+  /*background-image: url(../imgs/theme/topbar-bg.jpg);*/
   line-height: 1;
+}
+
+.header-area{
+  background-color: var(--verdeBambu2);
 }
 
 .header-top-ptb-1 #news-flash {
@@ -5555,6 +5559,10 @@ h6.post-title {
   /* justify-content: space-between; */
 }
 
+.shop-icon{
+  background-color: #fff;
+  
+}
 .logo a {
   display: block;
 }
@@ -5622,7 +5630,7 @@ h6.post-title {
 
 .header-action-2 .header-action-icon-2 > a {
   font-size: 30px;
-  color: #333;
+  color: #fff;
   line-height: 1;
   display: inline-block;
   position: relative;
@@ -5639,7 +5647,7 @@ h6.post-title {
   position: absolute;
   right: -11px;
   top: -5px;
-  color: #ffffff;
+  color: var(--verdeBambu2);
   height: 18px;
   width: 18px;
   border-radius: 100%;
@@ -5828,14 +5836,15 @@ h6.post-title {
 
 .header-action-2 .header-action-icon-2 > a span.pro-count.blue {
   /*background-color: #088178;*/
-  background-color: var(--verdeBambu1);
+  background-color: #fff;
+
 }
 
 .header-action-2 .header-action-icon-2:hover > a {
   /*color: #088178;
   fill: #088178;*/
-  color: var(--verdeBambu1);
-  fill: var(--verdeBambu1);
+  color: #fff;
+  fill: #fff;
 }
 
 .header-action-2 .header-action-icon-2:hover .cart-dropdown-wrap {

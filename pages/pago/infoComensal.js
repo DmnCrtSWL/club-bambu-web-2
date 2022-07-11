@@ -160,7 +160,7 @@ function infoComensal() {
                 <div className="cart-action text-end">
                   <Link
                     href={{
-                      pathname: "/pago/infoComensal",
+                      pathname: "/pago/infoProductos",
                       //   query: {
                       //     id: l.id,
                       //   },

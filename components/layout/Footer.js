@@ -56,7 +56,7 @@ const Footer = () => {
                                     <div className="logo logo-width-1 wow fadeIn animated">
                                         <Link href="/"><a>
                                             <img
-                                                src="/assets/imgs/theme/logo.svg"
+                                                src="/assets/imgs/theme/logo-green.svg"
                                                 alt="logo"
                                             />
                                         </a>
