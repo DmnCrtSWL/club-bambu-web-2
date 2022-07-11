@@ -164,7 +164,7 @@ function infoComensal() {
                       onChange={(e) => setHour(e)}
                       name="date"
                       inputVariant="outlined"
-                      minTime={new Date(0, 0, 0, 8)}
+                      minutesStep={30}
                     />
                   </ThemeProvider>
                   <h4 className="font-normal mb-5 my-4">
