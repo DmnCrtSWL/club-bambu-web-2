@@ -1,6 +1,5 @@
 import { connect } from "react-redux";
 import Layout from "../components/layout/Layout";
-
 import Link from "next/link";
 import {
   clearCart,
