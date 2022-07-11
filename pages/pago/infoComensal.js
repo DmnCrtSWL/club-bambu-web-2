@@ -31,7 +31,7 @@ function infoComensal() {
   const [hour, setHour] = useLocalStorage("hour", "");
   const [adress, setAdress] = useLocalStorage("adress", "");
   const [comments, setComments] = useLocalStorage("comments", "");
-
+  const [path, setpath] = useState("infoComensal");
   // const stripePromise = loadStripe();
 
   const sendForm = () => {
@@ -52,6 +52,7 @@ function infoComensal() {
     } else if (!/^[0-9]+$/.test(phone)) {
       toast.error("Ingresa un celular valido");
     } else {
+      setpath("infoProductos");
       console.log("Todo correcto");
     }
   };
@@ -187,13 +188,15 @@ function infoComensal() {
                 <div className="cart-action text-end">
                   <Link
                     href={{
-                      pathname: "/pago/infoProductos",
+                      pathname: `/pago/${path}`,
                       //   query: {
                       //     id: l.id,
                       //   },
                     }}
                   >
-                    <a className="btn ">Continuar</a>
+                    <a className="btn " onClick={() => sendForm()}>
+                      Continuar
+                    </a>
                   </Link>
                 </div>
               </MuiPickersUtilsProvider>
