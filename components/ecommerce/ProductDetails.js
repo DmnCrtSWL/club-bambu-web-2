@@ -72,7 +72,7 @@ const ProductDetails = ({
                       </div>
                     </div>
 
-                    <div className="social-icons single-share">
+                    {/* <div className="social-icons single-share">
                       <ul className="text-grey-5 d-inline-block">
                         <li>
                           <strong className="mr-10">Compartir esto:</strong>
@@ -101,16 +101,16 @@ const ProductDetails = ({
                             />
                           </a>
                         </li>
-                        {/*<li className="social-linkedin">
+                        <li className="social-linkedin">
                                                     <a href="#">
                                                         <img
                                                             src="/assets/imgs/theme/icons/icon-pinterest.svg"
                                                             alt=""
                                                         />
                                                     </a>
-                                                </li>*/}
+                                                </li>
                       </ul>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="col-md-6 col-sm-12 col-xs-12">
                     <div className="detail-info">
