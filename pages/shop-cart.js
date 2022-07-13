@@ -66,9 +66,11 @@ const Cart = ({
                                 <a>{item.name}</a>
                               </Link>
                             </h5>
-                            <p className="font-xs">
-                              {item.description.slice(3, -4)}
-                            </p>
+                            {item.description && (
+                              <p className="font-xs">
+                                {item.description.slice(3, -4)}
+                              </p>
+                            )}
                           </td>
                           <td className="price" data-title="Price">
                             <span>${item.price}</span>
