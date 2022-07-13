@@ -14,23 +14,23 @@ import DateFnsUtils from "@date-io/date-fns";
 import esLocale from "date-fns/locale/es";
 import { createTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
-import { useLocalStorage } from "./UseLocalStorage";
+import { UseLocalStorage } from "../../components/pago/UseLocalStorage";
 import { isEmpty, size } from "lodash";
 import { toast } from "react-toastify";
 import { validateEmail } from "../../util/validations";
 
 function infoComensal() {
   const router = useRouter();
-  const [name, setName] = useLocalStorage("text", "");
-  const [email, setEmail] = useLocalStorage("email", "");
-  const [phone, setPhone] = useLocalStorage("phone", "");
+  const [name, setName] = UseLocalStorage("text", "");
+  const [email, setEmail] = UseLocalStorage("email", "");
+  const [phone, setPhone] = UseLocalStorage("phone", "");
   const [methodPayCash, setMethodPayCash] = useState(true);
   const [methodPayCard, setMethodPayCard] = useState(false);
-  const [coupon, setCoupon] = useLocalStorage("coupon", "");
-  const [date, setDate] = useLocalStorage("date", "");
-  const [hour, setHour] = useLocalStorage("hour", "");
-  const [adress, setAdress] = useLocalStorage("adress", "");
-  const [comments, setComments] = useLocalStorage("comments", "");
+  const [coupon, setCoupon] = UseLocalStorage("coupon", "");
+  const [date, setDate] = UseLocalStorage("date", "");
+  const [hour, setHour] = UseLocalStorage("hour", "");
+  const [adress, setAdress] = UseLocalStorage("adress", "");
+  const [comments, setComments] = UseLocalStorage("comments", "");
   const [path, setpath] = useState("infoComensal");
   // const stripePromise = loadStripe();
 
