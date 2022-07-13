@@ -28,14 +28,11 @@ const Cart = ({
     return price;
   };
 
-  useEffect(()=>{
-    setTotal(0)
-    cartItems.map((item, i)=> (
-      setTotal(total + (item.price*item.quantity))
-    ))
-    console.log('ok')
-    
-  },[cartItems])
+  useEffect(() => {
+    setTotal(0);
+    cartItems.map((item, i) => setTotal(total + item.price * item.quantity));
+    console.log("ok");
+  }, [cartItems]);
 
   return (
     <>
@@ -78,16 +75,20 @@ const Cart = ({
                                 <a>{item.name}</a>
                               </Link>
                             </h5>
-                            <p className="font-xs">
-                              {item.description.slice(3, -4)}
-                            </p>
+                            {item.description && (
+                              <p className="font-xs">
+                                {item.description.slice(3, -4)}
+                              </p>
+                            )}
                           </td>
                           <td className="price" data-title="Price">
                             <span>${item.price}</span>
                           </td>
                           <td className="text-center" data-title="Stock">
                             <div className="text-center">
-                              <span className="qty-val text-center">{item.quantity}</span>
+                              <span className="qty-val text-center">
+                                {item.quantity}
+                              </span>
                             </div>
                           </td>
                           <td className="text-center" data-title="Cart">
@@ -97,9 +98,9 @@ const Cart = ({
                       ))}
                       <tr>
                         <td colSpan="6" className="text-end">
-                            <a onClick={clearCart} className="text-muted">
-                                <h3>Total: ${total}</h3>
-                            </a>
+                          <a onClick={clearCart} className="text-muted">
+                            <h3>Total: ${total}</h3>
+                          </a>
                         </td>
                       </tr>
                     </tbody>
@@ -108,17 +109,15 @@ const Cart = ({
                 <div className="cart-action text-end">
                   <Link
                     href={{
-                      pathname: "/pago/infoComensal"
+                      pathname: "/pago/infoComensal",
                     }}
                   >
                     <a className="btn ">
                       {/* <i className="fi-rs-shopping-bag mr-10"></i> */}
-                      Continuar con el pago
-                      
+                      Finalizar compra
                     </a>
                   </Link>
                 </div>
-                
               </div>
             </div>
           </div>
