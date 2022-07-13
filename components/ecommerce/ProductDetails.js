@@ -63,9 +63,9 @@ const ProductDetails = ({
                 <div className="row mb-50">
                   <div className="col-md-6 col-sm-12 col-xs-12">
                     <div className="detail-gallery">
-                      <span className="zoom-icon">
+                      {/* <span className="zoom-icon">
                         <i className="fi-rs-search"></i>
-                      </span>
+                      </span> */}
 
                       <div className="product-image-slider">
                         <ThumbSlider product={product} />
