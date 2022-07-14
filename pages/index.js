@@ -151,7 +151,7 @@ export default function Home() {
           </div>
   </section>*/}
 
-        {/*<Bottom />*/}
+        
         <QuickView />
       </Layout>
     </>

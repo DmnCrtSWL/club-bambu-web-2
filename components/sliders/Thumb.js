@@ -22,7 +22,7 @@ const ThumbSlider = ({ product }) => {
                 className="mySwiper2"
             >
                 <SwiperSlide key={product.id}>
-                    <img src={product.imageUrl} alt="evara"/>
+                    <img src={product.imageUrl} alt="evara" />
                 </SwiperSlide>
             </Swiper>
                 {/*{product.gallery.map((item,i) => (

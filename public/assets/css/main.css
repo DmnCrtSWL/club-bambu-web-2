@@ -1158,7 +1158,7 @@ input {
 }
 
 input:focus {
-  background: transparent;
+  background: var(--verdeFondoClaro);
   /*border: 1px solid #88c1be;*/
   border: 1px solid var(--verdeClaro2);
 }
@@ -4384,7 +4384,9 @@ table .product-thumbnail img {
 
 /*PRODUCT DETAILS*/
 .detail-gallery {
-  position: relative;
+  /*position: relative;*/
+  position: sticky;
+  
 }
 
 .detail-gallery .zoom-icon {
@@ -5647,7 +5649,7 @@ h6.post-title {
   position: absolute;
   right: -11px;
   top: -5px;
-  color: var(--verdeBambu2);
+  color: #fff;
   height: 18px;
   width: 18px;
   border-radius: 100%;
@@ -5791,7 +5793,7 @@ h6.post-title {
 
 .header-action .header-action-icon > a {
   font-size: 24px;
-  color: #333;
+  color: #fff;
   line-height: 1;
   display: inline-block;
   position: relative;

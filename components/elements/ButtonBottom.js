@@ -10,6 +10,7 @@ const ButtonBottom = ({
     const [scroll, setScroll] = useState(0);
 
     useEffect(() => {
+        console.log(totalCartItems)
         document.addEventListener("scroll", () => {
             const scrollCheck = window.scrollY >= 100;
             if (scrollCheck !== scroll) {
@@ -22,14 +23,13 @@ const ButtonBottom = ({
 
     return (
         <>
-        {/*<div className="cart-action text-center d-grid gap-2">*/}
+        { totalCartItems &&
         <div  className="cart-action text-center d-grid gap-2"
             style = {{
             position: "fixed",
             bottom: "0",
             right: "0%",
             left:"0%",
-            
             }}
         >
             <Link href="/shop-cart">
@@ -41,8 +41,10 @@ const ButtonBottom = ({
                 </a>
             </Link>
         </div>
+        }
         </>
     );
+    
 };
 
 
