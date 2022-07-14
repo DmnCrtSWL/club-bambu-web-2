@@ -27,7 +27,7 @@ const ProductId = () => {
 
   return (
     <>
-      <Layout parent="Home" sub="Shop" subChild={product.id}>
+      <Layout parent="Inicio" sub="Productos" subChild={product.name}>
         <div className="container">
           <ProductDetails />
         </div>

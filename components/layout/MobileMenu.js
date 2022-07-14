@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import useClickOutside from "../../util/outsideClick";
 import ecwid from "../../util/ecwid";
+import Search from "../ecommerce/Search";
 
 const MobileMenu = ({ isToggled, toggleClick }) => {
   const [isActive, setIsActive] = useState({
@@ -65,14 +66,15 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
             </div>
           </div>
           <div className="mobile-header-content-area">
-            {/* <div className="mobile-search search-style-3 mobile-header-border">
-              <form action="#">
+            <div className="mobile-search search-style-3 mobile-header-border">
+              {/* <form action="#">
                 <input type="text" placeholder="¿Qué estas buscando?" />
                 <button type="submit">
                   <i className="fi-rs-search"></i>
                 </button>
-              </form>
-            </div> */}
+              </form> */}
+              <Search />
+            </div>
             <div className="mobile-menu-wrap mobile-header-border">
               <div className="main-categori-wrap mobile-header-border">
                 <Link href="#">
