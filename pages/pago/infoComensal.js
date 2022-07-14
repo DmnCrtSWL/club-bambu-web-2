@@ -52,8 +52,15 @@ function infoComensal() {
     } else if (!/^[0-9]+$/.test(phone)) {
       toast.error("Ingresa un celular valido");
     } else {
-      setpath("infoProductos");
-      console.log("Todo correcto");
+      // setpath("infoProductos");
+      // console.log("Todo correcto");
+      router.push({
+        pathname: "/pago/infoProductos",
+        //  query: {
+        //    search: busqueda,
+        //    item: searchTerm,
+        //  },
+      });
     }
   };
 

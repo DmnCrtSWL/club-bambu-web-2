@@ -1,16 +1,22 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import ecwid from "../../util/ecwid";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     console.log("click");
+    const busqueda = await ecwid.searchProducts(searchTerm);
+    console.log("****+********");
+    console.log(busqueda);
+    console.log("****+********");
     router.push({
       pathname: "/products",
       query: {
-        search: searchTerm,
+        search: busqueda,
+        item: searchTerm,
       },
     });
     setSearchTerm("");
