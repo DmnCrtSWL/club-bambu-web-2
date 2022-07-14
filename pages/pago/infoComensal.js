@@ -53,7 +53,14 @@ function infoComensal() {
       toast.error("Ingresa un celular valido");
     } else {
       // setpath("infoProductos");
-      console.log("Todo correcto");
+      // console.log("Todo correcto");
+      router.push({
+        pathname: "/pago/infoProductos",
+        //  query: {
+        //    search: busqueda,
+        //    item: searchTerm,
+        //  },
+      });
     }
   };
 
@@ -188,7 +195,7 @@ function infoComensal() {
                 <div className="cart-action text-end">
                   <Link
                     href={{
-                      pathname: `/pago/infoProductos`,
+                      pathname: `/pago/${path}`,
                       //   query: {
                       //     id: l.id,
                       //   },
