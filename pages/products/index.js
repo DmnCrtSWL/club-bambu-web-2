@@ -38,8 +38,16 @@ const Products = ({ products, productFilters, fetchProduct }) => {
       setCategorias(categorias.items);
       const busqueda = await ecwid.searchProducts();
       const filtro = busqueda.items;
-      const currentProducts = filtro.filter((product) => product.name === item);
-      setProductos(currentProducts);
+      if (item) {
+        const currentProducts = filtro.filter((product) => {
+          if (
+            product.name.toString().toLowerCase().includes(item.toLowerCase())
+          ) {
+            return product;
+          }
+        });
+        setProductos(currentProducts);
+      }
       //   console.log(busqueda);
     })();
   }, [item]);
