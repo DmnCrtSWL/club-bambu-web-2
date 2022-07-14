@@ -1507,10 +1507,11 @@ const Header = ({
                   <div className="header-action-icon-2">
                     <Link href="/shop-cart">
                       <a className="mini-cart-icon">
-                        <img
+                        {/*<img
                           alt="Evara"
                           src="/assets/imgs/theme/icons/icon-cart.svg"
-                        />
+                        />*/}
+                        <i className="fi-rs-shopping-bag mr-10"></i>
                         <span className="pro-count white">
                           {totalCartItems}
                         </span>

@@ -5649,7 +5649,7 @@ h6.post-title {
   position: absolute;
   right: -11px;
   top: -5px;
-  color: #fff;
+  color: var(--verdeBambu2);
   height: 18px;
   width: 18px;
   border-radius: 100%;
@@ -6142,8 +6142,8 @@ h6.post-title {
 
 .header-bottom .header-action-right a span.pro-count {
   /*background-color: #088178;*/
-  background-color: var(--verdeBambu1);
-  color: #fff;
+  background-color: #fff;
+  color: var(--verdeBambu2);
 }
 
 .search-style-3 form {
@@ -6386,7 +6386,7 @@ h6.post-title {
 
 .burger-icon.burger-icon-white > span::before,
 .burger-icon.burger-icon-white > span::after {
-  background-color: #1a1a1a;
+  background-color: #fff;
 }
 
 .body-overlay-1 {
