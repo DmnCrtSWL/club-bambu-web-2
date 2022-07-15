@@ -101,24 +101,27 @@ const SingleProduct = ({
                         {product.discount.isActive ? <span className="sale">Sale</span>:null }
                         {product.discount.percentage >= 5 ? <span className="hot">{product.discount.percentage}%</span>:null }
                     </div> */}
-                </div>
-                <div className="product-content-wrap">
-                    <div className="product-category">
-                        <Link href="/products">
-                            <a>
-                                {product.brand}
-                            </a>
-                        </Link>
-                    </div>
-                    <h2>
-                    <Link
-                            href="/products/[slug]"
-                            as={`/products/${product.slug}`}
-                        >
-                            <a>{product.title}</a>
-                            </Link>
-                    </h2>
-                    {/* <div className="rating-result" title="90%">
+            </div>
+            <div className="product-content-wrap">
+              <div className="product-category">
+                <Link href="/products">
+                  <a>{product.googleItemCondition}</a>
+                </Link>
+              </div>
+              <h2>
+                <Link
+                  // href="/products/[slug]" as={`/products/${product.slug}`}
+                  href={{
+                    pathname: "/products/[id]",
+                    query: {
+                      id: product.id,
+                    },
+                  }}
+                >
+                  <a>{product.name}</a>
+                </Link>
+              </h2>
+              {/* <div className="rating-result" title="90%">
                         <span>
                             <span>{product.ratingScore}%</span>
                         </span>
