@@ -17,12 +17,12 @@ const Header = ({
 
   useEffect(() => {
     (async () => {
-      document.addEventListener("scroll", () => {
-        const scrollCheck = window.scrollY >= 100;
-        if (scrollCheck !== scroll) {
-          setScroll(scrollCheck);
-        }
-      });
+      //   document.addEventListener("scroll", () => {
+      //     const scrollCheck = window.scrollY >= 100;
+      //     if (scrollCheck !== scroll) {
+      //       setScroll(scrollCheck);
+      //     }
+      //   });
       const categorias = await ecwid.getCategories();
       setCategories(categorias.items);
     })();
@@ -174,7 +174,11 @@ const Header = ({
               <div className="logo logo-width-1">
                 <Link href="/">
                   <a>
-                    <img src="/assets/imgs/theme/logo.svg" alt="logo"  min-width= "185px" />
+                    <img
+                      src="/assets/imgs/theme/logo.svg"
+                      alt="logo"
+                      min-width="185px"
+                    />
                   </a>
                 </Link>
               </div>
