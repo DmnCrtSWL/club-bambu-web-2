@@ -28,7 +28,6 @@ const Products = ({ products, productFilters, fetchProduct }) => {
   //   let [currentPage, setCurrentPage] = useState(1);
   const [categorias, setCategorias] = useState([]);
   const [productos, setProductos] = useState([]);
-  //   console.log(search);
 
   useEffect(() => {
     (async () => {
@@ -38,7 +37,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
       setCategorias(categorias.items);
       const busqueda = await ecwid.searchProducts();
       const filtro = busqueda.items;
-      if (item) {
+      if (item && search) {
         const currentProducts = filtro.filter((product) => {
           if (
             product.name.toString().toLowerCase().includes(item.toLowerCase())
@@ -233,7 +232,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                   <div className="totall-product">
                     <p>
                       Hemos encontrado
-                      <strong className="text-brand">{size(productos)}</strong>
+                      <strong className="text-brand">{size(search)}</strong>
                       productos para ti!
                     </p>
                   </div>
@@ -250,17 +249,17 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                   </div> */}
                 </div>
                 <div className="row product-grid-3">
-                  {size(productos) === 0 && (
+                  {size(search) === 0 && (
                     <h3>No se han encontrado productos para {item} </h3>
                   )}
-                  {size(productos) > 0 && (
+                  {size(search) > 0 && (
                     <>
-                      {productos.map((item, i) => (
+                      {productos.map((l, i) => (
                         <div
                           className="col-lg-4 col-md-4 col-12 col-sm-6"
                           key={i}
                         >
-                          <SingleProduct product={item} />
+                          <SingleProduct product={l} />
                           {/* <SingleProductList product={item} /> */}
                         </div>
                       ))}
