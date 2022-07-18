@@ -56,10 +56,18 @@ function infoComensal() {
       // console.log("Todo correcto");
       router.push({
         pathname: "/pago/infoProductos",
-        //  query: {
-        //    search: busqueda,
-        //    item: searchTerm,
-        //  },
+        query: {
+          methodPayCash,
+          methodPayCard,
+          name,
+          email,
+          phone,
+          coupon,
+          date,
+          hour,
+          adress,
+          comments,
+        },
       });
     }
   };
@@ -107,7 +115,7 @@ function infoComensal() {
                       onChange={(e) => {
                         if (methodPayCash) {
                           setMethodPayCash(false);
-                          setMethodPayCard(false);
+                          setMethodPayCard(true);
                         } else {
                           setMethodPayCash(true);
                           setMethodPayCard(false);
@@ -124,7 +132,7 @@ function infoComensal() {
                       name="methodPayCard"
                       onChange={(e) => {
                         if (methodPayCard) {
-                          setMethodPayCash(false);
+                          setMethodPayCash(true);
                           setMethodPayCard(false);
                         } else {
                           setMethodPayCash(false);
@@ -193,18 +201,9 @@ function infoComensal() {
                   ></textarea>
                 </form>
                 <div className="cart-action text-end">
-                  <Link
-                    href={{
-                      pathname: `/pago/${path}`,
-                      //   query: {
-                      //     id: l.id,
-                      //   },
-                    }}
-                  >
-                    <a className="btn " onClick={() => sendForm()}>
-                      Continuar
-                    </a>
-                  </Link>
+                  <a className="btn " onClick={() => sendForm()}>
+                    Realizar compra
+                  </a>
                 </div>
               </MuiPickersUtilsProvider>
             </div>

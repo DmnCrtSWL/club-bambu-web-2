@@ -10,6 +10,7 @@ import {
   openCart,
 } from "../../redux/action/cart";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const Cart = ({
   openCart,
@@ -21,6 +22,20 @@ const Cart = ({
   deleteFromCart,
   clearCart,
 }) => {
+  const router = useRouter();
+  const {
+    methodPayCash,
+    methodPayCard,
+    name,
+    email,
+    phone,
+    coupon,
+    date,
+    hour,
+    adress,
+    comments,
+    totalPay,
+  } = router.query;
   const [total, setTotal] = useState(0);
   const price = () => {
     let price = 0;
@@ -36,12 +51,50 @@ const Cart = ({
 
   return (
     <>
-      <Layout parent="Home" sub="Shop" subChild="Cart">
+      <Layout parent="Inicio" sub="Mis pedidos" subChild="Detalles">
         <section className="mt-50 mb-50">
           <div className="container">
             <div>
               <h1>Resumen de tu Pedido</h1>
             </div>
+            <div className="border p-3 rounded mt-5">
+              <div className="text-lg font-semibold">Información personal</div>
+              <div>
+                <div>Nombre: {name}</div>
+                <div>Correo electrónico: {email}</div>
+                <div>Numero de celular: {phone}</div>
+              </div>
+            </div>
+            <div className="border p-3 rounded mt-10">
+              <div className="text-lg font-semibold">Información de pago</div>
+              {methodPayCash === "true" ? (
+                <div>Método de pago: Efectivo</div>
+              ) : (
+                <div>Método de pago: Tarjeta</div>
+              )}
+              <div>Monto total: ${total.toFixed(2)}</div>
+              {methodPayCard === "true" && (
+                <div>Tarjeta: xxxx xxxx xxxx xxxx</div>
+              )}
+            </div>
+            <div className="border p-3 rounded mt-10">
+              <div className="text-lg font-semibold">
+                Información de entrega
+              </div>
+              <div>
+                <div>Dirección: {adress}</div>
+              </div>
+            </div>
+            <div className="border p-3 rounded mt-10">
+              <div className="text-lg font-semibold">
+                Comentarios de mi pedido
+              </div>
+              <div>
+                <div>{comments ? comments : "Sin comentarios"}</div>
+              </div>
+            </div>
+
+            <div className="text-lg font-semibold mt-7 mb-5">Mis productos</div>
             <div className="row">
               <div className="col-12">
                 <div className="table-responsive">
@@ -96,28 +149,28 @@ const Cart = ({
                           </td>
                         </tr>
                       ))}
-                      <tr>
+                      {/* <tr>
                         <td colSpan="6" className="text-end">
                           <a onClick={clearCart} className="text-muted">
                             <h3>Total: ${total}</h3>
                           </a>
                         </td>
-                      </tr>
+                      </tr> */}
                     </tbody>
                   </table>
                 </div>
-                <div className="cart-action text-end">
+                {/* <div className="cart-action text-end">
                   <Link
                     href={{
                       pathname: "/pago/infoComensal",
                     }}
                   >
                     <a className="btn ">
-                      {/* <i className="fi-rs-shopping-bag mr-10"></i> */}
+                      <i className="fi-rs-shopping-bag mr-10"></i>
                       Finalizar compra
                     </a>
                   </Link>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
