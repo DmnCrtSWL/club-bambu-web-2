@@ -15,9 +15,18 @@ import { isEmpty, size } from "lodash";
 import { toast } from "react-toastify";
 import { validateEmail } from "../../util/validations";
 import Autocomplete from "react-google-autocomplete";
+<<<<<<< HEAD
 import InfoPay from "../../components/pago/InfoPay";
 import ecwid from "../../util/ecwid";
 
+=======
+import { loadStripe } from "@stripe/stripe-js";
+import {
+  Elements,
+  ElementsConsumer,
+  CardElement,
+} from "@stripe/react-stripe-js";
+>>>>>>> 08255ab819290d0bbbbba9bec1ad07308f9e7194
 function infoComensal() {
   const router = useRouter();
   const [name, setName] = UseLocalStorage("text", "");
@@ -31,7 +40,8 @@ function infoComensal() {
   const [adress, setAdress] = UseLocalStorage("adress", "");
   const [comments, setComments] = UseLocalStorage("comments", "");
 
-  console.log(hour);
+  const stripePromise = loadStripe("<pulishable_api_key>");
+
   const sendForm = () => {
     if (isEmpty(name)) {
       toast.error("Ingresa tu nombre");
@@ -131,6 +141,7 @@ function infoComensal() {
           adress,
           comments,
         },
+<<<<<<< HEAD
       });*/
     }
   };
@@ -157,6 +168,13 @@ function infoComensal() {
     return date;
   }
 
+=======
+      });
+      // ... SEND to your API server to process payment intent
+    }
+  };
+
+>>>>>>> 08255ab819290d0bbbbba9bec1ad07308f9e7194
   return (
     <>
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSfb3q43wvrhTk9tbipj9KkrcVcjxW3ro&libraries=places"></script>
@@ -233,7 +251,9 @@ function infoComensal() {
                       <h4 className="font-normal mb-5 my-4">
                         Informacion de pago
                       </h4>
-                      <InfoPay />
+                      <Elements stripe={stripePromise}>
+                        <CardElement />
+                      </Elements>
                     </>
                   )}
                   <h4 className="font-normal mb-5 my-4">Cupón de descuento</h4>
@@ -248,7 +268,7 @@ function infoComensal() {
                   <ThemeProvider theme={materialTheme}>
                     <DatePicker
                       value={date ? date : new Date()}
-                      onChange={(e) => setDate(e)}
+                      onChange={(e) => setDate(e.toString())}
                       name="date"
                       inputVariant="outlined"
                       minDate={new Date()}
@@ -258,7 +278,7 @@ function infoComensal() {
                   <ThemeProvider theme={materialTheme}>
                     <TimePicker
                       value={hour ? hour : roundMinutes(new Date())}
-                      onChange={(e) => setHour(e)}
+                      onChange={(e) => setHour(e.toString())}
                       name="date"
                       inputVariant="outlined"
                       minutesStep={30}

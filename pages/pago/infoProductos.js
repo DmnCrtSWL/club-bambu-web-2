@@ -29,9 +29,24 @@ const Cart = ({
     hour,
     adress,
     comments,
-    totalPay,
   } = router.query;
   const [total, setTotal] = useState(0);
+  console.log("*******");
+  console.log(date);
+  console.log("*******");
+
+  console.log(hour);
+  console.log("*******");
+
+  const horaOrden = new Date(hour);
+  const hora = horaOrden.getHours();
+  const minutos = horaOrden.getMinutes();
+
+  const fechaOrden = new Date(date);
+  const dia = fechaOrden.getDate();
+  const mes = fechaOrden.getMonth() + 1;
+  const año = fechaOrden.getFullYear();
+
   const price = () => {
     let price = 0;
     cartItems.forEach((item) => (price += item.price * item.quantity));
@@ -78,6 +93,12 @@ const Cart = ({
               </div>
               <div>
                 <div>Dirección: {adress}</div>
+                <div>
+                  Día: {dia} / {mes} / {año}
+                </div>
+                <div>
+                  Hora: {hora}:{minutos}
+                </div>
               </div>
             </div>
             <div className="border p-3 rounded mt-10">
