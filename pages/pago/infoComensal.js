@@ -15,8 +15,12 @@ import { isEmpty, size } from "lodash";
 import { toast } from "react-toastify";
 import { validateEmail } from "../../util/validations";
 import Autocomplete from "react-google-autocomplete";
-import InfoPay from "../../components/pago/InfoPay";
-
+import { loadStripe } from "@stripe/stripe-js";
+import {
+  Elements,
+  ElementsConsumer,
+  CardElement,
+} from "@stripe/react-stripe-js";
 function infoComensal() {
   const router = useRouter();
   const [name, setName] = UseLocalStorage("text", "");
@@ -30,7 +34,8 @@ function infoComensal() {
   const [adress, setAdress] = UseLocalStorage("adress", "");
   const [comments, setComments] = UseLocalStorage("comments", "");
 
-  console.log(hour);
+  const stripePromise = loadStripe("<pulishable_api_key>");
+
   const sendForm = () => {
     if (isEmpty(name)) {
       toast.error("Ingresa tu nombre");
@@ -49,6 +54,48 @@ function infoComensal() {
     } else if (!/^[0-9]+$/.test(phone)) {
       toast.error("Ingresa un celular valido");
     } else {
+      if (methodPayCard === true) {
+        handleSubmit();
+      } else {
+        router.push({
+          pathname: "/pago/infoProductos",
+          query: {
+            methodPayCash,
+            methodPayCard,
+            name,
+            email,
+            phone,
+            coupon,
+            date,
+            hour,
+            adress,
+            comments,
+          },
+        });
+      }
+    }
+  };
+
+  function roundMinutes(date) {
+    date.setHours(date.getHours() + Math.round(date.getMinutes() / 60));
+    date.setMinutes(0);
+
+    return date;
+  }
+
+  const handleSubmit = (stripe, elements) => async () => {
+    const cardElement = elements.getElement(CardElement);
+
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: cardElement,
+    });
+
+    if (error) {
+      toast.error("Error en la compra");
+      console.log("[error]", error);
+    } else {
+      console.log("[PaymentMethod]", paymentMethod);
       router.push({
         pathname: "/pago/infoProductos",
         query: {
@@ -64,15 +111,9 @@ function infoComensal() {
           comments,
         },
       });
+      // ... SEND to your API server to process payment intent
     }
   };
-
-  function roundMinutes(date) {
-    date.setHours(date.getHours() + Math.round(date.getMinutes() / 60));
-    date.setMinutes(0);
-
-    return date;
-  }
 
   return (
     <>
@@ -150,7 +191,9 @@ function infoComensal() {
                       <h4 className="font-normal mb-5 my-4">
                         Informacion de pago
                       </h4>
-                      <InfoPay />
+                      <Elements stripe={stripePromise}>
+                        <CardElement />
+                      </Elements>
                     </>
                   )}
                   <h4 className="font-normal mb-5 my-4">Cupón de descuento</h4>
@@ -165,7 +208,7 @@ function infoComensal() {
                   <ThemeProvider theme={materialTheme}>
                     <DatePicker
                       value={date ? date : new Date()}
-                      onChange={(e) => setDate(e)}
+                      onChange={(e) => setDate(e.toString())}
                       name="date"
                       inputVariant="outlined"
                       minDate={new Date()}
@@ -175,7 +218,7 @@ function infoComensal() {
                   <ThemeProvider theme={materialTheme}>
                     <TimePicker
                       value={hour ? hour : roundMinutes(new Date())}
-                      onChange={(e) => setHour(e)}
+                      onChange={(e) => setHour(e.toString())}
                       name="date"
                       inputVariant="outlined"
                       minutesStep={30}
