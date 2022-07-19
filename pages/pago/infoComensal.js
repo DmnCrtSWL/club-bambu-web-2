@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Layout from "../../components/layout/Layout";
 import {
@@ -15,19 +15,18 @@ import { isEmpty, size } from "lodash";
 import { toast } from "react-toastify";
 import { validateEmail } from "../../util/validations";
 import Autocomplete from "react-google-autocomplete";
-<<<<<<< HEAD
 import InfoPay from "../../components/pago/InfoPay";
 import ecwid from "../../util/ecwid";
-
-=======
-import { loadStripe } from "@stripe/stripe-js";
 import {
-  Elements,
-  ElementsConsumer,
-  CardElement,
-} from "@stripe/react-stripe-js";
->>>>>>> 08255ab819290d0bbbbba9bec1ad07308f9e7194
-function infoComensal() {
+  clearCart,
+  closeCart,
+  decreaseQuantity,
+  deleteFromCart,
+  increaseQuantity,
+  openCart,
+} from "../../redux/action/cart";
+
+function infoComensal(cartItems) {
   const router = useRouter();
   const [name, setName] = UseLocalStorage("text", "");
   const [email, setEmail] = UseLocalStorage("email", "");
@@ -39,9 +38,13 @@ function infoComensal() {
   const [hour, setHour] = UseLocalStorage("hour", "");
   const [adress, setAdress] = UseLocalStorage("adress", "");
   const [comments, setComments] = UseLocalStorage("comments", "");
-
   const stripePromise = loadStripe("<pulishable_api_key>");
 
+  useEffect(()=>{
+    cartItems.map((item, i) => (
+      console.group(item)
+    ))
+  },[])
   const sendForm = () => {
     if (isEmpty(name)) {
       toast.error("Ingresa tu nombre");
@@ -141,7 +144,6 @@ function infoComensal() {
           adress,
           comments,
         },
-<<<<<<< HEAD
       });*/
     }
   };
@@ -168,13 +170,6 @@ function infoComensal() {
     return date;
   }
 
-=======
-      });
-      // ... SEND to your API server to process payment intent
-    }
-  };
-
->>>>>>> 08255ab819290d0bbbbba9bec1ad07308f9e7194
   return (
     <>
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSfb3q43wvrhTk9tbipj9KkrcVcjxW3ro&libraries=places"></script>
