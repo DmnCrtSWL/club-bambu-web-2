@@ -9,6 +9,7 @@ import {
   increaseQuantity,
   openCart,
 } from "../redux/action/cart";
+import { MdError } from "react-icons/md";
 
 const Cart = ({
   openCart,
@@ -19,6 +20,7 @@ const Cart = ({
   decreaseQuantity,
   deleteFromCart,
   clearCart,
+  totalCartItems,
 }) => {
   const price = () => {
     let price = 0;
@@ -29,13 +31,20 @@ const Cart = ({
 
   return (
     <>
-      <Layout parent="Home" sub="Shop" subChild="Cart">
+      <Layout parent="Inicio" sub="Carrito" subChild="Detalles">
         <section className="mt-50 mb-50">
           <div className="container">
             <div className="row">
               <div className="col-12">
                 <div className="table-responsive">
-                  {cartItems.length <= 0 && "No Products"}
+                  {cartItems.length <= 0 && (
+                    <div className=" h-20 rounded-xl justify-center flex flex-col items-center p-1">
+                      <MdError size={40} className="mb-5" />
+                      <h4 className="text-center text-xs">
+                        Tu carrito esta vacio
+                      </h4>
+                    </div>
+                  )}
                   <table
                     className={
                       cartItems.length > 0
@@ -118,21 +127,21 @@ const Cart = ({
                     </tbody>
                   </table>
                 </div>
-                <div className="cart-action text-end">
-                  <Link
-                    href={{
-                      pathname: "/pago/infoComensal",
-                      //   query: {
-                      //     id: l.id,
-                      //   },
-                    }}
-                  >
-                    <a className="btn ">
-                      {/* <i className="fi-rs-shopping-bag mr-10"></i> */}
-                      Continuar
-                    </a>
-                  </Link>
-                </div>
+                {totalCartItems > 0 && (
+                  <div className="cart-action text-end">
+                    <Link
+                      href={{
+                        pathname: "/pago/infoComensal",
+                        //   query: {
+                        //     id: l.id,
+                        //   },
+                      }}
+                    >
+                      <a className="btn ">Continuar</a>
+                    </Link>
+                  </div>
+                )}
+
                 {/* <div className="divider center_icon mt-50 mb-50">
                   <i className="fi-rs-fingerprint"></i>
                 </div> */}
@@ -510,6 +519,7 @@ const Cart = ({
 const mapStateToProps = (state) => ({
   cartItems: state.cart,
   activeCart: state.counter,
+  totalCartItems: state.cart.length,
 });
 
 const mapDispatchToProps = {

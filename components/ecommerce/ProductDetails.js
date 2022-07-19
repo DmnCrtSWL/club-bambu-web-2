@@ -15,6 +15,7 @@ import { size } from "lodash";
 import ThumbSlider from "../sliders/Thumb";
 import ecwid from "../../util/ecwid";
 import { useRouter } from "next/router";
+import ButtonBottom from "../../components/elements/ButtonBottom";
 
 const ProductDetails = ({
   cartItems,
@@ -358,6 +359,7 @@ const ProductDetails = ({
           </div>
         </div>
       </section>
+      <ButtonBottom />
     </>
   );
 };
