@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
-import ecwid from "../../util/ecwid";
 import Layout from "../../components/layout/Layout";
-import { CardElement, Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 import {
   MuiPickersUtilsProvider,
   DatePicker,
@@ -19,6 +15,7 @@ import { isEmpty, size } from "lodash";
 import { toast } from "react-toastify";
 import { validateEmail } from "../../util/validations";
 import Autocomplete from "react-google-autocomplete";
+import InfoPay from "../../components/pago/InfoPay";
 
 function infoComensal() {
   const router = useRouter();
@@ -32,18 +29,13 @@ function infoComensal() {
   const [hour, setHour] = UseLocalStorage("hour", "");
   const [adress, setAdress] = UseLocalStorage("adress", "");
   const [comments, setComments] = UseLocalStorage("comments", "");
-  const [path, setpath] = useState("infoComensal");
-  // const stripePromise = loadStripe();
 
+  console.log(hour);
   const sendForm = () => {
     if (isEmpty(name)) {
       toast.error("Ingresa tu nombre");
     } else if (isEmpty(email)) {
       toast.error("Ingresa tu correo electrónico");
-    } else if (isEmpty(hour)) {
-      toast.error("Ingresa hora de entrega");
-    } else if (isEmpty(date)) {
-      toast.error("Ingresa fecha de entrega");
     } else if (isEmpty(phone)) {
       toast.error("Ingresa tu celular");
     } else if (isEmpty(adress)) {
@@ -165,13 +157,9 @@ function infoComensal() {
                       <h4 className="font-normal mb-5 my-4">
                         Informacion de pago
                       </h4>
-                      <input className="w-full"></input>
+                      <InfoPay />
                     </>
                   )}
-                  {/* <Elements>
-                    <CardElement />
-                  </Elements> */}
-
                   <h4 className="font-normal mb-5 my-4">Cupón de descuento</h4>
                   <input
                     className="w-full"
@@ -203,12 +191,6 @@ function infoComensal() {
                   <h4 className="font-normal mb-5 my-4">
                     Dirección de entrega
                   </h4>
-                  {/* <textarea
-                    className="w-full"
-                    onChange={(e) => setAdress(e.target.value)}
-                    name="adress"
-                    value={adress}
-                  ></textarea> */}
                   <Autocomplete
                     apiKey={"AIzaSyCSfb3q43wvrhTk9tbipj9KkrcVcjxW3ro"}
                     onPlaceSelected={(place) => {
