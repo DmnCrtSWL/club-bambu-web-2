@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Layout from "../../components/layout/Layout";
 import {
@@ -15,18 +15,13 @@ import { isEmpty, size } from "lodash";
 import { toast } from "react-toastify";
 import { validateEmail } from "../../util/validations";
 import Autocomplete from "react-google-autocomplete";
-import InfoPay from "../../components/pago/InfoPay";
-import ecwid from "../../util/ecwid";
+import { loadStripe } from "@stripe/stripe-js";
 import {
-  clearCart,
-  closeCart,
-  decreaseQuantity,
-  deleteFromCart,
-  increaseQuantity,
-  openCart,
-} from "../../redux/action/cart";
-
-function infoComensal(cartItems) {
+  Elements,
+  ElementsConsumer,
+  CardElement,
+} from "@stripe/react-stripe-js";
+function infoComensal() {
   const router = useRouter();
   const [name, setName] = UseLocalStorage("text", "");
   const [email, setEmail] = UseLocalStorage("email", "");
@@ -38,13 +33,9 @@ function infoComensal(cartItems) {
   const [hour, setHour] = UseLocalStorage("hour", "");
   const [adress, setAdress] = UseLocalStorage("adress", "");
   const [comments, setComments] = UseLocalStorage("comments", "");
+
   const stripePromise = loadStripe("<pulishable_api_key>");
 
-  useEffect(()=>{
-    cartItems.map((item, i) => (
-      console.group(item)
-    ))
-  },[])
   const sendForm = () => {
     if (isEmpty(name)) {
       toast.error("Ingresa tu nombre");
@@ -63,74 +54,119 @@ function infoComensal(cartItems) {
     } else if (!/^[0-9]+$/.test(phone)) {
       toast.error("Ingresa un celular valido");
     } else {
-      // setpath("infoProductos");
-      // console.log("Todo correcto");
-
-      //1. Mandar pago a Stripe
-      //2. Una vez confirmado el pago en Stripe obtenemos la respuesta y procesamos a Ecwid
-
-      const data =
-      {
-        order:  
-        { 
-          refundedAmount: 0,
-          subtotal: 100,
-          subtotalWithoutTax: 0,
-          total: 100,
-          totalWithoutTax: 0,
-          giftCardRedemption: 0,
-          totalBeforeGiftCardRedemption: 0,
-          giftCardDoubleSpending: false,
-          tax: 0,
-          couponDiscount: 0,
-          paymentStatus: 'PAID',
-          fulfillmentStatus: 'AWAITING_PROCESSING',
-          shippingPerson:
-          {
-            name: 'Irving PRUEBA',
-            city: 'Ciudad de México',
-            countryCode: 'MX',
-            street: 'Ballet, Lomas Studio, Plazo Carso, Planta Baja, Local A-19 y R-11',
-            phone: '+524435792767' 
-          },
-          billingPerson:
-          {
-            name: 'Irving PRUEBA',
-            city: 'Ciudad de México',
-            countryCode: 'MX',
-            street: 'Ballet, Ballet, Lomas Studio, Plazo Carso, Planta Baja, Local A-19 y R-11',
-            phone: '+524435792767' 
-          },
-          isTypeForm: true,
-          items:
-          [ 
-            { 
-              productId: 462402410,
-              categoryId: 132447116,
-              sku: '00153',
-              quantity: 1,
-              name: 'Espresso ($30)',
-              selectedOptions: [] 
+      if (methodPayCard === true) {
+        handleSubmit();
+      } else {
+        const data = {
+          order: {
+            refundedAmount: 0,
+            subtotal: 100,
+            subtotalWithoutTax: 0,
+            total: 100,
+            totalWithoutTax: 0,
+            giftCardRedemption: 0,
+            totalBeforeGiftCardRedemption: 0,
+            giftCardDoubleSpending: false,
+            tax: 0,
+            couponDiscount: 0,
+            paymentStatus: "PAID",
+            fulfillmentStatus: "AWAITING_PROCESSING",
+            shippingPerson: {
+              name: "Irving PRUEBA",
+              city: "Ciudad de México",
+              countryCode: "MX",
+              street:
+                "Ballet, Lomas Studio, Plazo Carso, Planta Baja, Local A-19 y R-11",
+              phone: "+524435792767",
             },
-            {
-              productId: 473539368,
-              categoryId: 134053034,
-              sku: '00264',
-              quantity: 1,
-              name: 'Sandwich',
-              selectedOptions: []
-            }
-          ],
-          email: 'irving-mc@outlook.com',
-          pickupTime: '2022-07-19 18:00:00+00:00' 
-        }
+            billingPerson: {
+              name: "Irving PRUEBA",
+              city: "Ciudad de México",
+              countryCode: "MX",
+              street:
+                "Ballet, Ballet, Lomas Studio, Plazo Carso, Planta Baja, Local A-19 y R-11",
+              phone: "+524435792767",
+            },
+            isTypeForm: true,
+            items: [
+              {
+                productId: 462402410,
+                categoryId: 132447116,
+                sku: "00153",
+                quantity: 1,
+                name: "Espresso ($30)",
+                selectedOptions: [],
+              },
+              {
+                productId: 473539368,
+                categoryId: 134053034,
+                sku: "00264",
+                quantity: 1,
+                name: "Sandwich",
+                selectedOptions: [],
+              },
+            ],
+            email: "irving-mc@outlook.com",
+            pickupTime: "2022-07-19 18:00:00+00:00",
+          },
+        };
+        registrarEcwid(data);
+        //3. Mandamos a la pagina detalle de pedido
+        router.push({
+          pathname: "/pago/infoProductos",
+          query: {
+            methodPayCash,
+            methodPayCard,
+            name,
+            email,
+            phone,
+            coupon,
+            date,
+            hour,
+            adress,
+            comments,
+          },
+        });
       }
+    }
+  };
 
-      registrarEcwid(data)
+  const registrarEcwid = async (data) => {
+    console.log("Entrando a Edwid");
+    console.log("data:");
+    console.log(data);
+    try {
+      const resp = await ecwid.addOrder(data);
+      console.log("Exito");
+      console.log(resp.data);
+    } catch (error) {
+      console.log(error);
+    }
+    console.log("Saliendo de Edwid");
+    return;
+  };
 
-      
-            //3. Mandamos a la pagina detalle de pedido
-      /*router.push({
+  function roundMinutes(date) {
+    date.setHours(date.getHours() + Math.round(date.getMinutes() / 60));
+    date.setMinutes(0);
+
+    return date;
+  }
+
+  const handleSubmit = (stripe, elements) => async () => {
+    const cardElement = elements.getElement(CardElement);
+
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: cardElement,
+    });
+
+    if (error) {
+      toast.error("Error en la compra");
+      console.log("[error]", error);
+    } else {
+      console.log("[PaymentMethod]", paymentMethod);
+      router.push({
         pathname: "/pago/infoProductos",
         query: {
           methodPayCash,
@@ -144,31 +180,10 @@ function infoComensal(cartItems) {
           adress,
           comments,
         },
-      });*/
+      });
+      // ... SEND to your API server to process payment intent
     }
   };
-
-  const registrarEcwid=async(data)=>{
-    console.log('Entrando a Edwid')
-    console.log("data:")
-    console.log(data)
-    try{
-      const resp = await ecwid.addOrder(data)
-      console.log("Exito")
-      console.log(resp.data)
-    }catch(error){
-      console.log(error)
-    }
-    console.log('Saliendo de Edwid')
-    return
-  }
-
-  function roundMinutes(date) {
-    date.setHours(date.getHours() + Math.round(date.getMinutes() / 60));
-    date.setMinutes(0);
-
-    return date;
-  }
 
   return (
     <>
