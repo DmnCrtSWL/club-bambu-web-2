@@ -145,6 +145,10 @@ const cleanGallery = (productId) => {
   return exec(PATH.products + "/" + productId + "/gallery", METHOD.DELETE);
 };
 
+const addOrder = (data) => {
+  return exec(PATH.orders, METHOD.POST, data);
+};
+
 const searchOrders = (options) => {
   return exec(PATH.orders, METHOD.GET, options);
 };
@@ -239,6 +243,7 @@ export default {
   deleteCategory,
   updateCategory,
 
+  addOrder,
   searchOrders,
   getOrderDetails,
   updateOrder,

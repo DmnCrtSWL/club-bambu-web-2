@@ -12,13 +12,7 @@ import {
 import { useEffect, useState } from "react";
 
 const Cart = ({
-  openCart,
   cartItems,
-  activeCart,
-  closeCart,
-  increaseQuantity,
-  decreaseQuantity,
-  deleteFromCart,
   clearCart,
 }) => {
   const [total, setTotal] = useState(0);
@@ -34,6 +28,10 @@ const Cart = ({
     console.log("ok");
   }, [cartItems]);
 
+  const SetPedido=()=>{
+
+  }
+  
   return (
     <>
       <Layout parent="Home" sub="Shop" subChild="Cart">
