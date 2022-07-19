@@ -211,7 +211,7 @@ function infoComensal() {
                     }}
                     defaultValue={adress}
                     language="es"
-                    placeholder="Bucar ubicación"
+                    placeholder="Buscar ubicación"
                     options={{
                       types: "address",
                       componentRestrictions: { country: "mx" },
