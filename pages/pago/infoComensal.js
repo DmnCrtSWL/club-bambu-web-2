@@ -59,7 +59,12 @@ function infoComensal() {
     } else {
       // setpath("infoProductos");
       // console.log("Todo correcto");
-      router.push({
+
+      //1. Mandar pago a Stripe
+      //2. Una vez confirmado el pago en Stripe obtenemos la respuesta y procesamos a Ecwid
+
+      //3. Mandamos a la pagina detalle de pedido
+      /*router.push({
         pathname: "/pago/infoProductos",
         query: {
           methodPayCash,
@@ -73,7 +78,7 @@ function infoComensal() {
           adress,
           comments,
         },
-      });
+      });*/
     }
   };
 

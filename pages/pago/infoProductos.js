@@ -12,6 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
+//Cambiar Cart por titulo infoProductos
 const Cart = ({
   cartItems,
   clearCart,
@@ -42,10 +43,6 @@ const Cart = ({
     cartItems.map((item, i) => setTotal(total + item.price * item.quantity));
     console.log("ok");
   }, [cartItems]);
-
-  const SetPedido=()=>{
-
-  }
   
   return (
     <>
