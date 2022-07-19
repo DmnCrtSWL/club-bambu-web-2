@@ -18,6 +18,7 @@ import { UseLocalStorage } from "../../components/pago/UseLocalStorage";
 import { isEmpty, size } from "lodash";
 import { toast } from "react-toastify";
 import { validateEmail } from "../../util/validations";
+import Autocomplete from "react-google-autocomplete";
 
 function infoComensal() {
   const router = useRouter();
@@ -39,6 +40,10 @@ function infoComensal() {
       toast.error("Ingresa tu nombre");
     } else if (isEmpty(email)) {
       toast.error("Ingresa tu correo electrónico");
+    } else if (isEmpty(hour)) {
+      toast.error("Ingresa hora de entrega");
+    } else if (isEmpty(date)) {
+      toast.error("Ingresa fecha de entrega");
     } else if (isEmpty(phone)) {
       toast.error("Ingresa tu celular");
     } else if (isEmpty(adress)) {
@@ -72,8 +77,16 @@ function infoComensal() {
     }
   };
 
+  function roundMinutes(date) {
+    date.setHours(date.getHours() + Math.round(date.getMinutes() / 60));
+    date.setMinutes(0);
+
+    return date;
+  }
+
   return (
     <>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSfb3q43wvrhTk9tbipj9KkrcVcjxW3ro&libraries=places"></script>
       <Layout noBreadcrumb="d-none" headerStyle="header-style-1">
         <section className="product-tabs section-padding position-relative wow fadeIn animated">
           <div className="container">
@@ -89,7 +102,6 @@ function infoComensal() {
                     type="text"
                     value={name}
                   ></input>
-
                   <h4 className="font-normal mb-5 my-4">Correo electrónico</h4>
                   <input
                     className="w-full"
@@ -151,7 +163,7 @@ function infoComensal() {
                       <input className="w-full"></input>
                     </>
                   )}
-                  {/* <Elements stripe={stripePromise}>
+                  {/* <Elements>
                     <CardElement />
                   </Elements> */}
 
@@ -176,7 +188,7 @@ function infoComensal() {
                   <h4 className="font-normal mb-6 my-4">Hora de entrega</h4>
                   <ThemeProvider theme={materialTheme}>
                     <TimePicker
-                      value={hour ? hour : new Date()}
+                      value={hour ? hour : roundMinutes(new Date())}
                       onChange={(e) => setHour(e)}
                       name="date"
                       inputVariant="outlined"
@@ -186,12 +198,25 @@ function infoComensal() {
                   <h4 className="font-normal mb-5 my-4">
                     Dirección de entrega
                   </h4>
-                  <textarea
+                  {/* <textarea
                     className="w-full"
                     onChange={(e) => setAdress(e.target.value)}
                     name="adress"
                     value={adress}
-                  ></textarea>
+                  ></textarea> */}
+                  <Autocomplete
+                    apiKey={"AIzaSyCSfb3q43wvrhTk9tbipj9KkrcVcjxW3ro"}
+                    onPlaceSelected={(place) => {
+                      setAdress(place.formatted_address);
+                    }}
+                    defaultValue={adress}
+                    language="es"
+                    placeholder="Bucar ubicación"
+                    options={{
+                      types: "address",
+                      componentRestrictions: { country: "mx" },
+                    }}
+                  />
                   <h4 className="font-normal mb-5 my-4">Comentarios extras</h4>
                   <textarea
                     className="w-full"

@@ -21,7 +21,7 @@ const ButtonBottom = ({ totalCartItems }) => {
 
   return (
     <>
-      {totalCartItems && (
+      {totalCartItems > 0 && (
         <div
           className="cart-action text-center d-grid gap-2"
           style={{

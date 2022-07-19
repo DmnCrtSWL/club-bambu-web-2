@@ -151,9 +151,9 @@ export default function Home() {
           </div>
   </section>*/}
 
-        
         <QuickView />
       </Layout>
+      <ButtonBottom />
     </>
   );
 }

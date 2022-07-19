@@ -37,7 +37,7 @@ const Layout = ({
       {isToggled && (
         <div className="body-overlay-1" onClick={toggleClick}></div>
       )}
-  
+
       <Header
         headerStyle={headerStyle}
         isToggled={isToggled}
@@ -53,9 +53,10 @@ const Layout = ({
         />
         {children}
       </main>
-     
-      <Footer />
-      <ButtonBottom />
+
+      {/* <Footer /> */}
+      <div className="mb-8 "></div>
+      {/* <ButtonBottom /> */}
     </>
   );
 };
