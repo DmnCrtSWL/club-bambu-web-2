@@ -72,9 +72,10 @@ const Cart = ({
 
                           <td className="product-des product-name">
                             <h5 className="product-name">
-                              <Link href="/products">
+                              {/* <Link href="/products">
                                 <a>{item.name}</a>
-                              </Link>
+                              </Link> */}
+                              {item.name}
                             </h5>
                             {item.description && (
                               <p className="font-xs">
