@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import ecwid from "../../util/ecwid";
+import BeatLoader from "react-spinners/BeatLoader";
 
 function IconsCategory() {
   const router = useRouter();
@@ -68,7 +69,8 @@ function IconsCategory() {
         </>
       ) : (
         <div className="col-12">
-          <div className=" bg-slate-200 h-20 rounded-xl justify-center flex items-center p-1">
+          <div className=" h-20 rounded-xl justify-center flex flex-col items-center p-1">
+            <BeatLoader color={"#325454"} size={10} className="mb-10" />
             <h4 className="text-center text-xs">Cargando Categorías</h4>
           </div>
         </div>

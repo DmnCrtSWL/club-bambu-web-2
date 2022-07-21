@@ -23,14 +23,14 @@ const Intro1 = () => {
               <div className="row align-items-center slider-animated-1">
                 <div className="col-lg-5 col-md-6 col-sm-6">
                   <div className="hero-slider-content-2">
-                    <h4 className="animated">Trade-in offer</h4>
-                    <h2 className="animated fw-900">Supper value deals</h2>
+                    {/* <h4 className="animated">¿Sano y Delicioso?</h4> */}
+                    <h2 className="animated fw-900">¿Sano y Delicioso?</h2>
                     <h1 className="animated fw-900 text-brand">
-                      On all products
+                      Bienvenido a Bambú Lomas
                     </h1>
-                    <p className="animated">
+                    {/* <p className="animated">
                       Save more with coupons & up to 70% off
-                    </p>
+                    </p> */}
                     {/* <Link href="/products/shop-grid-right">
                                             <a className="animated btn btn-brush btn-brush-3">
                                                 Comprar Ahora
@@ -57,12 +57,16 @@ const Intro1 = () => {
               <div className="row align-items-center slider-animated-1">
                 <div className="col-lg-5 col-md-6 col-sm-6">
                   <div className="hero-slider-content-2">
-                    <h4 className="animated">Hot promotions</h4>
-                    <h2 className="animated fw-900">Fashion Trending</h2>
-                    <h1 className="animated fw-900 text-7">Great Collection</h1>
-                    <p className="animated">
+                    {/* <h4 className="animated">Bambú Lomas</h4> */}
+                    <h2 className="animated fw-900">
+                      Los nutrientes que tu cuerpo necesita.
+                    </h2>
+                    <h1 className="animated fw-900 text-orange-500">
+                      Directo a tu paladar
+                    </h1>
+                    {/* <p className="animated">
                       Save more with coupons & up to 20% off
-                    </p>
+                    </p> */}
                     {/* <Link href="/products/shop-grid-right">
                       <a className="animated btn btn-brush btn-brush-2">
                         Discover Now
@@ -89,12 +93,14 @@ const Intro1 = () => {
               <div className="row align-items-center slider-animated-1">
                 <div className="col-lg-5 col-md-6 col-sm-6">
                   <div className="hero-slider-content-2">
-                    <h4 className="animated">Upcoming Offer</h4>
-                    <h2 className="animated fw-900">Big Deals From</h2>
-                    <h1 className="animated fw-900 text-8">Manufacturer</h1>
-                    <p className="animated">
+                    {/* <h4 className="animated">Upcoming Offer</h4> */}
+                    {/* <h2 className="animated fw-900">Big Deals From</h2> */}
+                    <h1 className="animated fw-900 text-brand">
+                      Una cocina 100% Natural
+                    </h1>
+                    {/* <p className="animated">
                       Clothing, Shoes, Bags, Wallets...
-                    </p>
+                    </p> */}
                     {/* <Link href="/products/shop-grid-right">
                       <a className="animated btn btn-brush btn-brush-1">
                         Shop Now

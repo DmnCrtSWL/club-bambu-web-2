@@ -2,6 +2,7 @@ import SingleProduct from "../ecommerce/SingleProduct";
 import React, { useEffect, useState } from "react";
 import ecwid from "../../util/ecwid";
 import Link from "next/link";
+import BeatLoader from "react-spinners/BeatLoader";
 
 const FeaturedTab = () => {
   const [products, setProducts] = useState([]);
@@ -75,8 +76,9 @@ const FeaturedTab = () => {
         </>
       ) : (
         <div className="col-12">
-          <div className=" bg-slate-100 h-20 rounded-xl justify-center flex items-center p-1">
-            <h4 className="text-center text-xs">Cargando Productos Bambu</h4>
+          <div className=" h-20 rounded-xl justify-center flex flex-col items-center p-1">
+            <BeatLoader color={"#325454"} size={10} className="mb-10" />
+            <h4 className="text-center text-xs">Cargando Productos</h4>
           </div>
         </div>
       )}

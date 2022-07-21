@@ -1799,19 +1799,19 @@ label {
 }
 
 .hero-slider-1 .single-slider-img-1 .slider-1-1 {
-  position: absolute;
+  position: sticky;
   bottom: 30px;
   right: 0;
 }
 
 .hero-slider-1 .single-slider-img-1 .slider-1-2 {
-  position: absolute;
+  position: sticky;
   bottom: 20px;
   right: 0;
 }
 
 .hero-slider-1 .single-slider-img-1 .slider-1-3 {
-  position: absolute;
+  position: sticky;
   bottom: 30px;
   right: 0;
 }
