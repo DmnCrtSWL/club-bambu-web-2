@@ -25,7 +25,7 @@ function HeaderCategory() {
 
   return (
     <>
-      <div className="relative flex items-center mx-52 mt-10">
+      <div className="relative flex items-center mx-11 mt-10">
         <MdChevronLeft
           size={40}
           onClick={slideLeft}

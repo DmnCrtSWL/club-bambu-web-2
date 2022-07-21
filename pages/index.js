@@ -28,7 +28,7 @@ export default function Home() {
         <section className="home-slider position-relative">
           <HeaderCategory />
         </section>
-        <section className="home-slider position-relative pt-50">
+        <section className="home-slider position-relative pt-50 mx-10">
           <Intro1 />
         </section>
 
@@ -39,7 +39,7 @@ export default function Home() {
             </div>
           </div>
         </section> */}
-        <section className="product-tabs section-padding position-relative wow fadeIn animated">
+        <section className="product-tabs section-padding position-relative wow fadeIn animated mx-10">
           <div className="container">
             <div className="col-lg-12">
               <IconsCategory />
@@ -47,7 +47,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="product-tabs section-padding position-relative wow fadeIn animated">
+        <section className="product-tabs section-padding position-relative wow fadeIn animated mx-10">
           <div className="container">
             <div className="col-lg-12">
               <FeatchTab />
