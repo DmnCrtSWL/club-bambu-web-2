@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import Layout from "../components/layout/Layout";
-import Link from "next/link";
+// import Link from "next/link";
+import { Link } from "@material-ui/core";
 import {
   clearCart,
   closeCart,
@@ -130,12 +131,13 @@ const Cart = ({
                 {totalCartItems > 0 && (
                   <div className="cart-action text-end">
                     <Link
-                      href={{
-                        pathname: "/pago/infoComensal",
-                        //   query: {
-                        //     id: l.id,
-                        //   },
-                      }}
+                      href="/pago/infoComensal"
+                      // href={{
+                      //   pathname: "/pago/infoComensal",
+                      //   //   query: {
+                      //   //     id: l.id,
+                      //   //   },
+                      // }}
                     >
                       <a className="btn ">Continuar</a>
                     </Link>
