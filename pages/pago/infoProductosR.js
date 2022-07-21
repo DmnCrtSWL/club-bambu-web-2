@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import ecwid from "../../util/ecwid";
 
+//Cambiar Cart por titulo infoProductos
 const infoProductos = () => {
   const router = useRouter();
   const {
@@ -29,62 +30,7 @@ const infoProductos = () => {
     orderId,
   } = router.query;
   const [total, setTotal] = useState(0);
-  const [order,setOrder] = useState({
-    additionalInfo: {},
-    b2b_b2c: "",
-    billingPerson: {},
-    couponDiscount: 0,
-    createDate: "",
-    createTimestamp: 0,
-    customSurcharges: [],
-    customerFiscalCode: "",
-    customerId: 0,
-    customerRequestedInvoice: false,
-    customerTaxExempt: false,
-    customerTaxIdValid: true,
-    disableAllCustomerNotifications: false,
-    discount: 0,
-    electronicInvoicePecEmail: "",
-    electronicInvoiceSdiCode: "",
-    email: "",
-    externalFulfillment: false,
-    extraFields: {},
-    fulfillmentStatus: "",
-    giftCardDoubleSpending: false,
-    giftCardRedemption: 0,
-    hidden: false,
-    id: "",
-    invoices: [],
-    items: [],
-    membershipBasedDiscount: 0,
-    orderExtraFields: [],
-    orderNumber: 0,
-    paymentParams: {},
-    paymentStatus: "",
-    pickupTime: "",
-    predictedPackage: [],
-    pricesIncludeTax: false,
-    publicUid: "",
-    refundedAmount: 0,
-    refunds: [],
-    reversedTaxApplied: false,
-    shipments: [],
-    shippingPerson: {},
-    subtotal: 0,
-    subtotalWithoutTax: 0,
-    tax: 0,
-    total: 0,
-    totalAndMembershipBasedDiscount: 0,
-    totalBeforeGiftCardRedemption: 0,
-    totalWithoutTax: 0,
-    updateDate: "",
-    updateTimestamp: 0,
-    usdTotal: 0,
-    vendorOrderNumber: "",
-    volumeDiscount: 0,
-  });
-  //const [order,setOrder] =useState({})
-
+  const [order,setOrder] = useState();
 
   console.log("*******");
   console.log(date);
@@ -116,9 +62,10 @@ const infoProductos = () => {
     getData()
   }, [orderId]);
   
-  const getData= async() =>{
+  const getData= async()=>{
     const resp = await ecwid.getOrderDetails(orderId)
     setOrder(resp)
+    console.log(resp)
   }
   
   return (
@@ -132,7 +79,7 @@ const infoProductos = () => {
             <div className="border p-3 rounded mt-5">
               <div className="text-lg font-semibold">Información personal</div>
               <div>
-                <div>Nombre: {order.billingPerson.name}</div>
+                <div>Nombre: {name}</div>
                 <div>Correo electrónico: {email}</div>
                 <div>Numero de celular: {phone}</div>
               </div>
@@ -248,14 +195,15 @@ const infoProductos = () => {
                       Finalizar compra
                     </a>
                   </Link>
-                  </div> */}
+                </div> */}
               </div>
             </div>
           </div>
         </section>
       </Layout>
     </>
-  )
+  );
+
 };
 
 const mapStateToProps = (state) => ({

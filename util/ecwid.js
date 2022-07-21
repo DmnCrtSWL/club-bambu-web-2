@@ -146,7 +146,7 @@ const cleanGallery = (productId) => {
 };
 
 const addOrder = (data) => {
-  return exec(PATH.orders, METHOD.POST, data);
+  return exec( PATH.orders, METHOD.POST, data);
 };
 
 const searchOrders = (options) => {

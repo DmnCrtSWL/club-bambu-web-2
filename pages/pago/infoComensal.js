@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Layout from "../../components/layout/Layout";
 import {
@@ -21,7 +21,18 @@ import {
   ElementsConsumer,
   CardElement,
 } from "@stripe/react-stripe-js";
-function infoComensal() {
+import ecwid from "../../util/ecwid";
+import {
+  clearCart,
+  closeCart,
+  increaseQuantity,
+  openCart
+} from "../../redux/action/cart";
+import { connect } from "react-redux";
+
+
+
+const infoComensal =({cartItems}) => {
   const router = useRouter();
   const [name, setName] = UseLocalStorage("text", "");
   const [email, setEmail] = UseLocalStorage("email", "");
@@ -33,10 +44,15 @@ function infoComensal() {
   const [hour, setHour] = UseLocalStorage("hour", "");
   const [adress, setAdress] = UseLocalStorage("adress", "");
   const [comments, setComments] = UseLocalStorage("comments", "");
-
   const stripePromise = loadStripe("<pulishable_api_key>");
+  const [total, setTotal] = useState(0);
+  const [orderId, setOrderId] = UseLocalStorage("orderId", "");
 
-  const sendForm = () => {
+  useEffect(() => {
+    cartItems.map((item) => ( setTotal(total += (item.price * item.quantity))))
+  }, [cartItems]);
+
+  const sendForm = async() => {
     if (isEmpty(name)) {
       toast.error("Ingresa tu nombre");
     } else if (isEmpty(email)) {
@@ -57,60 +73,66 @@ function infoComensal() {
       if (methodPayCard === true) {
         handleSubmit();
       } else {
-        const data = {
-          order: {
-            refundedAmount: 0,
-            subtotal: 100,
-            subtotalWithoutTax: 0,
-            total: 100,
-            totalWithoutTax: 0,
-            giftCardRedemption: 0,
-            totalBeforeGiftCardRedemption: 0,
-            giftCardDoubleSpending: false,
-            tax: 0,
-            couponDiscount: 0,
-            paymentStatus: "PAID",
-            fulfillmentStatus: "AWAITING_PROCESSING",
-            shippingPerson: {
-              name: "Irving PRUEBA",
-              city: "Ciudad de México",
-              countryCode: "MX",
-              street:
-                "Ballet, Lomas Studio, Plazo Carso, Planta Baja, Local A-19 y R-11",
-              phone: "+524435792767",
-            },
-            billingPerson: {
-              name: "Irving PRUEBA",
-              city: "Ciudad de México",
-              countryCode: "MX",
-              street:
-                "Ballet, Ballet, Lomas Studio, Plazo Carso, Planta Baja, Local A-19 y R-11",
-              phone: "+524435792767",
-            },
-            isTypeForm: true,
-            items: [
-              {
-                productId: 462402410,
-                categoryId: 132447116,
-                sku: "00153",
-                quantity: 1,
-                name: "Espresso ($30)",
-                selectedOptions: [],
-              },
-              {
-                productId: 473539368,
-                categoryId: 134053034,
-                sku: "00264",
-                quantity: 1,
-                name: "Sandwich",
-                selectedOptions: [],
-              },
-            ],
-            email: "irving-mc@outlook.com",
-            pickupTime: "2022-07-19 18:00:00+00:00",
+        //const paymentMethod = methodPayCard ? "Card" : "Cash"
+        var productos = []
+        var datoProducto = {}
+        cartItems.map((item)=>(
+          datoProducto ={
+            productId: item.id,
+            sku: item.sku,
+            quantity: item.quantity,
+            name: item.name,
+            price: item.price,
+            selectedOptions: [],
           },
-        };
-        registrarEcwid(data);
+          productos.push(datoProducto) 
+        ));
+        //_____________________________Formateando fecha
+        const fecha = hour.split("T")
+        const hora = fecha[1].split("Z")
+        const dateFormat= fecha[0] + ' ' + hora[0]
+        console.log(dateFormat)
+        console.log(total)
+        //_______________________________
+
+        const data ={
+            "refundedAmount": 0,
+            "subtotal": total,
+            "subtotalWithoutTax": 0,
+            "total": total,
+            "totalWithoutTax": 0,
+            "giftCardRedemption": 0,
+            "totalBeforeGiftCardRedemption": 0,
+            "giftCardDoubleSpending": false,
+            "tax": 0,
+            "couponDiscount": 0,
+            "paymentStatus": "PAID",
+            "fulfillmentStatus": "AWAITING_PROCESSING",
+            "shippingPerson":
+            {
+              "name": name,
+              "city": "Ciudad de México",
+              "countryCode": "MX",
+              "street": adress,
+              "phone": phone
+            },
+            "billingPerson":
+            { 
+              "name": name,
+              "city": "Ciudad de México",
+              "countryCode": "MX",
+              "street": adress,
+              "phone": phone
+            },
+            "isTypeForm": true,
+            "items": productos,
+            "email": email,
+            "pickupTime": dateFormat
+        }
+        
+        //registrar Orden en Ewcid
+        const resp = await ecwid.addOrder(data);
+        setOrderId(resp.id)
         //3. Mandamos a la pagina detalle de pedido
         router.push({
           pathname: "/pago/infoProductos",
@@ -125,25 +147,11 @@ function infoComensal() {
             hour,
             adress,
             comments,
+            orderId,
           },
         });
       }
     }
-  };
-
-  const registrarEcwid = async (data) => {
-    console.log("Entrando a Edwid");
-    console.log("data:");
-    console.log(data);
-    try {
-      const resp = await ecwid.addOrder(data);
-      console.log("Exito");
-      console.log(resp.data);
-    } catch (error) {
-      console.log(error);
-    }
-    console.log("Saliendo de Edwid");
-    return;
   };
 
   function roundMinutes(date) {
@@ -155,17 +163,17 @@ function infoComensal() {
 
   const handleSubmit = (stripe, elements) => async () => {
     const cardElement = elements.getElement(CardElement);
-
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card: cardElement,
     });
-
     if (error) {
       toast.error("Error en la compra");
       console.log("[error]", error);
     } else {
       console.log("[PaymentMethod]", paymentMethod);
+      const resp = await ecwid.addOrder(data);
+      setOrderId(resp.id)
       router.push({
         pathname: "/pago/infoProductos",
         query: {
@@ -179,6 +187,7 @@ function infoComensal() {
           hour,
           adress,
           comments,
+          orderId,
         },
       });
       // ... SEND to your API server to process payment intent
@@ -348,4 +357,19 @@ const materialTheme = createTheme({
   },
 });
 
-export default infoComensal;
+const mapStateToProps = (state) => ({
+  cartItems: state.cart,
+  activeCart: state.counter,
+  totalCartItems: state.cart.length,
+});
+
+const mapDispatchToProps = {
+  closeCart,
+  increaseQuantity,
+  openCart,
+  clearCart,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(infoComensal);
+
+//export default infoComensal;
