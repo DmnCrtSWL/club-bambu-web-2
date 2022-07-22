@@ -88,13 +88,15 @@ const infoComensal = ({ cartItems }) => {
           )
         );
         //_____________________________Formateando fecha
-        const fecha = hour.split("T");
-        const hora = fecha[1].split("Z");
-        const dateFormat = fecha[0] + " " + hora[0];
-        console.log(dateFormat);
-        console.log(total);
+        const fecha = new Date(date)
+        const dia = fecha.getDate();
+        const mes = fecha.getMonth() + 1;
+        const año = fecha.getFullYear();
+        const horario = new Date(hour)
+        const hora = horario.getHours();
+        const minuto = horario.getMinutes();
+        const dateFormat = año+'-'+mes+'-'+dia + ' ' + hora + ':' + minuto +':00 +0000'
         //_______________________________
-
         const data = {
           refundedAmount: 0,
           subtotal: total,
@@ -110,16 +112,16 @@ const infoComensal = ({ cartItems }) => {
           fulfillmentStatus: "AWAITING_PROCESSING",
           shippingPerson: {
             name: name,
-            city: "Ciudad de México",
+            city: adress.formatted_address,
             countryCode: "MX",
-            street: adress,
+            street: adress.formatted_address,
             phone: phone,
           },
           billingPerson: {
             name: name,
-            city: "Ciudad de México",
+            city: adress.formatted_address,
             countryCode: "MX",
-            street: adress,
+            street: adress.formatted_address,
             phone: phone,
           },
           isTypeForm: true,
@@ -127,7 +129,6 @@ const infoComensal = ({ cartItems }) => {
           email: email,
           pickupTime: dateFormat,
         };
-
         //registrar Orden en Ewcid
         const resp = await ecwid.addOrder(data);
         setOrderId(resp.id);
