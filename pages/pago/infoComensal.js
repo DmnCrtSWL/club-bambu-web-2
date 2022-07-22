@@ -30,7 +30,7 @@ import {
 } from "../../redux/action/cart";
 import { connect } from "react-redux";
 
-const infoComensal = ({ cartItems }) => {
+const infoComensal = ({ cartItems, clearCart }) => {
   const router = useRouter();
   const [name, setName] = UseLocalStorage("text", "");
   const [email, setEmail] = UseLocalStorage("email", "");
@@ -143,7 +143,7 @@ const infoComensal = ({ cartItems }) => {
         console.log("Actualizando Order");
         console.log(orderId);
         if (orderId) {
-          clearCart;
+          clearCart();
         }
 
         const id = resp.id;
