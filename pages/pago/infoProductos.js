@@ -12,6 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import ecwid from "../../util/ecwid";
+import BeatLoader from "react-spinners/BeatLoader";
 
 const infoProductos = () => {
   const router = useRouter();
@@ -30,23 +31,14 @@ const infoProductos = () => {
   } = router.query;
   const [total, setTotal] = useState(0);
   const [order, setOrder] = useState({});
+  const [productos, setproductos] = useState([]);
 
-  console.log("*******");
-  console.log(date);
-  console.log("*******");
-
-  console.log(hour);
-  console.log("*******");
-
-  console.log(orderId);
-  console.log("*******");
-
-  const horaOrden = new Date(hour);
-  const hora = horaOrden.getHours();
+  const horaOrden = new Date(order.pickupTime);
+  const hora = horaOrden.getUTCHours();
   const minutos = horaOrden.getMinutes();
 
-  const fechaOrden = new Date(date);
-  const dia = fechaOrden.getDate();
+  const fechaOrden = new Date(order.pickupTime);
+  const dia = fechaOrden.getUTCDate();
   const mes = fechaOrden.getMonth() + 1;
   const año = fechaOrden.getFullYear();
   const cartItems = 0;
@@ -59,10 +51,11 @@ const infoProductos = () => {
 
   useEffect(() => {
     (async () => {
-      const resp = await ecwid.getOrderDetails("1919");
+      const resp = await ecwid.getOrderDetails(orderId);
       setOrder(resp);
+      setproductos(resp.items);
     })();
-  }, []);
+  }, [orderId]);
 
   return (
     <>
@@ -80,8 +73,8 @@ const infoProductos = () => {
                 {order.billingPerson && (
                   <div>
                     <div>Nombre: {order.billingPerson.name}</div>
-                    <div>Correo electrónico: {email}</div>
-                    <div>Numero de celular: {phone}</div>
+                    <div>Correo electrónico: {order.email}</div>
+                    <div>Numero de celular: {order.billingPerson.phone}</div>
                   </div>
                 )}
               </div>
@@ -92,7 +85,7 @@ const infoProductos = () => {
                 ) : (
                   <div>Método de pago: Tarjeta</div>
                 )}
-                <div>Monto total: ${total.toFixed(2)}</div>
+                <div>Monto total: ${order.total}</div>
                 {methodPayCard === "true" && (
                   <div>Tarjeta: xxxx xxxx xxxx xxxx</div>
                 )}
@@ -102,7 +95,9 @@ const infoProductos = () => {
                   Información de entrega
                 </div>
                 <div>
-                  <div>Dirección: {adress}</div>
+                  {order.billingPerson && (
+                    <div>Dirección: {order.billingPerson.street}</div>
+                  )}
                   <div>
                     Día: {dia} / {mes} / {año}
                   </div>
@@ -116,7 +111,11 @@ const infoProductos = () => {
                   Comentarios de mi pedido
                 </div>
                 <div>
-                  <div>{comments ? comments : "Sin comentarios"}</div>
+                  <div>
+                    {order.orderComments
+                      ? order.orderComments
+                      : "Sin comentarios"}
+                  </div>
                 </div>
               </div>
 
@@ -126,10 +125,9 @@ const infoProductos = () => {
               <div className="row">
                 <div className="col-12">
                   <div className="table-responsive">
-                    {/*cartItems.length <= 0 && "No Products"*/}
                     <table
                       className={
-                        cartItems.length > 0
+                        productos.length > 0
                           ? "table shopping-summery text-center clean"
                           : "d-none"
                       }
@@ -144,67 +142,52 @@ const infoProductos = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {/*cartItems.map((item, i) => (
-                        <tr key={i}>
-                          <td className="image product-thumbnail">
-                            <img src={item.imageUrl} />
-                          </td>
+                        {productos.map((item, i) => (
+                          <tr key={i}>
+                            <td className="image product-thumbnail">
+                              <img src={item.imageUrl} />
+                            </td>
 
-                          <td className="product-des product-name">
-                            <h5 className="product-name">
-                              <Link href="/products">
+                            <td className="product-des product-name">
+                              <h5 className="product-name">
+                                {/* <Link href="/products">
                                 <a>{item.name}</a>
-                              </Link>
-                            </h5>
-                            {item.description && (
-                              <p className="font-xs">
-                                {item.description.slice(3, -4)}
-                              </p>
-                            )}
-                          </td>
-                          <td className="price" data-title="Price">
-                            <span>${item.price}</span>
-                          </td>
-                          <td className="text-center" data-title="Stock">
-                            <div className="text-center">
-                              <span className="qty-val text-center">
-                                {item.quantity}
-                              </span>
-                            </div>
-                          </td>
-                          <td className="text-center" data-title="Cart">
-                            <span>${item.quantity * item.price}</span>
-                          </td>
-                        </tr>
-                      ))*/}
-                        {/* <tr>
-                        <td colSpan="6" className="text-end">
-                          <a onClick={clearCart} className="text-muted">
-                            <h3>Total: ${total}</h3>
-                          </a>
-                        </td>
-                      </tr> */}
+                              </Link> */}
+                                {item.name}
+                              </h5>
+                              {item.description && (
+                                <p className="font-xs">
+                                  {item.description.slice(3, -4)}
+                                </p>
+                              )}
+                            </td>
+                            <td className="price" data-title="Price">
+                              <span>${item.price}</span>
+                            </td>
+                            <td className="text-center" data-title="Stock">
+                              <div className="detail-qty   m-auto">
+                                <span className="qty-val">{item.quantity}</span>
+                              </div>
+                            </td>
+                            <td className="text-center" data-title="Cart">
+                              <span>${item.quantity * item.price}</span>
+                            </td>
+                          </tr>
+                        ))}
                       </tbody>
                     </table>
                   </div>
-                  {/* <div className="cart-action text-end">
-                  <Link
-                    href={{
-                      pathname: "/pago/infoComensal",
-                    }}
-                  >
-                    <a className="btn ">
-                      <i className="fi-rs-shopping-bag mr-10"></i>
-                      Finalizar compra
-                    </a>
-                  </Link>
-                  </div> */}
                 </div>
               </div>
             </div>
           </section>
         ) : (
-          <div>Cargando información</div>
+          <div className="col-12 ">
+            <div className=" h-20 rounded-xl justify-center flex flex-col items-center p-1">
+              <BeatLoader color={"#325454"} size={10} className="mb-10" />
+              <h4 className="text-center text-xs">Cargando información</h4>
+            </div>
+          </div>
         )}
       </Layout>
     </>
