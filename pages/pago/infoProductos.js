@@ -29,62 +29,7 @@ const infoProductos = () => {
     orderId,
   } = router.query;
   const [total, setTotal] = useState(0);
-  const [order,setOrder] = useState({
-    additionalInfo: {},
-    b2b_b2c: "",
-    billingPerson: {},
-    couponDiscount: 0,
-    createDate: "",
-    createTimestamp: 0,
-    customSurcharges: [],
-    customerFiscalCode: "",
-    customerId: 0,
-    customerRequestedInvoice: false,
-    customerTaxExempt: false,
-    customerTaxIdValid: true,
-    disableAllCustomerNotifications: false,
-    discount: 0,
-    electronicInvoicePecEmail: "",
-    electronicInvoiceSdiCode: "",
-    email: "",
-    externalFulfillment: false,
-    extraFields: {},
-    fulfillmentStatus: "",
-    giftCardDoubleSpending: false,
-    giftCardRedemption: 0,
-    hidden: false,
-    id: "",
-    invoices: [],
-    items: [],
-    membershipBasedDiscount: 0,
-    orderExtraFields: [],
-    orderNumber: 0,
-    paymentParams: {},
-    paymentStatus: "",
-    pickupTime: "",
-    predictedPackage: [],
-    pricesIncludeTax: false,
-    publicUid: "",
-    refundedAmount: 0,
-    refunds: [],
-    reversedTaxApplied: false,
-    shipments: [],
-    shippingPerson: {},
-    subtotal: 0,
-    subtotalWithoutTax: 0,
-    tax: 0,
-    total: 0,
-    totalAndMembershipBasedDiscount: 0,
-    totalBeforeGiftCardRedemption: 0,
-    totalWithoutTax: 0,
-    updateDate: "",
-    updateTimestamp: 0,
-    usdTotal: 0,
-    vendorOrderNumber: "",
-    volumeDiscount: 0,
-  });
-  //const [order,setOrder] =useState({})
-
+  const [order, setOrder] = useState({});
 
   console.log("*******");
   console.log(date);
@@ -113,88 +58,93 @@ const infoProductos = () => {
   };*/
 
   useEffect(() => {
-    getData()
-  }, [orderId]);
-  
-  const getData= async() =>{
-    const resp = await ecwid.getOrderDetails(orderId)
-    setOrder(resp)
-  }
-  
+    (async () => {
+      const resp = await ecwid.getOrderDetails("1919");
+      setOrder(resp);
+    })();
+  }, []);
+
   return (
     <>
       <Layout parent="Inicio" sub="Mis pedidos" subChild="Detalles">
-        <section className="mt-50 mb-50">
-          <div className="container">
-            <div>
-              <h1>Resumen de tu Pedido</h1>
-            </div>
-            <div className="border p-3 rounded mt-5">
-              <div className="text-lg font-semibold">Información personal</div>
+        {order ? (
+          <section className="mt-50 mb-50">
+            <div className="container">
               <div>
-                <div>Nombre: {order.billingPerson.name}</div>
-                <div>Correo electrónico: {email}</div>
-                <div>Numero de celular: {phone}</div>
+                <h1>Resumen de tu Pedido</h1>
               </div>
-            </div>
-            <div className="border p-3 rounded mt-10">
-              <div className="text-lg font-semibold">Información de pago</div>
-              {methodPayCash === "true" ? (
-                <div>Método de pago: Efectivo</div>
-              ) : (
-                <div>Método de pago: Tarjeta</div>
-              )}
-              <div>Monto total: ${total.toFixed(2)}</div>
-              {methodPayCard === "true" && (
-                <div>Tarjeta: xxxx xxxx xxxx xxxx</div>
-              )}
-            </div>
-            <div className="border p-3 rounded mt-10">
-              <div className="text-lg font-semibold">
-                Información de entrega
+              <div className="border p-3 rounded mt-5">
+                <div className="text-lg font-semibold">
+                  Información personal
+                </div>
+                {order.billingPerson && (
+                  <div>
+                    <div>Nombre: {order.billingPerson.name}</div>
+                    <div>Correo electrónico: {email}</div>
+                    <div>Numero de celular: {phone}</div>
+                  </div>
+                )}
               </div>
-              <div>
-                <div>Dirección: {adress}</div>
-                <div>
-                  Día: {dia} / {mes} / {año}
+              <div className="border p-3 rounded mt-10">
+                <div className="text-lg font-semibold">Información de pago</div>
+                {methodPayCash === "true" ? (
+                  <div>Método de pago: Efectivo</div>
+                ) : (
+                  <div>Método de pago: Tarjeta</div>
+                )}
+                <div>Monto total: ${total.toFixed(2)}</div>
+                {methodPayCard === "true" && (
+                  <div>Tarjeta: xxxx xxxx xxxx xxxx</div>
+                )}
+              </div>
+              <div className="border p-3 rounded mt-10">
+                <div className="text-lg font-semibold">
+                  Información de entrega
                 </div>
                 <div>
-                  Hora: {hora}:{minutos}
+                  <div>Dirección: {adress}</div>
+                  <div>
+                    Día: {dia} / {mes} / {año}
+                  </div>
+                  <div>
+                    Hora: {hora}:{minutos}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="border p-3 rounded mt-10">
-              <div className="text-lg font-semibold">
-                Comentarios de mi pedido
+              <div className="border p-3 rounded mt-10">
+                <div className="text-lg font-semibold">
+                  Comentarios de mi pedido
+                </div>
+                <div>
+                  <div>{comments ? comments : "Sin comentarios"}</div>
+                </div>
               </div>
-              <div>
-                <div>{comments ? comments : "Sin comentarios"}</div>
-              </div>
-            </div>
 
-            <div className="text-lg font-semibold mt-7 mb-5">Mis productos</div>
-            <div className="row">
-              <div className="col-12">
-                <div className="table-responsive">
-                  {/*cartItems.length <= 0 && "No Products"*/}
-                  <table
-                    className={
-                      cartItems.length > 0
-                        ? "table shopping-summery text-center clean"
-                        : "d-none"
-                    }
-                  >
-                    <thead>
-                      <tr className="main-heading">
-                        <th scope="col">Imagen</th>
-                        <th scope="col">Producto</th>
-                        <th scope="col">Precio</th>
-                        <th scope="col">Cantidad</th>
-                        <th scope="col">Subtotal</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {/*cartItems.map((item, i) => (
+              <div className="text-lg font-semibold mt-7 mb-5">
+                Mis productos
+              </div>
+              <div className="row">
+                <div className="col-12">
+                  <div className="table-responsive">
+                    {/*cartItems.length <= 0 && "No Products"*/}
+                    <table
+                      className={
+                        cartItems.length > 0
+                          ? "table shopping-summery text-center clean"
+                          : "d-none"
+                      }
+                    >
+                      <thead>
+                        <tr className="main-heading">
+                          <th scope="col">Imagen</th>
+                          <th scope="col">Producto</th>
+                          <th scope="col">Precio</th>
+                          <th scope="col">Cantidad</th>
+                          <th scope="col">Subtotal</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {/*cartItems.map((item, i) => (
                         <tr key={i}>
                           <td className="image product-thumbnail">
                             <img src={item.imageUrl} />
@@ -227,17 +177,17 @@ const infoProductos = () => {
                           </td>
                         </tr>
                       ))*/}
-                      {/* <tr>
+                        {/* <tr>
                         <td colSpan="6" className="text-end">
                           <a onClick={clearCart} className="text-muted">
                             <h3>Total: ${total}</h3>
                           </a>
                         </td>
                       </tr> */}
-                    </tbody>
-                  </table>
-                </div>
-                {/* <div className="cart-action text-end">
+                      </tbody>
+                    </table>
+                  </div>
+                  {/* <div className="cart-action text-end">
                   <Link
                     href={{
                       pathname: "/pago/infoComensal",
@@ -249,13 +199,16 @@ const infoProductos = () => {
                     </a>
                   </Link>
                   </div> */}
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        ) : (
+          <div>Cargando información</div>
+        )}
       </Layout>
     </>
-  )
+  );
 };
 
 const mapStateToProps = (state) => ({

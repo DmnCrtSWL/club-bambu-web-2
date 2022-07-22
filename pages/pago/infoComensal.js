@@ -26,13 +26,11 @@ import {
   clearCart,
   closeCart,
   increaseQuantity,
-  openCart
+  openCart,
 } from "../../redux/action/cart";
 import { connect } from "react-redux";
 
-
-
-const infoComensal =({cartItems}) => {
+const infoComensal = ({ cartItems }) => {
   const router = useRouter();
   const [name, setName] = UseLocalStorage("text", "");
   const [email, setEmail] = UseLocalStorage("email", "");
@@ -49,10 +47,10 @@ const infoComensal =({cartItems}) => {
   const [orderId, setOrderId] = UseLocalStorage("orderId", "");
 
   useEffect(() => {
-    cartItems.map((item) => ( setTotal(total += (item.price * item.quantity))))
+    cartItems.map((item) => setTotal((total += item.price * item.quantity)));
   }, [cartItems]);
 
-  const sendForm = async() => {
+  const sendForm = async () => {
     if (isEmpty(name)) {
       toast.error("Ingresa tu nombre");
     } else if (isEmpty(email)) {
@@ -74,65 +72,65 @@ const infoComensal =({cartItems}) => {
         handleSubmit();
       } else {
         //const paymentMethod = methodPayCard ? "Card" : "Cash"
-        var productos = []
-        var datoProducto = {}
-        cartItems.map((item)=>(
-          datoProducto ={
-            productId: item.id,
-            sku: item.sku,
-            quantity: item.quantity,
-            name: item.name,
-            price: item.price,
-            selectedOptions: [],
-          },
-          productos.push(datoProducto) 
-        ));
+        var productos = [];
+        var datoProducto = {};
+        cartItems.map(
+          (item) => (
+            (datoProducto = {
+              productId: item.id,
+              sku: item.sku,
+              quantity: item.quantity,
+              name: item.name,
+              price: item.price,
+              selectedOptions: [],
+            }),
+            productos.push(datoProducto)
+          )
+        );
         //_____________________________Formateando fecha
-        const fecha = hour.split("T")
-        const hora = fecha[1].split("Z")
-        const dateFormat= fecha[0] + ' ' + hora[0]
-        console.log(dateFormat)
-        console.log(total)
+        const fecha = hour.split("T");
+        const hora = fecha[1].split("Z");
+        const dateFormat = fecha[0] + " " + hora[0];
+        console.log(dateFormat);
+        console.log(total);
         //_______________________________
 
-        const data ={
-            "refundedAmount": 0,
-            "subtotal": total,
-            "subtotalWithoutTax": 0,
-            "total": total,
-            "totalWithoutTax": 0,
-            "giftCardRedemption": 0,
-            "totalBeforeGiftCardRedemption": 0,
-            "giftCardDoubleSpending": false,
-            "tax": 0,
-            "couponDiscount": 0,
-            "paymentStatus": "PAID",
-            "fulfillmentStatus": "AWAITING_PROCESSING",
-            "shippingPerson":
-            {
-              "name": name,
-              "city": "Ciudad de México",
-              "countryCode": "MX",
-              "street": adress,
-              "phone": phone
-            },
-            "billingPerson":
-            { 
-              "name": name,
-              "city": "Ciudad de México",
-              "countryCode": "MX",
-              "street": adress,
-              "phone": phone
-            },
-            "isTypeForm": true,
-            "items": productos,
-            "email": email,
-            "pickupTime": dateFormat
-        }
-        
+        const data = {
+          refundedAmount: 0,
+          subtotal: total,
+          subtotalWithoutTax: 0,
+          total: total,
+          totalWithoutTax: 0,
+          giftCardRedemption: 0,
+          totalBeforeGiftCardRedemption: 0,
+          giftCardDoubleSpending: false,
+          tax: 0,
+          couponDiscount: 0,
+          paymentStatus: "PAID",
+          fulfillmentStatus: "AWAITING_PROCESSING",
+          shippingPerson: {
+            name: name,
+            city: "Ciudad de México",
+            countryCode: "MX",
+            street: adress,
+            phone: phone,
+          },
+          billingPerson: {
+            name: name,
+            city: "Ciudad de México",
+            countryCode: "MX",
+            street: adress,
+            phone: phone,
+          },
+          isTypeForm: true,
+          items: productos,
+          email: email,
+          pickupTime: dateFormat,
+        };
+
         //registrar Orden en Ewcid
         const resp = await ecwid.addOrder(data);
-        setOrderId(resp.id)
+        setOrderId(resp.id);
         //3. Mandamos a la pagina detalle de pedido
         router.push({
           pathname: "/pago/infoProductos",
@@ -173,7 +171,7 @@ const infoComensal =({cartItems}) => {
     } else {
       console.log("[PaymentMethod]", paymentMethod);
       const resp = await ecwid.addOrder(data);
-      setOrderId(resp.id)
+      setOrderId(resp.id);
       router.push({
         pathname: "/pago/infoProductos",
         query: {
@@ -309,9 +307,9 @@ const infoComensal =({cartItems}) => {
                   <Autocomplete
                     apiKey={"AIzaSyCSfb3q43wvrhTk9tbipj9KkrcVcjxW3ro"}
                     onPlaceSelected={(place) => {
-                      setAdress(place.formatted_address);
+                      setAdress(place);
                     }}
-                    defaultValue={adress}
+                    defaultValue={adress.formatted_address}
                     language="es"
                     placeholder="Buscar ubicación"
                     options={{
@@ -339,7 +337,7 @@ const infoComensal =({cartItems}) => {
       </Layout>
     </>
   );
-}
+};
 
 const materialTheme = createTheme({
   overrides: {
