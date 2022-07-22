@@ -135,7 +135,7 @@ const infoComensal = ({ cartItems }) => {
         };
         //registrar Orden en Ewcid
         const resp = await ecwid.addOrder(data);
-        vector=[...orderId, [{orderId: resp.id, name: name, phone: phone, email: email}]]
+        vector=[...orderId, {orderId: resp.id, name: name, phone: phone, email: email}]
         setOrderId(vector)
         console.log("Actualizando Order")
         console.log(orderId)
