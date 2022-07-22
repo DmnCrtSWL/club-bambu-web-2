@@ -75,9 +75,18 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
               </form> */}
               <Search />
             </div>
+            <div>
+              <div className="main-categori-wrap">
+                <Link href="/pago/misPedidos">
+                  <a className="categori-button-active-2">
+                    <span className="fi-rs-apps"></span> Mis pedidos
+                  </a>
+                </Link>
+              </div>
+            </div>
             <div className="mobile-menu-wrap mobile-header-border">
               <div className="main-categori-wrap mobile-header-border">
-                <Link href="#">
+                <Link href="/">
                   <a className="categori-button-active-2">
                     <span className="fi-rs-apps"></span> Categorías Bambu
                   </a>

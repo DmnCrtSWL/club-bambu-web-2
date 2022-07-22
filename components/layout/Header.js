@@ -253,14 +253,14 @@ const Header = ({
                         </a>
                       </Link>
                     </div>
-                    {/* <div
-                      className="burger-icon burger-icon-white"
+                    <div
+                      className="burger-icon burger-icon-white ml-2"
                       onClick={toggleClick}
                     >
                       <span className="burger-icon-top"></span>
                       <span className="burger-icon-mid"></span>
                       <span className="burger-icon-bottom"></span>
-                    </div> */}
+                    </div>
                   </div>
                 </div>
               </div>
