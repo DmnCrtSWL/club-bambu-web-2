@@ -45,7 +45,7 @@ const infoComensal = ({ cartItems }) => {
   const stripePromise = loadStripe("<pulishable_api_key>");
   const [total, setTotal] = useState(0);
   const [orderId, setOrderId] = UseLocalStorage("orderId", "");
-  var vector= {};
+  var vector = {};
 
   useEffect(() => {
     cartItems.map((item) => setTotal((total += item.price * item.quantity)));
@@ -89,14 +89,15 @@ const infoComensal = ({ cartItems }) => {
           )
         );
         //_____________________________Formateando fecha
-        const fecha = new Date(date)
+        const fecha = new Date(date);
         const dia = fecha.getDate();
         const mes = fecha.getMonth() + 1;
         const año = fecha.getFullYear();
-        const horario = new Date(hour)
+        const horario = new Date(hour);
         const hora = horario.getHours();
         const minuto = horario.getMinutes();
-        const dateFormat = año+'-'+mes+'-'+dia + ' ' + hora + ':' + minuto +':00 +0000'
+        const dateFormat =
+          año + "-" + mes + "-" + dia + " " + hora + ":" + minuto + ":00 +0000";
         //_______________________________
         const data = {
           refundedAmount: 0,
@@ -130,17 +131,23 @@ const infoComensal = ({ cartItems }) => {
           items: productos,
           email: email,
           pickupTime: dateFormat,
-          orderComments: comments
+          orderComments: comments,
         };
         //registrar Orden en Ewcid
         const resp = await ecwid.addOrder(data);
-        vector=[...orderId, {orderId: resp.id, name: name, phone: phone, email: email}]
-        setOrderId(vector)
-        console.log("Actualizando Order")
-        console.log(orderId)
-        if(orderId){
-          clearCart
+        vector = [
+          ...orderId,
+          { orderId: resp.id, name: name, phone: phone, email: email },
+        ];
+        setOrderId(vector);
+        console.log("Actualizando Order");
+        console.log(orderId);
+        if (orderId) {
+          clearCart;
         }
+
+        const id = resp.id;
+        const iorder = id.toString();
         //3. Mandamos a la pagina detalle de pedido
         router.push({
           pathname: "/pago/infoProductos",
@@ -155,7 +162,7 @@ const infoComensal = ({ cartItems }) => {
             hour,
             adress,
             comments,
-            orderId,
+            iorder,
           },
         });
       }
@@ -181,11 +188,16 @@ const infoComensal = ({ cartItems }) => {
     } else {
       console.log("[PaymentMethod]", paymentMethod);
       const resp = await ecwid.addOrder(data);
-      vector=[...orderId, {orderId: resp.id, name: name, phone: phone, email: email}]
+      vector = [
+        ...orderId,
+        { orderId: resp.id, name: name, phone: phone, email: email },
+      ];
       setOrderId(vector);
-      if(orderId){
-        clearCart
+      if (orderId) {
+        clearCart;
       }
+      const id = resp.id;
+      const iorder = id.toString();
       router.push({
         pathname: "/pago/infoProductos",
         query: {
@@ -199,7 +211,7 @@ const infoComensal = ({ cartItems }) => {
           hour,
           adress,
           comments,
-          orderId,
+          iorder,
         },
       });
       // ... SEND to your API server to process payment intent

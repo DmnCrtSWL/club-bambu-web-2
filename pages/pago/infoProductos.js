@@ -27,7 +27,8 @@ const infoProductos = () => {
     hour,
     adress,
     comments,
-    orderId,
+    iorder,
+    orderi,
   } = router.query;
   const [total, setTotal] = useState(0);
   const [order, setOrder] = useState({});
@@ -51,11 +52,11 @@ const infoProductos = () => {
 
   useEffect(() => {
     (async () => {
-      const resp = await ecwid.getOrderDetails(orderId);
+      const resp = await ecwid.getOrderDetails(orderi ? orderi : iorder);
       setOrder(resp);
       setproductos(resp.items);
     })();
-  }, [orderId]);
+  }, [iorder, orderi]);
 
   return (
     <>
