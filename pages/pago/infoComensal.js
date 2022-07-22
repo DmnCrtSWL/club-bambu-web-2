@@ -44,7 +44,7 @@ const infoComensal = ({ cartItems }) => {
   const [comments, setComments] = UseLocalStorage("comments", "");
   const stripePromise = loadStripe("<pulishable_api_key>");
   const [total, setTotal] = useState(0);
-  const [orderId, setOrderId] = UseLocalStorage("orderId", "");
+  const [orderId, setOrderId] = UseLocalStorage("orderId", []);
 
   useEffect(() => {
     cartItems.map((item) => setTotal((total += item.price * item.quantity)));
@@ -106,8 +106,9 @@ const infoComensal = ({ cartItems }) => {
           giftCardRedemption: 0,
           totalBeforeGiftCardRedemption: 0,
           giftCardDoubleSpending: false,
+          paymentMethod: methodPayCash ? "Cash" : "Card",
           tax: 0,
-          couponDiscount: 0,
+          couponDiscount: parseInt(coupon),
           paymentStatus: "PAID",
           fulfillmentStatus: "AWAITING_PROCESSING",
           shippingPerson: {
@@ -128,10 +129,14 @@ const infoComensal = ({ cartItems }) => {
           items: productos,
           email: email,
           pickupTime: dateFormat,
+          orderComments: comments
         };
         //registrar Orden en Ewcid
         const resp = await ecwid.addOrder(data);
         setOrderId(resp.id);
+        if(orderId){
+          clearCart
+        }
         //3. Mandamos a la pagina detalle de pedido
         router.push({
           pathname: "/pago/infoProductos",
@@ -172,7 +177,7 @@ const infoComensal = ({ cartItems }) => {
     } else {
       console.log("[PaymentMethod]", paymentMethod);
       const resp = await ecwid.addOrder(data);
-      setOrderId(resp.id);
+      setOrderId(orderId.push(resp.id));
       router.push({
         pathname: "/pago/infoProductos",
         query: {
