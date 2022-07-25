@@ -5,6 +5,7 @@ import {
   MuiPickersUtilsProvider,
   DatePicker,
   TimePicker,
+  DateTimePicker,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import esLocale from "date-fns/locale/es";
@@ -29,6 +30,7 @@ import {
   openCart,
 } from "../../redux/action/cart";
 import { connect } from "react-redux";
+import moment from "moment";
 
 const infoComensal = ({ cartItems, clearCart }) => {
   const router = useRouter();
@@ -38,7 +40,10 @@ const infoComensal = ({ cartItems, clearCart }) => {
   const [methodPayCash, setMethodPayCash] = useState(true);
   const [methodPayCard, setMethodPayCard] = useState(false);
   const [coupon, setCoupon] = UseLocalStorage("coupon", "");
-  const [date, setDate] = UseLocalStorage("date", "");
+  const [date, setDate] = UseLocalStorage(
+    "date",
+    round(moment(), moment.duration(30, "minutes"), "ceil")
+  );
   const [hour, setHour] = UseLocalStorage("hour", "");
   const [adress, setAdress] = UseLocalStorage("adress", "");
   const [comments, setComments] = UseLocalStorage("comments", "");
@@ -68,6 +73,8 @@ const infoComensal = ({ cartItems, clearCart }) => {
       toast.error("Ingresa un celular valido");
     } else if (!/^[0-9]+$/.test(phone)) {
       toast.error("Ingresa un celular valido");
+    } else if (Date.parse(new Date(date)) < Date.parse(new Date())) {
+      toast.error("Ingresa una fecha mayor");
     } else {
       if (methodPayCard === true) {
         handleSubmit();
@@ -93,9 +100,9 @@ const infoComensal = ({ cartItems, clearCart }) => {
         const dia = fecha.getDate();
         const mes = fecha.getMonth() + 1;
         const año = fecha.getFullYear();
-        const horario = new Date(hour);
-        const hora = horario.getHours();
-        const minuto = horario.getMinutes();
+        // const horario = new Date(hour);
+        const hora = fecha.getHours();
+        const minuto = fecha.getMinutes();
         const dateFormat =
           año + "-" + mes + "-" + dia + " " + hora + ":" + minuto + ":00 +0000";
         //_______________________________
@@ -187,17 +194,83 @@ const infoComensal = ({ cartItems, clearCart }) => {
       console.log("[error]", error);
     } else {
       console.log("[PaymentMethod]", paymentMethod);
+      //const paymentMethod = methodPayCard ? "Card" : "Cash"
+      var productos = [];
+      var datoProducto = {};
+      cartItems.map(
+        (item) => (
+          (datoProducto = {
+            productId: item.id,
+            sku: item.sku,
+            quantity: item.quantity,
+            name: item.name,
+            price: item.price,
+            selectedOptions: [],
+          }),
+          productos.push(datoProducto)
+        )
+      );
+      //_____________________________Formateando fecha
+      const fecha = new Date(date);
+      const dia = fecha.getDate();
+      const mes = fecha.getMonth() + 1;
+      const año = fecha.getFullYear();
+      // const horario = new Date(hour);
+      const hora = fecha.getHours();
+      const minuto = fecha.getMinutes();
+      const dateFormat =
+        año + "-" + mes + "-" + dia + " " + hora + ":" + minuto + ":00 +0000";
+      //_______________________________
+      const data = {
+        refundedAmount: 0,
+        subtotal: total,
+        subtotalWithoutTax: 0,
+        total: total,
+        totalWithoutTax: 0,
+        giftCardRedemption: 0,
+        totalBeforeGiftCardRedemption: 0,
+        giftCardDoubleSpending: false,
+        paymentMethod: methodPayCash ? "Cash" : "Card",
+        tax: 0,
+        couponDiscount: parseInt(coupon),
+        paymentStatus: "PAID",
+        fulfillmentStatus: "AWAITING_PROCESSING",
+        shippingPerson: {
+          name: name,
+          city: adress.formatted_address,
+          countryCode: "MX",
+          street: adress.formatted_address,
+          phone: phone,
+        },
+        billingPerson: {
+          name: name,
+          city: adress.formatted_address,
+          countryCode: "MX",
+          street: adress.formatted_address,
+          phone: phone,
+        },
+        isTypeForm: true,
+        items: productos,
+        email: email,
+        pickupTime: dateFormat,
+        orderComments: comments,
+      };
+      //registrar Orden en Ewcid
       const resp = await ecwid.addOrder(data);
       vector = [
         ...orderId,
         { orderId: resp.id, name: name, phone: phone, email: email },
       ];
       setOrderId(vector);
+      console.log("Actualizando Order");
+      console.log(orderId);
       if (orderId) {
-        clearCart;
+        clearCart();
       }
+
       const id = resp.id;
       const iorder = id.toString();
+      //3. Mandamos a la pagina detalle de pedido
       router.push({
         pathname: "/pago/infoProductos",
         query: {
@@ -217,6 +290,10 @@ const infoComensal = ({ cartItems, clearCart }) => {
       // ... SEND to your API server to process payment intent
     }
   };
+
+  function round(date, duration, method) {
+    return moment(Math[method](+date / +duration) * +duration);
+  }
 
   return (
     <>
@@ -308,7 +385,7 @@ const infoComensal = ({ cartItems, clearCart }) => {
                     value={coupon}
                   ></input>
                   <h4 className="font-normal mb-6 my-4">Fecha de entrega</h4>
-                  <ThemeProvider theme={materialTheme}>
+                  {/* <ThemeProvider theme={materialTheme}>
                     <DatePicker
                       value={date ? date : new Date()}
                       onChange={(e) => setDate(e.toString())}
@@ -317,8 +394,8 @@ const infoComensal = ({ cartItems, clearCart }) => {
                       minDate={new Date()}
                     />
                   </ThemeProvider>
-                  <h4 className="font-normal mb-6 my-4">Hora de entrega</h4>
-                  <ThemeProvider theme={materialTheme}>
+                  <h4 className="font-normal mb-6 my-4">Hora de entrega</h4> */}
+                  {/* <ThemeProvider theme={materialTheme}>
                     <TimePicker
                       value={hour ? hour : roundMinutes(new Date())}
                       onChange={(e) => setHour(e.toString())}
@@ -326,7 +403,15 @@ const infoComensal = ({ cartItems, clearCart }) => {
                       inputVariant="outlined"
                       minutesStep={30}
                     />
-                  </ThemeProvider>
+                  </ThemeProvider> */}
+                  <DateTimePicker
+                    value={date}
+                    onChange={(e) => setDate(e.toString())}
+                    name="date"
+                    inputVariant="outlined"
+                    minDate={new Date()}
+                    minutesStep={30}
+                  />
                   <h4 className="font-normal mb-5 my-4">
                     Dirección de entrega
                   </h4>
