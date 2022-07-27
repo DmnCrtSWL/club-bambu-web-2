@@ -16,7 +16,7 @@ const FeaturedTab = () => {
   }, []);
 
   const currentCategory = products.filter(
-    (category) => category.googleItemCondition === "NEW"
+    (category) => category.defaultCategoryId === 136064009
   );
 
   return (

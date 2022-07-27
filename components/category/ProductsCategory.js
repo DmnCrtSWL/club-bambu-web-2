@@ -14,18 +14,18 @@ function ProductsCategory() {
 
   useEffect(() => {
     (async () => {
-      const productos = await ecwid.getProducts();
+      const productos = await ecwid.getProducts({ offset: 100 });
       const filtro = productos.items;
       const number = Number(id);
       const number2 = Number(slug);
-      if (number) {
+      if (number2) {
         const currentCategory = filtro.filter(
-          (category) => category.categoryIds[0] === number
+          (category) => category.categoryIds[0] === number2
         );
         setProducts(currentCategory);
       } else {
         const currentCategory = filtro.filter(
-          (category) => category.categoryIds[0] === number2
+          (category) => category.categoryIds[0] === number
         );
         setProducts(currentCategory);
       }

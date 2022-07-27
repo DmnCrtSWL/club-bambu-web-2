@@ -17,10 +17,11 @@ const CategoryId = (props) => {
   return (
     <>
       <Layout noBreadcrumb="d-none" headerStyle="header-style-1">
-        <h1 className="m-10">Categoría {title}</h1>
         <section className="product-tabs section-padding position-relative wow fadeIn animated">
           <div className="container">
             <div className="col-lg-12">
+              <h1 className="m-10">Categoría {title}</h1>
+
               <Products />
             </div>
           </div>

@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Layout from "../../components/layout/Layout";
-import {
-  MuiPickersUtilsProvider,
-  DatePicker,
-  TimePicker,
-  DateTimePicker,
-} from "@material-ui/pickers";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import esLocale from "date-fns/locale/es";
 import { createTheme } from "@material-ui/core";
@@ -316,7 +311,7 @@ const infoComensal = ({ cartItems, clearCart }) => {
           <div className="container">
             <div className="col-lg-12">
               <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
-                <h2>Información comensal</h2>
+                <h2 className="ml-10">Información comensal</h2>
                 <form className="m-10">
                   <h4 className="font-normal mb-2">Nombre completo*</h4>
                   <input
@@ -417,14 +412,34 @@ const infoComensal = ({ cartItems, clearCart }) => {
                       minutesStep={30}
                     />
                   </ThemeProvider> */}
-                  <DateTimePicker
+                  {/* <ThemeProvider theme={materialTheme}> */}
+                  {/* <DateTimePicker
                     value={date}
                     onChange={(e) => setDate(e.toString())}
                     name="date"
                     inputVariant="outlined"
                     minDate={new Date()}
                     minutesStep={30}
-                  />
+                  /> */}
+                  {/* </ThemeProvider> */}
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DateTimePicker
+                      value={date}
+                      onChange={(newValue) => {
+                        setDate(newValue.toString());
+                      }}
+                      label="Intervalos de 30 minutos"
+                      minutesStep={30}
+                      minDate={new Date()}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          disabled
+                          onKeyDown={(event) => event.preventDefault()}
+                        />
+                      )}
+                    />
+                  </LocalizationProvider>
                   <h4 className="font-normal mb-5 my-4">
                     Dirección de entrega*
                   </h4>
@@ -472,14 +487,52 @@ const materialTheme = createTheme({
         backgroundColor: "#325454",
       },
     },
-    MuiPickersCalendarHeader: {
-      switchHeader: {
-        backgroundColor: "white",
-        color: "#325454",
-      },
+  },
+  MuiPickersDay: {
+    day: {
+      color: "#325454",
+    },
+    daySelected: {
+      backgroundColor: "#325454",
+    },
+    current: {
+      color: "#325454",
     },
   },
 });
+
+// const materialTheme = createTheme({
+//   overrides: {
+//     MuiPickersCalendarHeader: {
+//       switchHeader: {
+//         color: "#6A148E",
+//         textTransform: "uppercase",
+//       },
+//       dayLabel: {
+//         textTransform: "uppercase",
+//       },
+//     },
+//     MuiPickersDay: {
+//       day: {
+//         color: "#325454",
+//       },
+//       daySelected: {
+//         backgroundColor: "#325454",
+//         "&:hover": {
+//           backgroundColor: "#325454",
+//         },
+//       },
+//       current: {
+//         color: "##325454",
+//       },
+//     },
+//     MuiSvgIcon: {
+//       root: {
+//         fill: "white",
+//       },
+//     },
+//   },
+// });
 
 const mapStateToProps = (state) => ({
   cartItems: state.cart,
