@@ -11,26 +11,40 @@ function ProductsCategory() {
   const { id, title, slug } = router.query;
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [productos1, setproductos1] = useState([]);
+  const [productos2, setproductos2] = useState([]);
 
   useEffect(() => {
     (async () => {
       const productos = await ecwid.getProducts({ offset: 100 });
+      setproductos1(productos.items);
+      const productosParte = await ecwid.getProducts();
+      setproductos2(productosParte.items);
+      let totalProductos = [];
+
+      if (productos1 && productos2) {
+        totalProductos = productos1.concat(productos2);
+      }
+      console.log(productos);
+      console.log(productosParte);
+      console.log(totalProductos);
+
       const filtro = productos.items;
       const number = Number(id);
       const number2 = Number(slug);
       if (number2) {
-        const currentCategory = filtro.filter(
+        const currentCategory = totalProductos.filter(
           (category) => category.categoryIds[0] === number2
         );
         setProducts(currentCategory);
       } else {
-        const currentCategory = filtro.filter(
+        const currentCategory = totalProductos.filter(
           (category) => category.categoryIds[0] === number
         );
         setProducts(currentCategory);
       }
     })();
-  }, [id]);
+  }, [id, productos1, productos2]);
 
   useEffect(() => {
     setLoading(true);
