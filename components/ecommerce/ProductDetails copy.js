@@ -30,7 +30,6 @@ const ProductDetails = ({
   const { id } = router.query;
   const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState([]);
-  const [totalTemp, setTotalTemp] = useState(0);
   const handleCart = (product) => {
     addToCart(product);
     toast.success("Add to Cart !");
@@ -52,10 +51,8 @@ const ProductDetails = ({
     (async () => {
       const producto = await ecwid.getProduct(id);
       setProduct(producto);
-      setTotalTemp(producto.price);
       console.log("producto Detail: ")
       console.log(producto)
-      console.log("Total:  " + totalTemp)
     })();
   }, [id]);
 
@@ -150,7 +147,7 @@ const ProductDetails = ({
                         <div className="product-price primary-color float-left">
                           <ins>
                             <span className="text-brand">
-                              Precio: ${totalTemp}
+                              Precio: ${product.price}
                             </span>
                           </ins>
                           {/*<ins>
@@ -215,31 +212,14 @@ const ProductDetails = ({
                         <ul className="list-filter size-filter font-small">
                           {size(product.options) > 0 && (
                             <>
-                              {product.options.map((opcion, i)=> (
-                                <>
-                                  {console.log(opcion)}
-                                  <strong className="mr-10">{opcion.name}</strong>
-                                  <ul>
-                                  {opcion.choices.map((o,i)=>
-                                    <li key={i}>
-                                      <a 
-                                      onClick={(e)=>(
-                                        console.log("click"),
-                                        console.log(o.priceModifier),
-                                        setTotalTemp(totalTemp + o.priceModifier)
-                                      )}
-                                      >
-                                        {o.text}
-                                        </a>
-                                    </li>
-                                  )}
-                                  </ul>
-                                </>
-                              ))
-                              }
+                              <strong className="mr-10">Opciones</strong>
+                              {product.options[0].choices.map((opcion, i) => (
+                                <li key={i}>
+                                  <a href="#">{opcion.text}</a>
+                                </li>
+                              ))}
                             </>
-                          )
-                          }
+                          )}
                           {/*<li className="active">
                                                         <a>M</a>
                                                     </li>

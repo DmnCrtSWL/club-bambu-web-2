@@ -33,6 +33,7 @@ const infoProductos = () => {
   const [total, setTotal] = useState(0);
   const [order, setOrder] = useState({});
   const [productos, setproductos] = useState([]);
+  const [loading, setLoading]= useState(true);
 
   const horaOrden = new Date(order.pickupTime);
   const hora = horaOrden.getUTCHours();
@@ -55,17 +56,27 @@ const infoProductos = () => {
       const resp = await ecwid.getOrderDetails(orderi ? orderi : iorder);
       setOrder(resp);
       setproductos(resp.items);
+      setLoading(false);
     })();
   }, [iorder, orderi]);
 
   return (
     <>
-      <Layout parent="Inicio" sub="Mis pedidos" subChild="Detalles">
+      {loading === true ? (
+        <div className="col-12">
+          <div className=" h-20 rounded-xl justify-center flex flex-col items-center p-1">
+            <BeatLoader color={"#325454"} size={10} className="mb-10" />
+            <h4 className="text-center text-xs">Cargando información de Pedido</h4>
+          </div>
+        </div>
+        ):(
+          <>
+            <Layout parent="Inicio" sub="Mis pedidos" subChild="Detalles">
         {order ? (
           <section className="mt-50 mb-50">
             <div className="container">
               <div>
-                <h1>Resumen de tu Pedido</h1>
+                <h1>¡Tu pedido se ha realizado, resumen de tu pedido!</h1>
               </div>
               <div className="border p-3 rounded mt-5">
                 <div className="text-lg font-semibold">
@@ -180,6 +191,11 @@ const infoProductos = () => {
                   </div>
                 </div>
               </div>
+              <div className="cart-action text-end">
+                  <a className="btn " onClick={() => router.push({pathname: "/"})}>
+                    Ir al inicio
+                  </a>
+                </div>
             </div>
           </section>
         ) : (
@@ -192,7 +208,9 @@ const infoProductos = () => {
         )}
       </Layout>
     </>
-  );
+  )};
+  </>
+  )
 };
 
 const mapStateToProps = (state) => ({
