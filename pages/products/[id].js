@@ -5,11 +5,13 @@ import { server } from "../../config/index";
 import { findProductIndex } from "../../util/util";
 import ecwid from "../../util/ecwid";
 import { useRouter } from "next/router";
+import BeatLoader from "react-spinners/BeatLoader";
 
 const ProductId = () => {
   const router = useRouter();
   const { id } = router.query;
   const [product, setProduct] = useState([]);
+  const [loading, setLoading] =useState(true);
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -19,21 +21,31 @@ const ProductId = () => {
     (async () => {
       const producto = await ecwid.getProduct(id);
       setProduct(producto);
-      console.log("Producto id entrando a [id]: " + id);
-      console.log("Datos: ");
-      console.log(product);
     })();
-  }, []);
+    setLoading(false);
+  }, [id]);
 
   return (
     <>
-      <Layout parent="Inicio" sub="Productos" subChild={product.name}>
-        <div className="container">
-          <ProductDetails />
+    {loading === true ? (
+      <div className="col-12">
+        <div className=" h-20 rounded-xl justify-center flex flex-col items-center p-1">
+          <BeatLoader color={"#325454"} size={10} className="mb-10" />
+            <h4 className="text-center text-xs">Cargando Información</h4>
         </div>
-      </Layout>
+      </div>
+      ):(
+      <>
+        <Layout parent="Inicio" sub="Productos" subChild={product.name}>
+          <div className="container">
+            <ProductDetails />
+          </div>
+        </Layout>
+      </>
+      )
+    };
     </>
-  );
+  )
 };
 
 /*

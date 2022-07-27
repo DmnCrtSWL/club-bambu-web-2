@@ -26,10 +26,7 @@ import {
 } from "../../redux/action/cart";
 import { connect } from "react-redux";
 import moment from "moment";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { TextField } from "@mui/material";
+import BeatLoader from "react-spinners/BeatLoader";
 
 const infoComensal = ({ cartItems, clearCart }) => {
   const router = useRouter();
@@ -45,14 +42,17 @@ const infoComensal = ({ cartItems, clearCart }) => {
   );
   const [hour, setHour] = UseLocalStorage("hour", "");
   const [adress, setAdress] = UseLocalStorage("adress", "");
-  const [comments, setComments] = UseLocalStorage("comments", "");
+  //const [comments, setComments] = UseLocalStorage("comments", "");
+  const [comments, setComments] = useState("");
   const stripePromise = loadStripe("<pulishable_api_key>");
   const [total, setTotal] = useState(0);
   const [orderId, setOrderId] = UseLocalStorage("orderId", "");
   var vector = {};
+  const [loading, setLoading]=useState(true)
 
   useEffect(() => {
     cartItems.map((item) => setTotal((total += item.price * item.quantity)));
+    setLoading(false);
   }, [cartItems]);
 
   const sendForm = async () => {
@@ -296,15 +296,24 @@ const infoComensal = ({ cartItems, clearCart }) => {
 
   return (
     <>
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSfb3q43wvrhTk9tbipj9KkrcVcjxW3ro&libraries=places"></script>
-      <Layout noBreadcrumb="d-none" headerStyle="header-style-1">
+      {loading === true ? (
+      <div className="col-12">
+      <div className=" h-20 rounded-xl justify-center flex flex-col items-center p-1">
+        <BeatLoader color={"#325454"} size={10} className="mb-10" />
+        <h4 className="text-center text-xs">Cargando Información</h4>
+      </div>
+    </div>
+      ):(
+      <>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSfb3q43wvrhTk9tbipj9KkrcVcjxW3ro&libraries=places"></script>
+          <Layout noBreadcrumb="d-none" headerStyle="header-style-1">
         <section className="product-tabs section-padding position-relative wow fadeIn animated">
           <div className="container">
             <div className="col-lg-12">
               <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
                 <h2 className="ml-10">Información comensal</h2>
                 <form className="m-10">
-                  <h4 className="font-normal mb-2">Nombre completo</h4>
+                  <h4 className="font-normal mb-2">Nombre completo*</h4>
                   <input
                     className="w-full"
                     onChange={(e) => setName(e.target.value)}
@@ -312,7 +321,7 @@ const infoComensal = ({ cartItems, clearCart }) => {
                     type="text"
                     value={name}
                   ></input>
-                  <h4 className="font-normal mb-5 my-4">Correo electrónico</h4>
+                  <h4 className="font-normal mb-5 my-4">Correo electrónico*</h4>
                   <input
                     className="w-full"
                     onChange={(e) => setEmail(e.target.value)}
@@ -320,7 +329,7 @@ const infoComensal = ({ cartItems, clearCart }) => {
                     type="text"
                     value={email}
                   ></input>
-                  <h4 className="font-normal mb-5 my-4">Numero de celular</h4>
+                  <h4 className="font-normal mb-5 my-4">Numero de celular*</h4>
                   <input
                     className="w-full"
                     onChange={(e) => setPhone(e.target.value)}
@@ -328,7 +337,7 @@ const infoComensal = ({ cartItems, clearCart }) => {
                     type="text"
                     value={phone}
                   ></input>
-                  <h4 className="font-normal mb-5 my-4">Método de pago</h4>
+                  <h4 className="font-normal mb-5 my-4">Método de pago*</h4>
                   <label className="mx-4 mt-2">
                     Efectivo
                     <input
@@ -383,7 +392,7 @@ const infoComensal = ({ cartItems, clearCart }) => {
                     type="text"
                     value={coupon}
                   ></input>
-                  <h4 className="font-normal mb-6 my-4">Fecha de entrega</h4>
+                  <h4 className="font-normal mb-6 my-4">Fecha de entrega*</h4>
                   {/* <ThemeProvider theme={materialTheme}>
                     <DatePicker
                       value={date ? date : new Date()}
@@ -432,7 +441,7 @@ const infoComensal = ({ cartItems, clearCart }) => {
                     />
                   </LocalizationProvider>
                   <h4 className="font-normal mb-5 my-4">
-                    Dirección de entrega
+                    Dirección de entrega*
                   </h4>
                   <Autocomplete
                     apiKey={"AIzaSyCSfb3q43wvrhTk9tbipj9KkrcVcjxW3ro"}
@@ -447,7 +456,7 @@ const infoComensal = ({ cartItems, clearCart }) => {
                       componentRestrictions: { country: "mx" },
                     }}
                   />
-                  <h4 className="font-normal mb-5 my-4">Comentarios extras</h4>
+                  <h4 className="font-normal mb-5 my-4">Comentarios extras:</h4>
                   <textarea
                     className="w-full"
                     onChange={(e) => setComments(e.target.value)}
@@ -466,7 +475,9 @@ const infoComensal = ({ cartItems, clearCart }) => {
         </section>
       </Layout>
     </>
-  );
+  )};
+  </>
+  )
 };
 
 const materialTheme = createTheme({
