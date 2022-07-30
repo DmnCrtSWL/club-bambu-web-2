@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Select from 'react-select';
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
@@ -31,10 +32,46 @@ const ProductDetails = ({
   const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState([]);
   const [totalTemp, setTotalTemp] = useState(0);
+  const [options,setOptions] = useState([]);
+
   const handleCart = (product) => {
-    addToCart(product);
+    const data= {
+      options: options
+    }
+    setProduct({...product,options: 'ok'})
+    console.log(product);
+    //addToCart(product);
     toast.success("Add to Cart !");
   };
+
+  //Actualiza precio del producto
+  const handleSelectChange = (e) =>{
+    var exist=false;
+    if (options.length>0){
+      options.map(
+        o=>{
+          if(o.key === e.key){
+            exist=true
+            let newArray = options.filter(item => item !== o)
+            newArray.push(e)
+            setOptions(newArray)
+          }
+        }
+      )
+      if(!exist){
+        setOptions([...options, e])
+      }
+    }else{
+        setOptions([...options, e])
+    }
+  }
+
+  //Actualiza el precio del producto dependiendo las opciones seleccionadas
+  useEffect(() => {
+    var precio = product.price
+    options.map((o)=>{ precio = precio + o.priceModifier})
+    setTotalTemp(precio)
+  }, [options]);
 
   /*const handleCompare = (product) => {
         addToCompare(product);
@@ -53,9 +90,9 @@ const ProductDetails = ({
       const producto = await ecwid.getProduct(id);
       setProduct(producto);
       setTotalTemp(producto.price);
-      console.log("producto Detail: ")
+      console.log("Detalle de producto: ")
       console.log(producto)
-      console.log("Total:  " + totalTemp)
+      console.log("Total Temporal:  " + totalTemp)
     })();
   }, [id]);
 
@@ -216,27 +253,26 @@ const ProductDetails = ({
                           {size(product.options) > 0 && (
                             <>
                               {product.options.map((opcion, i)=> (
-                                <>
-                                  {console.log(opcion)}
+                                <div key={i}>
                                   <strong className="mr-10">{opcion.name}</strong>
-                                  <ul>
-                                  {opcion.choices.map((o,i)=>
-                                    <li key={i}>
-                                      <a 
-                                      onClick={(e)=>(
-                                        console.log("click"),
-                                        console.log(o.priceModifier),
-                                        setTotalTemp(totalTemp + o.priceModifier)
-                                      )}
-                                      >
-                                        {o.text}
-                                        </a>
-                                    </li>
-                                  )}
-                                  </ul>
-                                </>
+                                  { size(opcion.choices)>0 &&   
+                                    <Select 
+                                      defaultValue={{label:'Selecciona una opción', value:'empty'}}
+                                      options={opcion.choices.map((o,j)=>(
+                                        {
+                                          label: o.text, 
+                                          value: o.text, 
+                                          priceModifier: o.priceModifier, 
+                                          key: i,
+
+                                        }))}
+                                        onChange={handleSelectChange}
+                                    />
+                                  }
+                                  
+                                </div>
                               ))
-                              }
+                            }
                             </>
                           )
                           }
@@ -339,6 +375,28 @@ const ProductDetails = ({
                         </li>
                       </ul>
                     </div>
+
+
+
+
+
+
+
+                      {options&& (
+                        <>
+                          {options.map((option, i)=>(
+                            <div key={i}>
+                              <h4>{option.value} --- {option.priceModifier}</h4>
+                              {console.log('opciones' , option)}
+                            </div>
+                          ))}
+                          <h2>Total: {totalTemp}</h2>
+                        </>
+                      )}
+
+
+
+
                   </div>
                 </div>
 
