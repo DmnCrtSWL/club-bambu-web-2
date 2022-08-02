@@ -26,6 +26,10 @@ import {
 } from "../../redux/action/cart";
 import { connect } from "react-redux";
 import moment from "moment";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { TextField } from "@mui/material";
 import BeatLoader from "react-spinners/BeatLoader";
 
 const infoComensal = ({ cartItems, clearCart }) => {
@@ -53,6 +57,7 @@ const infoComensal = ({ cartItems, clearCart }) => {
   useEffect(() => {
     cartItems.map((item) => setTotal((total += item.price * item.quantity)));
     setLoading(false);
+    console.log(cartItems)
   }, [cartItems]);
 
   const sendForm = async () => {
@@ -85,6 +90,7 @@ const infoComensal = ({ cartItems, clearCart }) => {
           (item) => (
             (datoProducto = {
               productId: item.id,
+              category: item.defaultCategoryId,
               sku: item.sku,
               quantity: item.quantity,
               name: item.name,
@@ -140,6 +146,7 @@ const infoComensal = ({ cartItems, clearCart }) => {
           orderComments: comments,
         };
         //registrar Orden en Ewcid
+        console.log(data)
         const resp = await ecwid.addOrder(data);
         vector = [
           ...orderId,
@@ -151,7 +158,6 @@ const infoComensal = ({ cartItems, clearCart }) => {
         if (orderId) {
           clearCart();
         }
-
         const id = resp.id;
         const iorder = id.toString();
         //3. Mandamos a la pagina detalle de pedido

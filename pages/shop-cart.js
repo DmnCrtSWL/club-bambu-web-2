@@ -64,17 +64,14 @@ const Cart = ({
                       </tr>
                     </thead>
                     <tbody>
+                    {/*cartItems.map((item, i) => {console.log(item.selectedOptions)})*/}
                       {cartItems.map((item, i) => (
                         <tr key={i}>
                           <td className="image product-thumbnail">
                             <img src={item.imageUrl} />
                           </td>
-
                           <td className="product-des product-name">
                             <h5 className="product-name">
-                              {/* <Link href="/products">
-                                <a>{item.name}</a>
-                              </Link> */}
                               {item.name}
                             </h5>
                             {item.description && (
@@ -82,6 +79,15 @@ const Cart = ({
                                 {item.description.slice(3, -4)}
                               </p>
                             )}
+                            {item.selectedOptions && (
+                              <p className="font-xs">
+                                <ul> Opciones Extra
+                                  {item.selectedOptions.map((option)=>(
+                                    <li>{option.value}</li>
+                                  ))}
+                                </ul>
+                              </p>
+                            )} 
                           </td>
                           <td className="price" data-title="Price">
                             <span>${item.price}</span>

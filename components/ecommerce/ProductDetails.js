@@ -35,16 +35,17 @@ const ProductDetails = ({
   const [options,setOptions] = useState([]);
 
   const handleCart = (product) => {
-    const data= {
-      options: options
-    }
-    setProduct({...product,options: 'ok'})
+    product.selectedOptions = options
+    //setProduct({...product, selectedOptions: options})
+    //setProduct({...product, options})
+    //setProduct([...product,  options])
+    console.log('Producto con opciones:')
     console.log(product);
-    //addToCart(product);
+    addToCart(product);
     toast.success("Add to Cart !");
   };
 
-  //Actualiza precio del producto
+  //Actualiza precio del productos
   const handleSelectChange = (e) =>{
     var exist=false;
     if (options.length>0){
@@ -59,7 +60,7 @@ const ProductDetails = ({
         }
       )
       if(!exist){
-        setOptions([...options, e])
+        setOptions([...options,e])
       }
     }else{
         setOptions([...options, e])
@@ -255,16 +256,25 @@ const ProductDetails = ({
                               {product.options.map((opcion, i)=> (
                                 <div key={i}>
                                   <strong className="mr-10">{opcion.name}</strong>
-                                  { size(opcion.choices)>0 &&   
+                                  {size(opcion.choices)>0 &&   
                                     <Select 
                                       defaultValue={{label:'Selecciona una opción', value:'empty'}}
                                       options={opcion.choices.map((o,j)=>(
                                         {
-                                          label: o.text, 
-                                          value: o.text, 
-                                          priceModifier: o.priceModifier, 
+                                          name: opcion.name,
+                                          value: o.text,
+                                          valuesArray: [o.text], 
+                                          selections: [
+                                            {
+                                            selectionTitle: o.text,
+                                            priceModifier: o.priceModifier, 
+                                            selectionModifierType: o.priceModifierType,
+                                            },
+                                          ],
+                                          type: 'CHOICE',
+                                          label: o.text,
                                           key: i,
-
+                                          priceModifier:o.priceModifier,
                                         }))}
                                         onChange={handleSelectChange}
                                     />

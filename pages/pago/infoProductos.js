@@ -53,7 +53,8 @@ const infoProductos = () => {
 
   useEffect(() => {
     (async () => {
-      const resp = await ecwid.getOrderDetails(orderi ? orderi : iorder);
+      //const resp = await ecwid.getOrderDetails(orderi ? orderi : iorder);
+      const resp = await ecwid.getOrderDetails(2063);
       setOrder(resp);
       setproductos(resp.items);
       setLoading(false);
@@ -71,6 +72,7 @@ const infoProductos = () => {
         </div>
         ):(
           <>
+          {console.log(order)}
             <Layout parent="Inicio" sub="Mis pedidos" subChild="Detalles">
         {order ? (
           <section className="mt-50 mb-50">
