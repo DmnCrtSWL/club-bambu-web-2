@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import ecwid from "../../util/ecwid";
 import Layout from "../../components/layout/Layout";
+import BeatLoader from "react-spinners/BeatLoader";
 
 function allProducts() {
   const router = useRouter();
@@ -25,8 +26,9 @@ function allProducts() {
       } else {
         const productosDestacados = await ecwid.getProducts();
         const filtro = productosDestacados.items;
+
         const currentCategory = filtro.filter(
-          (category) => category.googleItemCondition === "NEW"
+          (category) => category.defaultCategoryId === 136064009
         );
         setProducts(currentCategory);
       }
@@ -161,7 +163,12 @@ function allProducts() {
                           </div>
                         ) : (
                           <div className="col-12">
-                            <div className=" bg-slate-200 h-20 rounded-xl justify-center flex items-center p-1">
+                            <div className=" h-20 rounded-xl justify-center flex flex-col items-center p-1">
+                              <BeatLoader
+                                color={"#325454"}
+                                size={10}
+                                className="mb-10"
+                              />
                               <h4 className="text-center text-xs">
                                 Cargando productos Bambu
                               </h4>
