@@ -45,16 +45,15 @@ const infoProductos = () => {
   const año = fechaOrden.getFullYear();
   const cartItems = 0;
 
-  /*const price = () => {
+  const price = () => {
     let price = 0;
     cartItems.forEach((item) => (price += item.price * item.quantity));
     return price;
-  };*/
+  };
 
   useEffect(() => {
     (async () => {
-      //const resp = await ecwid.getOrderDetails(orderi ? orderi : iorder);
-      const resp = await ecwid.getOrderDetails(2063);
+      const resp = await ecwid.getOrderDetails(orderi ? orderi : iorder);
       setOrder(resp);
       setproductos(resp.items);
       setLoading(false);
@@ -174,6 +173,13 @@ const infoProductos = () => {
                                   {item.description.slice(3, -4)}
                                 </p>
                               )}
+                              {item.selectedOptions && (
+                                <ul className="font-xs"> Opciones:
+                                  {item.selectedOptions.map((option,i)=>(
+                                    <li key={i}>{option.value}</li>
+                                  ))}
+                                </ul>
+                              )} 
                             </td>
                             <td className="price" data-title="Price">
                               <span>${item.price}</span>

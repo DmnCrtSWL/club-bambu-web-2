@@ -392,7 +392,8 @@ const ProductDetails = ({
 
 
 
-                      {options&& (
+                      { /* Nos ayuda a ver las opciones de forma visual
+                      options&& (
                         <>
                           {options.map((option, i)=>(
                             <div key={i}>
@@ -402,7 +403,7 @@ const ProductDetails = ({
                           ))}
                           <h2>Total: {totalTemp}</h2>
                         </>
-                      )}
+                          )*/}
 
 
 

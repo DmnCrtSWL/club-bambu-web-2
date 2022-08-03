@@ -86,8 +86,28 @@ const infoComensal = ({ cartItems, clearCart }) => {
         //const paymentMethod = methodPayCard ? "Card" : "Cash"
         var productos = [];
         var datoProducto = {};
+        var opcionesSeleccionadas=[];
+        var datoOpciones={};
         cartItems.map(
           (item) => (
+            (item.selectedOptions.map(opcion =>(
+              datoOpciones={
+                name: opcion.name,
+                selections: [
+                  {
+                    selectionTitle: opcion.selections[0].selectionTitle, 
+                    selectionModifier: opcion.selections[0].priceModifier, 
+                    selectionModifierType: opcion.selections[0].selectionModifierType
+                  } 
+                ],
+                type: opcion.type,
+                value: opcion.value,
+                valueTranslated: {es_419: opcion.value},
+                valuesArray: opcion.valuesArray,
+              },
+              opcionesSeleccionadas.push(datoOpciones)
+              )
+            )),
             (datoProducto = {
               productId: item.id,
               category: item.defaultCategoryId,
@@ -95,11 +115,12 @@ const infoComensal = ({ cartItems, clearCart }) => {
               quantity: item.quantity,
               name: item.name,
               price: item.price,
-              selectedOptions: [],
+              selectedOptions:  opcionesSeleccionadas,
             }),
             productos.push(datoProducto)
           )
         );
+        console.log(productos);
         //_____________________________Formateando fecha
         const fecha = new Date(date);
         const dia = fecha.getDate();

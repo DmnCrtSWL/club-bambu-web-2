@@ -80,13 +80,11 @@ const Cart = ({
                               </p>
                             )}
                             {item.selectedOptions && (
-                              <p className="font-xs">
-                                <ul> Opciones Extra
-                                  {item.selectedOptions.map((option)=>(
-                                    <li>{option.value}</li>
+                                <ul className="font-xs"> Opciones:
+                                  {item.selectedOptions.map((option,i)=>(
+                                    <li key={i}>{option.value}</li>
                                   ))}
                                 </ul>
-                              </p>
                             )} 
                           </td>
                           <td className="price" data-title="Price">
