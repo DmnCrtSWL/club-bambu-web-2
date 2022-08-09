@@ -5,6 +5,7 @@ import Breadcrumb from "./Breadcrumb";
 import Footer from "./Footer";
 import Header from "./Header";
 import MobileMenu from "./MobileMenu";
+import HeaderLifeStyle from "../lifestyle/HeaderLifeStyle";
 
 const Layout = ({
   children,
@@ -42,8 +43,9 @@ const Layout = ({
         headerStyle={headerStyle}
         isToggled={isToggled}
         toggleClick={toggleClick}
+        HeaderLifeStyle={HeaderLifeStyle}
       />
-      <MobileMenu isToggled={isToggled} toggleClick={toggleClick} />
+      <MobileMenu isToggled={isToggled} toggleClick={toggleClick} HeaderLifeStyle={HeaderLifeStyle}/>
       <main className="main">
         <Breadcrumb
           parent={parent}

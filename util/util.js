@@ -14,3 +14,5 @@ export const deleteProduct = (list, id) => {
     return index;
   };
   
+
+  

@@ -4,7 +4,7 @@ import useClickOutside from "../../util/outsideClick";
 import ecwid from "../../util/ecwid";
 import Search from "../ecommerce/Search";
 
-const MobileMenu = ({ isToggled, toggleClick }) => {
+const MobileMenu = ({ isToggled, toggleClick, HeaderLifeStyle}) => {
   const [isActive, setIsActive] = useState({
     status: false,
     key: "",
@@ -555,6 +555,7 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
                         </div> */}
           </div>
         </div>
+        <HeaderLifeStyle />
       </div>
     </>
   );

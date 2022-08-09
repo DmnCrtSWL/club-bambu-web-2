@@ -1713,7 +1713,32 @@ label {
   color: #242424;
 }
 
+/* COMPONENTS / LifeStyle*/
+#sliderLifeStyle{
+  background-color: #FFA420;
+  align-items: center;
+}
+#item-list{
+  display:flex;
+  justify-content: center;
+  align-items:center;
+  color:#000;
+  background-color: var(--verdeFondoClaro);
+  border-radius: 25px;
+}
+#item-list:hover{
+  background-color: #E98666;
+  color: rgb(0,0,0,0.7);
+}
+#item{
+  color:rgb(0,0,0,0.7);
+  margin-right: 5px;
+}
+
 /*COMPONENTS -> SLIDER*/
+
+
+
 .single-animation-wrap.slick-active .slider-animated-1 h1 {
   -webkit-animation-delay: 1.4s;
   animation-delay: 1.4s;

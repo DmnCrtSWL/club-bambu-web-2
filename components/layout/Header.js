@@ -10,6 +10,7 @@ const Header = ({
   toggleClick,
   totalWishlistItems,
   headerStyle,
+  HeaderLifeStyle,
 }) => {
   const [isToggled, setToggled] = useState(false);
   const [scroll, setScroll] = useState(0);
@@ -1624,6 +1625,7 @@ const Header = ({
             </div>
           </div>
         </div>
+        <HeaderLifeStyle/>
       </header>
     </>
   );
