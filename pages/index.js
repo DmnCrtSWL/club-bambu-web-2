@@ -1,3 +1,5 @@
+import { Button } from "react-bootstrap";
+import Link from "next/link";
 import FeatchTab from "../components/ecommerce/fetchTab";
 import FeatchTab2 from "../components/ecommerce/fetchTabSlider";
 import Banner2 from "../components/elements/Banner2";
@@ -15,24 +17,37 @@ import BrandSlider from "./../components/sliders/Brand";
 import CategorySlider from "./../components/sliders/Category";
 import Intro1 from "./../components/sliders/Intro1";
 import NewArrival from "./../components/sliders/NewArrival";
+import ButtonBottom from "../components/elements/ButtonBottom";
+import HeaderCategory from "../components/category/HeaderCategory";
+import IconsCategory from "../components/category/IconsCategory";
 
 export default function Home() {
   return (
     <>
       <Layout noBreadcrumb="d-none" headerStyle="header-style-1">
-        <section className="home-slider position-relative pt-50">
+        <section className="home-slider position-relative">
+          <HeaderCategory />
+        </section>
+        <section className="home-slider position-relative pt-50 mx-10">
           <Intro1 />
         </section>
 
-        <section className="featured section-padding position-relative">
+        {/* <section className="featured section-padding position-relative">
           <div className="container">
             <div className="row">
               <BannerFeatures />
             </div>
           </div>
+        </section> */}
+        <section className="product-tabs section-padding position-relative wow fadeIn animated mx-10">
+          <div className="container">
+            <div className="col-lg-12">
+              <IconsCategory />
+            </div>
+          </div>
         </section>
 
-        <section className="product-tabs section-padding position-relative wow fadeIn animated">
+        <section className="product-tabs section-padding position-relative wow fadeIn animated mx-10">
           <div className="container">
             <div className="col-lg-12">
               <FeatchTab />
@@ -40,13 +55,13 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="banner-2 section-padding pb-0">
+        {/*<section className="banner-2 section-padding pb-0">
           <div className="container">
             <Banner2 />
           </div>
-        </section>
+      </section>*/}
 
-        <section className="popular-categories section-padding mt-15 mb-25">
+        {/* <section className="popular-categories section-padding mt-15 mb-25">
           <div className="container wow fadeIn animated">
             <h3 className="section-title mb-20">
               <span>Popular</span> Categories
@@ -57,17 +72,17 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+    </section>*/}
 
-        <section className="banners mb-15">
+        {/*<section className="banners mb-15">
           <div className="container">
             <div className="row">
               <Banner5 />
             </div>
           </div>
-        </section>
+        </section>*/}
 
-        <section className="section-padding">
+        {/*<section className="section-padding">
           <div className="container wow fadeIn animated">
             <h3 className="section-title mb-20">
               <span>New</span> Arrivals
@@ -76,9 +91,9 @@ export default function Home() {
               <NewArrival />
             </div>
           </div>
-        </section>
+        </section>*/}
 
-        <section className="deals section-padding">
+        {/*<section className="deals section-padding">
           <div className="container">
             <div className="row">
               <div className="col-lg-6 deal-co">
@@ -89,8 +104,14 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+      </section>*/}
 
+        {/* <section className="bg-grey-9 section-padding">
+          <div className="container pt-25 pb-25">
+          <FeatchTab2 />
+          </div>
+        </section> */}
+        {/*
         <section className="section-padding">
           <div className="container">
             <h3 className="section-title mb-20 wow fadeIn animated">
@@ -100,15 +121,9 @@ export default function Home() {
               <BrandSlider />
             </div>
           </div>
-        </section>
+    </section>*/}
 
-        <section className="bg-grey-9 section-padding">
-          <div className="container pt-25 pb-25">
-            <FeatchTab2 />
-          </div>
-        </section>
-
-        <section className="section-padding">
+        {/*<section className="section-padding">
           <div className="container pt-25 pb-20">
             <div className="row">
               <div className="col-lg-6">
@@ -124,9 +139,9 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+    </section>*/}
 
-        <section className="mb-50">
+        {/*<section className="mb-50">
           <div className="container">
             <div className="row">
               <div className="col-12">
@@ -134,12 +149,11 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
-
-        <Bottom />
+  </section>*/}
 
         <QuickView />
       </Layout>
+      <ButtonBottom />
     </>
   );
 }

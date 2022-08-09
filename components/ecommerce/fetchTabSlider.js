@@ -10,9 +10,25 @@ function FeatchTabSlider() {
     const [active, setActive] = useState("1");
     const [featured, setFeatured] = useState([]);
     const [trending, setTrending] = useState([]);
-    const [newArrival, setNewArrival] = useState([]);
+    //const [newArrival, setNewArrival] = useState([]);
 
     const featuredProduct = async () => {
+        const request = await fetch(`${server}/static/productApi.json`);
+        const allProducts = await request.json();
+        const featuedItem = allProducts.filter((item) => item.featured);
+        setFeatured(featuedItem);
+        setActive("1");
+    };
+
+    const trendingProduct = async () => {
+        const request = await fetch(`${server}/static/productApi.json`);
+        const allProducts = await request.json();
+        const trendingItem = allProducts.filter((item) => item.trending);
+        setTrending(trendingItem);
+        setActive("2");
+    };
+
+    {/*const featuredProduct = async () => {
         const request = await fetch(`${server}/static/product.json`);
         const allProducts = await request.json();
         const featuedItem = allProducts.filter((item) => item.featured);
@@ -27,6 +43,7 @@ function FeatchTabSlider() {
         setTrending(trendingItem);
         setActive("2");
     };
+
     const newArrivalProduct = async () => {
         const request = await fetch(`${server}/static/product.json`);
         const allProducts = await request.json();
@@ -35,7 +52,7 @@ function FeatchTabSlider() {
         });
         setNewArrival(newArrivalItem);
         setActive("3");
-    };
+    };*/}
 
     useEffect(() => {
         featuredProduct();
@@ -46,26 +63,26 @@ function FeatchTabSlider() {
             <div className="heading-tab d-flex">
                 <div className="heading-tab-left wow fadeIn animated">
                     <h3 className="section-title mb-20">
-                        <span>Monthly</span> Best Sell
+                        <span>Promociones</span> y Platillos Destacados
                     </h3>
                 </div>
                 <div className="heading-tab-right wow fadeIn animated">
                     <ul className="nav nav-tabs right no-border" id="myTab-1" role="tablist">
                         <li className="nav-item" role="presentation">
                             <button className={active === "1" ? "nav-link active" : "nav-link"} onClick={featuredProduct}>
-                                Featured
+                                Promociones
                             </button>
                         </li>
                         <li className="nav-item" role="presentation">
                             <button className={active === "2" ? "nav-link active" : "nav-link"} onClick={trendingProduct}>
-                                Popular
+                                Platillos Destacados
                             </button>
                         </li>
-                        <li className="nav-item" role="presentation">
+                        {/*<li className="nav-item" role="presentation">
                             <button className={active === "3" ? "nav-link active" : "nav-link"} onClick={newArrivalProduct}>
                                 New added
                             </button>
-                        </li>
+                        </li>*/}
                     </ul>
                 </div>
             </div>
@@ -75,15 +92,15 @@ function FeatchTabSlider() {
                     <div className="banner-img style-2 wow fadeIn animated">
                         <img src="assets/imgs/banner/banner-9.jpg" alt="" />
                         <div className="banner-text">
-                            <span>Woman Area</span>
+                            <span>Club Bambú</span>
                             <h4 className="mt-5">
-                                Save 17% on <br />
-                                Clothing
+                                Promociones <br />
+                                Exclusivas
                             </h4>
 
-                            <Link href="/products">
+                            <Link href="/products/allProducts">
                                 <a className="text-white">
-                                    Shop Now <i className="fi-rs-arrow-right"></i>
+                                    ¡Pide Ya! <i className="fi-rs-arrow-right"></i>
                                 </a>
                             </Link>
                         </div>
@@ -102,11 +119,11 @@ function FeatchTabSlider() {
                                 <TrendingSlider products={trending} />
                             </div>
                         </div>
-                        <div className={active === "3" ? "tab-pane fade show active" : "tab-pane fade"}>
+                        {/*<div className={active === "3" ? "tab-pane fade show active" : "tab-pane fade"}>
                             <div className="carausel-4-columns-cover card-product-small arrow-center position-relative">
                                 <NewArrivalTabSlider products={newArrival} />
                             </div>
-                        </div>
+                        </div>*/}
                     </div>
                 </div>
             </div>

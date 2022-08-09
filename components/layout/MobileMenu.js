@@ -1,68 +1,114 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import useClickOutside from "../../util/outsideClick";
+import ecwid from "../../util/ecwid";
+import Search from "../ecommerce/Search";
 
-const MobileMenu = ({ isToggled, toggleClick }) => {
-    const [isActive, setIsActive] = useState({
-        status: false,
-        key: "",
-    });
+const MobileMenu = ({ isToggled, toggleClick, HeaderLifeStyle}) => {
+  const [isActive, setIsActive] = useState({
+    status: false,
+    key: "",
+  });
+  const [categories, setCategories] = useState([]);
 
-    const handleToggle = (key) => {
-        if (isActive.key === key) {
-            setIsActive({
-                status: false,
-            });
-        } else {
-            setIsActive({
-                status: true,
-                key,
-            });
+  useEffect(() => {
+    (async () => {
+      const categorias = await ecwid.getCategories();
+      setCategories(categorias.items);
+    })();
+  }, []);
+
+  // const handleToggle = (key) => {
+  //     if (isActive.key === key) {
+  //         setIsActive({
+  //             status: false,
+  //         });
+  //     } else {
+  //         setIsActive({
+  //             status: true,
+  //             key,
+  //         });
+  //     }
+  // };
+
+  // let domNode = useClickOutside(() => {
+  //     setIsActive({
+  //         status: false,
+  //     });
+  // });
+
+  return (
+    <>
+      <div
+        className={
+          isToggled
+            ? "mobile-header-active mobile-header-wrapper-style sidebar-visible"
+            : "mobile-header-active mobile-header-wrapper-style"
         }
-    };
-
-    let domNode = useClickOutside(() => {
-        setIsActive({
-            status: false,
-        });
-    });
-    return (
-        <>
-            <div className={isToggled ? "mobile-header-active mobile-header-wrapper-style sidebar-visible" : "mobile-header-active mobile-header-wrapper-style"}>
-                <div className="mobile-header-wrapper-inner">
-                    <div className="mobile-header-top">
-                        <div className="mobile-header-logo">
-                            <Link href="/index">
-                                <a>
-                                    <img src="/assets/imgs/theme/logo.svg" alt="logo" />
-                                </a>
-                            </Link>
-                        </div>
-                        <div className="mobile-menu-close close-style-wrap close-style-position-inherit">
-                            <button className="close-style search-close" onClick={toggleClick}>
-                                <i className="icon-top"></i>
-                                <i className="icon-bottom"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="mobile-header-content-area">
-                        <div className="mobile-search search-style-3 mobile-header-border">
-                            <form action="#">
-                                <input type="text" placeholder="Search for items…" />
-                                <button type="submit">
-                                    <i className="fi-rs-search"></i>
-                                </button>
-                            </form>
-                        </div>
-                        <div className="mobile-menu-wrap mobile-header-border">
-                            <div className="main-categori-wrap mobile-header-border">
-                                <Link href="#">
-                                    <a className="categori-button-active-2">
-                                        <span className="fi-rs-apps"></span> Browse Categories
-                                    </a>
-                                </Link>
-                                <div className="categori-dropdown-wrap categori-dropdown-active-small">
+      >
+        <div className="mobile-header-wrapper-inner">
+          <div className="mobile-header-top">
+            <div className="mobile-header-logo">
+              <Link href="/index">
+                <a>
+                  <img src="/assets/imgs/theme/logo.svg" alt="logo" />
+                </a>
+              </Link>
+            </div>
+            <div className="mobile-menu-close close-style-wrap close-style-position-inherit">
+              <button
+                className="close-style search-close"
+                onClick={toggleClick}
+              >
+                <i className="icon-top"></i>
+                <i className="icon-bottom"></i>
+              </button>
+            </div>
+          </div>
+          <div className="mobile-header-content-area">
+            <div className="mobile-search search-style-3 mobile-header-border">
+              {/* <form action="#">
+                <input type="text" placeholder="¿Qué estas buscando?" />
+                <button type="submit">
+                  <i className="fi-rs-search"></i>
+                </button>
+              </form> */}
+              <Search />
+            </div>
+            <div>
+              <div className="main-categori-wrap">
+                <Link href="/pago/misPedidos">
+                  <a className="categori-button-active-2">
+                    <span className="fi-rs-apps"></span> Mis pedidos
+                  </a>
+                </Link>
+              </div>
+            </div>
+            <div className="mobile-menu-wrap mobile-header-border">
+              <div className="main-categori-wrap mobile-header-border">
+                <Link href="/">
+                  <a className="categori-button-active-2">
+                    <span className="fi-rs-apps"></span> Categorías Bambu
+                  </a>
+                </Link>
+                {categories.map((category, i) => (
+                  <div key={i}>
+                    <Link
+                      href={{
+                        pathname: "/categories/[slug]",
+                        query: {
+                          id: category.parentId,
+                          title: category.name,
+                          slug: category.id,
+                        },
+                      }}
+                      //   as={`/categories/${category.slug}`}
+                    >
+                      <a>{category.name}</a>
+                    </Link>
+                  </div>
+                ))}
+                {/* <div className="categori-dropdown-wrap categori-dropdown-active-small">
                                     <ul>
                                         <li>
                                             <Link href="/products/shop-grid-right">
@@ -137,10 +183,10 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
                                             </Link>
                                         </li>
                                     </ul>
-                                </div>
-                            </div>
+                                </div> */}
+              </div>
 
-                            <nav>
+              {/* <nav>
                                 <ul className="mobile-menu" ref={domNode}>
                                     <li className={isActive.key == 1 ? "menu-item-has-children active" : "menu-item-has-children"}>
                                         <span className="menu-expand" onClick={() => handleToggle(1)}>
@@ -460,9 +506,9 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
                                         </ul>
                                     </li>
                                 </ul>
-                            </nav>
-                        </div>
-                        <div className="mobile-header-info-wrap mobile-header-border">
+                            </nav> */}
+            </div>
+            {/* <div className="mobile-header-info-wrap mobile-header-border">
                             <div className="single-mobile-header-info mt-30">
                                 <Link href="/page-contact">
                                     <a> Our location </a>
@@ -478,8 +524,8 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
                                     <a>(+01) - 2345 - 6789 </a>
                                 </Link>
                             </div>
-                        </div>
-                        <div className="mobile-social-icon">
+                        </div> */}
+            {/* <div className="mobile-social-icon">
                             <h5 className="mb-15 text-grey-4">Follow Us</h5>
                             <Link href="#">
                                 <a>
@@ -506,12 +552,13 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
                                     <img src="/assets/imgs/theme/icons/icon-youtube.svg" alt="" />
                                 </a>
                             </Link>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+                        </div> */}
+          </div>
+        </div>
+        <HeaderLifeStyle />
+      </div>
+    </>
+  );
 };
 
 export default MobileMenu;

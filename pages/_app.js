@@ -15,32 +15,34 @@ import "swiper/css/navigation";
 import Preloader from "./../components/elements/Preloader";
 
 function MyApp({ Component, pageProps }) {
-    const [loading, setLoading] = useState(false);
-    useEffect(() => {
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000);
+  const [loading, setLoading] = useState(false);
 
-        if (typeof window !== "undefined") {
-            window.WOW = require("wowjs");
-        }
-        new WOW.WOW().init();
-    }, []);
-    return (
-        <>
-            {!loading ? (
-                <Provider store={store}>
-                    <StorageWrapper>
-                    <ToastContainer />
-                            <Component {...pageProps} />
-                    </StorageWrapper>
-                </Provider>
-            ): (
-                <Preloader />
-            )} 
-        </>
-    );
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    if (typeof window !== "undefined") {
+      window.WOW = require("wowjs");
+    }
+    new WOW.WOW().init();
+  }, []);
+
+  return (
+    <>
+      {/* {!loading ? ( */}
+      <Provider store={store}>
+        <StorageWrapper>
+          <ToastContainer />
+          <Component {...pageProps} />
+        </StorageWrapper>
+      </Provider>
+      {/* ) : (
+        <Preloader />
+      )} */}
+    </>
+  );
 }
 
 export default MyApp;

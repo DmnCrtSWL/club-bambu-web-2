@@ -2,32 +2,77 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Search from "../ecommerce/Search";
+import ecwid from "../../util/ecwid";
 
 const Header = ({
-    totalCartItems,
-    totalCompareItems,
-    toggleClick,
-    totalWishlistItems,
-    headerStyle,
+  totalCartItems,
+  totalCompareItems,
+  toggleClick,
+  totalWishlistItems,
+  headerStyle,
+  HeaderLifeStyle,
 }) => {
-    const [isToggled, setToggled] = useState(false);
-    const [scroll, setScroll] = useState(0);
+  const [isToggled, setToggled] = useState(false);
+  const [scroll, setScroll] = useState(0);
+  const [categories, setCategories] = useState([]);
 
-    useEffect(() => {
-        document.addEventListener("scroll", () => {
-            const scrollCheck = window.scrollY >= 100;
-            if (scrollCheck !== scroll) {
-                setScroll(scrollCheck);
-            }
-        });
-    });
+  useEffect(() => {
+    (async () => {
+      //   document.addEventListener("scroll", () => {
+      //     const scrollCheck = window.scrollY >= 100;
+      //     if (scrollCheck !== scroll) {
+      //       setScroll(scrollCheck);
+      //     }
+      //   });
+      const categorias = await ecwid.getCategories();
+      setCategories(categorias.items);
+    })();
+  }, []);
 
-    const handleToggle = () => setToggled(!isToggled);
+  const handleToggle = () => setToggled(!isToggled);
 
-    return (
-        <>
-            <header className={`header-area ${headerStyle} header-height-2`}>
-                <div className="header-top header-top-ptb-1 d-none d-lg-block">
+  //   const categorias = [
+  //     {
+  //       id: 1,
+  //       slug: "barra-espresso",
+  //       name: "Barra Espresso",
+  //     },
+  //     {
+  //       id: 2,
+  //       slug: "alternativas-joselo",
+  //       name: "Alternativas Joselo",
+  //     },
+  //     {
+  //       id: 3,
+  //       slug: "tes",
+  //       name: "Tés",
+  //     },
+  //     {
+  //       id: 4,
+  //       slug: "tisanas",
+  //       name: "Tisanas",
+  //     },
+  //     {
+  //       id: 5,
+  //       slug: "bocadillos",
+  //       name: "Bocadillos",
+  //     },
+  //     {
+  //       id: 6,
+  //       slug: "frutas-y-cereales",
+  //       name: "Frutas y cereales",
+  //     },
+  //     {
+  //       id: 7,
+  //       slug: "expendio-de-cafe",
+  //       name: "Expendio de Café",
+  //     },
+  //   ];
+
+  return (
+    <>
+      <header className={`header-area ${headerStyle} header-height-2`}>
+        {/* <div className="header-top header-top-ptb-1 d-none d-lg-block">
                     <div className="container">
                         <div className="row align-items-center">
                             <div className="col-xl-3 col-lg-4">
@@ -123,27 +168,51 @@ const Header = ({
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="header-middle header-middle-ptb-1 d-none d-lg-block">
-                    <div className="container">
-                        <div className="header-wrap">
-                            <div className="logo logo-width-1">
-                                <Link href="/">
-                                    <a>
-                                        <img
-                                            src="/assets/imgs/theme/logo.svg"
-                                            alt="logo"
-                                        />
-                                    </a>
-                                </Link>
-                            </div>
-                            <div className="header-right">
-                                <div className="search-style-2">
+                </div> */}
+        <div className="header-middle d-none d-lg-block mx-3">
+          <div className="container">
+            <div className="header-wrap ">
+              <div className="logo logo-width-1">
+                <Link href="/">
+                  <a>
+                    <img
+                      src="/assets/imgs/theme/logo.svg"
+                      alt="logo"
+                      min-width="185px"
+                    />
+                  </a>
+                </Link>
+              </div>
+              <div className="header-right">
+                {/* <div className="search-style-2">
                                     <Search />
-                                </div>
-                                <div className="header-action-right">
-                                    <div className="header-action-2">
-                                        <div className="header-action-icon-2">
+                                </div> */}
+                <div className="header-right justify-evenly">
+                  <div className="w-96">
+                    <Search />
+                  </div>
+                  {/* {categories.map((category, i) => (
+                    <div key={i} className="flex-row h-px">
+                      <Link
+                        href={{
+                          pathname: "/categories/[slug]",
+                          query: {
+                            id: category.id,
+                            title: category.name,
+                            slug: category.url,
+                          },
+                        }}
+                        // "/categories/[slug]"
+                        // as={`/categories/${category.slug}`}
+                      >
+                        <a>{category.name}</a>
+                      </Link>
+                    </div>
+                  ))} */}
+                </div>
+                <div className="header-action-right">
+                  <div className="header-action-2">
+                    {/* <div className="header-action-icon-2">
                                             <Link href="/shop-compare">
                                                 <a>
                                                     <img
@@ -170,46 +239,52 @@ const Header = ({
                                                     </span>
                                                 </a>
                                             </Link>
-                                        </div>
-                                        <div className="header-action-icon-2">
-                                            <Link href="/shop-cart">
-                                                <a className="mini-cart-icon">
-                                                    <img
-                                                        alt="Evara"
-                                                        src="/assets/imgs/theme/icons/icon-cart.svg"
-                                                    />
-                                                    <span className="pro-count blue">
-                                                        {totalCartItems}
-                                                    </span>
-                                                </a>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                        </div> */}
+                    <div className="header-action-icon-2 p-3">
+                      <Link href="/shop-cart">
+                        <a className="mini-cart-icon">
+                          {/*<img
+                            alt="Evara"
+                            src="/assets/imgs/theme/icons/icon-cart.svg"
+                          />*/}
+                          <i className="fi-rs-shopping-bag mr-10"></i>
+                          <span className="pro-count blue">
+                            {totalCartItems}
+                          </span>
+                        </a>
+                      </Link>
                     </div>
+                    <div
+                      className="burger-icon burger-icon-white ml-2"
+                      onClick={toggleClick}
+                    >
+                      <span className="burger-icon-top"></span>
+                      <span className="burger-icon-mid"></span>
+                      <span className="burger-icon-bottom"></span>
+                    </div>
+                  </div>
                 </div>
-                <div
-                    className={
-                        scroll
-                            ? "header-bottom header-bottom-bg-color sticky-bar stick"
-                            : "header-bottom header-bottom-bg-color sticky-bar"
-                    }
-                >
-                    <div className="container">
-                        <div className="header-wrap header-space-between position-relative">
-                            <div className="logo logo-width-1 d-block d-lg-none">
-                                <Link href="/">
-                                    <a>
-                                        <img
-                                            src="/assets/imgs/theme/logo.svg"
-                                            alt="logo"
-                                        />
-                                    </a>
-                                </Link>
-                            </div>
-                            <div className="header-nav d-none d-lg-flex">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className={
+            scroll
+              ? "header-bottom header-bottom-bg-color sticky-bar stick"
+              : "header-bottom header-bottom-bg-color sticky-bar"
+          }
+        >
+          <div className="container">
+            <div className="header-wrap header-space-between position-relative">
+              <div className="logo logo-width-1 d-block d-lg-none">
+                <Link href="/">
+                  <a>
+                    <img src="/assets/imgs/theme/logo.svg" alt="logo" />
+                  </a>
+                </Link>
+              </div>
+              {/* <div className="header-nav d-none d-lg-flex">
                                 <div className="main-categori-wrap d-none d-lg-block">
                                     <a
                                         className="categori-button-active"
@@ -1328,7 +1403,7 @@ const Header = ({
                                                     </li>
                                                 </ul>
                                             </li>
-                                            <li>
+                                             <li>
                                                 <Link href="/#">
                                                     <a>
                                                         Pages
@@ -1390,12 +1465,12 @@ const Header = ({
                                                 <Link href="/page-contact">
                                                     <a>Contact</a>
                                                 </Link>
-                                            </li>
+                                            </li> 
                                         </ul>
                                     </nav>
                                 </div>
-                            </div>
-                            <div className="hotline d-none d-lg-block">
+                            </div> */}
+              {/* <div className="hotline d-none d-lg-block">
                                 <p>
                                     <i className="fi-rs-headset"></i>
                                     <span>Hotline</span> 1900 - 888
@@ -1405,10 +1480,10 @@ const Header = ({
                                 Happy
                                 <span className="text-brand">Mother's Day</span>
                                 . Big Sale Up to 40%
-                            </p>
-                            <div className="header-action-right d-block d-lg-none">
-                                <div className="header-action-2">
-                                    <div className="header-action-icon-2">
+                            </p> */}
+              <div className="header-action-right d-block d-lg-none">
+                <div className="header-action-2">
+                  {/* <div className="header-action-icon-2">
                                         <Link href="/shop-wishlist">
                                             <a>
                                                 <img
@@ -1420,8 +1495,8 @@ const Header = ({
                                                 </span>
                                             </a>
                                         </Link>
-                                    </div>
-                                    <div className="header-action-icon-2">
+                                    </div> */}
+                  {/* <div className="header-action-icon-2">
                                         <Link href="/shop-wishlist">
                                             <a>
                                                 <img
@@ -1433,20 +1508,21 @@ const Header = ({
                                                 </span>
                                             </a>
                                         </Link>
-                                    </div>
-                                    <div className="header-action-icon-2">
-                                        <Link href="/shop-cart">
-                                            <a className="mini-cart-icon">
-                                                <img
-                                                    alt="Evara"
-                                                    src="/assets/imgs/theme/icons/icon-cart.svg"
-                                                />
-                                                <span className="pro-count white">
-                                                    {totalCartItems}
-                                                </span>
-                                            </a>
-                                        </Link>
-                                        <div className="cart-dropdown-wrap cart-dropdown-hm2">
+                                    </div> */}
+                  <div className="header-action-icon-2">
+                    <Link href="/shop-cart">
+                      <a className="mini-cart-icon">
+                        {/*<img
+                          alt="Evara"
+                          src="/assets/imgs/theme/icons/icon-cart.svg"
+                        />*/}
+                        <i className="fi-rs-shopping-bag mr-10"></i>
+                        <span className="pro-count white">
+                          {totalCartItems}
+                        </span>
+                      </a>
+                    </Link>
+                    {/* <div className="cart-dropdown-wrap cart-dropdown-hm2">
                                             <ul>
                                                 <li>
                                                     <div className="shopping-cart-img">
@@ -1532,32 +1608,33 @@ const Header = ({
                                                     </Link>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div className="header-action-icon-2 d-block d-lg-none">
-                                        <div
-                                            className="burger-icon burger-icon-white"
-                                            onClick={toggleClick}
-                                        >
-                                            <span className="burger-icon-top"></span>
-                                            <span className="burger-icon-mid"></span>
-                                            <span className="burger-icon-bottom"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                        </div> */}
+                  </div>
+                  <div className="header-action-icon-2 d-block d-lg-none">
+                    <div
+                      className="burger-icon burger-icon-white"
+                      onClick={toggleClick}
+                    >
+                      <span className="burger-icon-top"></span>
+                      <span className="burger-icon-mid"></span>
+                      <span className="burger-icon-bottom"></span>
                     </div>
+                  </div>
                 </div>
-            </header>
-        </>
-    );
+              </div>
+            </div>
+          </div>
+        </div>
+        <HeaderLifeStyle/>
+      </header>
+    </>
+  );
 };
 
 const mapStateToProps = (state) => ({
-    totalCartItems: state.cart.length,
-    totalCompareItems: state.compare.items.length,
-    totalWishlistItems: state.wishlist.items.length,
+  totalCartItems: state.cart.length,
+  totalCompareItems: state.compare.items.length,
+  totalWishlistItems: state.wishlist.items.length,
 });
 
 export default connect(mapStateToProps, null)(Header);

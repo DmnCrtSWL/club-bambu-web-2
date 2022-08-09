@@ -1,114 +1,170 @@
 import { connect } from "react-redux";
 import Layout from "../components/layout/Layout";
+// import Link from "next/link";
+import { Link } from "@material-ui/core";
+import {
+  clearCart,
+  closeCart,
+  decreaseQuantity,
+  deleteFromCart,
+  increaseQuantity,
+  openCart,
+} from "../redux/action/cart";
+import { MdError } from "react-icons/md";
 
-import Link from "next/link";
-import { clearCart, closeCart, decreaseQuantity, deleteFromCart, increaseQuantity, openCart } from "../redux/action/cart";
+const Cart = ({
+  openCart,
+  cartItems,
+  activeCart,
+  closeCart,
+  increaseQuantity,
+  decreaseQuantity,
+  deleteFromCart,
+  clearCart,
+  totalCartItems,
+}) => {
+  const price = () => {
+    let price = 0;
+    cartItems.forEach((item) => (price += item.price * item.quantity));
 
-const Cart = ({ openCart, cartItems, activeCart, closeCart, increaseQuantity, decreaseQuantity, deleteFromCart, clearCart }) => {
-    const price = () => {
-        let price = 0;
-        cartItems.forEach((item) => (price += item.price * item.quantity));
+    return price;
+  };
 
-        return price;
-    };
+  return (
+    <>
+      <Layout parent="Inicio" sub="Carrito" subChild="Detalles">
+        <section className="mt-50 mb-50">
+          <div className="container">
+            <div className="row">
+              <div className="col-12">
+                <div className="table-responsive">
+                  {cartItems.length <= 0 && (
+                    <div className=" h-20 rounded-xl justify-center flex flex-col items-center p-1">
+                      <MdError size={40} className="mb-5" />
+                      <h4 className="text-center text-xs">
+                        Tu carrito esta vacio
+                      </h4>
+                    </div>
+                  )}
+                  <table
+                    className={
+                      cartItems.length > 0
+                        ? "table shopping-summery text-center clean"
+                        : "d-none"
+                    }
+                  >
+                    <thead>
+                      <tr className="main-heading">
+                        <th scope="col">Imagen</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Subtotal</th>
+                        <th scope="col">Eliminar</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {/*cartItems.map((item, i) => {console.log(item.selectedOptions)})*/}
+                      {cartItems.map((item, i) => (
+                        <tr key={i}>
+                          <td className="image product-thumbnail">
+                            <img src={item.imageUrl} />
+                          </td>
+                          <td className="product-des product-name">
+                            <h5 className="product-name">
+                              {item.name}
+                            </h5>
+                            {item.description && (
+                              <p className="font-xs">
+                                {item.description.slice(3, -4)}
+                              </p>
+                            )}
+                            {item.selectedOptions && (
+                                <ul className="font-xs"> Opciones:
+                                  {item.selectedOptions.map((option,i)=>(
+                                    <li key={i}>{option.value}</li>
+                                  ))}
+                                </ul>
+                            )} 
+                          </td>
+                          <td className="price" data-title="Price">
+                            <span>${item.price}</span>
+                          </td>
+                          <td className="text-center" data-title="Stock">
+                            <div className="detail-qty border radius  m-auto">
+                              <a
+                                onClick={(e) => decreaseQuantity(item.id)}
+                                className="qty-down"
+                              >
+                                <i className="fi-rs-angle-small-down"></i>
+                              </a>
+                              <span className="qty-val">{item.quantity}</span>
+                              <a
+                                onClick={(e) => increaseQuantity(item.id)}
+                                className="qty-up"
+                              >
+                                <i className="fi-rs-angle-small-up"></i>
+                              </a>
+                            </div>
+                          </td>
+                          <td className="text-right" data-title="Cart">
+                            <span>${item.quantity * item.price}</span>
+                          </td>
+                          <td className="action" data-title="Remove">
+                            <a
+                              onClick={(e) => deleteFromCart(item.id)}
+                              className="text-muted"
+                            >
+                              <i className="fi-rs-trash"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      ))}
+                      <tr>
+                        <td colSpan="6" className="text-end">
+                          {cartItems.length > 0 && (
+                            <a onClick={clearCart} className="text-muted">
+                              <i className="fi-rs-cross-small"></i>
+                              Limpiar Carrito
+                            </a>
+                          )}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                {totalCartItems > 0 && (
+                  <div className="cart-action text-end">
+                    <Link
+                      href="/pago/infoComensal"
+                      // href={{
+                      //   pathname: "/pago/infoComensal",
+                      //   //   query: {
+                      //   //     id: l.id,
+                      //   //   },
+                      // }}
+                    >
+                      <a className="btn ">Continuar</a>
+                    </Link>
+                  </div>
+                )}
 
-    return (
-        <>
-            <Layout parent="Home" sub="Shop" subChild="Cart">
-                <section className="mt-50 mb-50">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-12">
-                                <div className="table-responsive">
-                                    {cartItems.length <= 0 && "No Products"}
-                                    <table className={cartItems.length > 0 ? "table shopping-summery text-center clean" : "d-none"}>
-                                        <thead>
-                                            <tr className="main-heading">
-                                                <th scope="col">Image</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Price</th>
-                                                <th scope="col">Quantity</th>
-                                                <th scope="col">Subtotal</th>
-                                                <th scope="col">Remove</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {cartItems.map((item, i) => (
-                                                <tr key={i}>
-                                                    <td className="image product-thumbnail">
-                                                        <img src={item.images[0].img} />
-                                                    </td>
-
-                                                    <td className="product-des product-name">
-                                                        <h5 className="product-name">
-                                                            <Link href="/products">
-                                                                <a>{item.title}</a>
-                                                            </Link>
-                                                        </h5>
-                                                        <p className="font-xs">
-                                                            Maboriosam in a tonto nesciung eget
-                                                            <br /> distingy magndapibus.
-                                                        </p>
-                                                    </td>
-                                                    <td className="price" data-title="Price">
-                                                        <span>${item.price}</span>
-                                                    </td>
-                                                    <td className="text-center" data-title="Stock">
-                                                        <div className="detail-qty border radius  m-auto">
-                                                            <a onClick={(e) => decreaseQuantity(item.id)} className="qty-down">
-                                                                <i className="fi-rs-angle-small-down"></i>
-                                                            </a>
-                                                            <span className="qty-val">{item.quantity}</span>
-                                                            <a onClick={(e) => increaseQuantity(item.id)} className="qty-up">
-                                                                <i className="fi-rs-angle-small-up"></i>
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                    <td className="text-right" data-title="Cart">
-                                                        <span>${item.quantity * item.price}</span>
-                                                    </td>
-                                                    <td className="action" data-title="Remove">
-                                                        <a onClick={(e) => deleteFromCart(item.id)} className="text-muted">
-                                                            <i className="fi-rs-trash"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                            <tr>
-                                                <td colSpan="6" className="text-end">
-                                                    {cartItems.length > 0 && (
-                                                        <a onClick={clearCart} className="text-muted">
-                                                            <i className="fi-rs-cross-small"></i>
-                                                            Clear Cart
-                                                        </a>
-                                                    )}
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div className="cart-action text-end">
-                                    <a className="btn ">
-                                        <i className="fi-rs-shopping-bag mr-10"></i>
-                                        Continue Shopping
-                                    </a>
-                                </div>
-                                <div className="divider center_icon mt-50 mb-50">
-                                    <i className="fi-rs-fingerprint"></i>
-                                </div>
-                                <div className="row mb-50">
-                                    <div className="col-lg-6 col-md-12">
-                                        <div className="heading_s1 mb-3">
-                                            <h4>Calculate Shipping</h4>
-                                        </div>
-                                        <p className="mt-15 mb-30">
-                                            Flat rate:
-                                            <span className="font-xl text-brand fw-900">5%</span>
-                                        </p>
-                                        <form className="field_form shipping_calculator">
-                                            <div className="form-row">
-                                                <div className="form-group col-lg-12">
-                                                    <div className="custom_select">
+                {/* <div className="divider center_icon mt-50 mb-50">
+                  <i className="fi-rs-fingerprint"></i>
+                </div> */}
+                {/* <div className="row mb-50">
+                  <div className="col-lg-6 col-md-12">
+                    <div className="heading_s1 mb-3">
+                      <h4>Calcular Envío</h4>
+                    </div>
+                    <p className="mt-15 mb-30">
+                      Costo extra:
+                      <span className="font-xl text-brand fw-900">5%</span>
+                    </p>
+                    <form className="field_form shipping_calculator">
+                      <div className="form-row">
+                        <div className="form-group col-lg-12"> */}
+                {/*<div className="custom_select">
                                                         <select className="form-control select-active">
                                                             <option value="">Choose a option...</option>
                                                             <option value="AX">Aland Islands</option>
@@ -356,111 +412,130 @@ const Cart = ({ openCart, cartItems, activeCart, closeCart, increaseQuantity, de
                                                             <option value="ZM">Zambia</option>
                                                             <option value="ZW">Zimbabwe</option>
                                                         </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="form-row row">
-                                                <div className="form-group col-lg-6">
-                                                    <input required="required" placeholder="State / Country" name="name" type="text" />
-                                                </div>
-                                                <div className="form-group col-lg-6">
-                                                    <input required="required" placeholder="PostCode / ZIP" name="name" type="text" />
-                                                </div>
-                                            </div>
-                                            <div className="form-row">
-                                                <div className="form-group col-lg-12">
-                                                    <button className="btn  btn-sm">
-                                                        <i className="fi-rs-shuffle mr-10"></i>
-                                                        Update
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        <div className="mb-30 mt-50">
-                                            <div className="heading_s1 mb-3">
-                                                <h4>Apply Coupon</h4>
-                                            </div>
-                                            <div className="total-amount">
-                                                <div className="left">
-                                                    <div className="coupon">
-                                                        <form action="#" target="_blank">
-                                                            <div className="form-row row justify-content-center">
-                                                                <div className="form-group col-lg-6">
-                                                                    <input className="font-medium" name="Coupon" placeholder="Enter Your Coupon" />
-                                                                </div>
-                                                                <div className="form-group col-lg-6">
-                                                                    <button className="btn  btn-sm">
-                                                                        <i className="fi-rs-label mr-10"></i>
-                                                                        Apply
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-6 col-md-12">
-                                        <div className="border p-md-4 p-30 border-radius cart-totals">
-                                            <div className="heading_s1 mb-3">
-                                                <h4>Cart Totals</h4>
-                                            </div>
-                                            <div className="table-responsive">
-                                                <table className="table">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td className="cart_total_label">Cart Subtotal</td>
-                                                            <td className="cart_total_amount">
-                                                                <span className="font-lg fw-900 text-brand">$ {price()}</span>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td className="cart_total_label">Shipping</td>
-                                                            <td className="cart_total_amount">
-                                                                <i className="ti-gift mr-5"></i>
-                                                                Free Shipping
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td className="cart_total_label">Total</td>
-                                                            <td className="cart_total_amount">
-                                                                <strong>
-                                                                    <span className="font-xl fw-900 text-brand">${price()}</span>
-                                                                </strong>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <a href="#" className="btn ">
-                                                <i className="fi-rs-box-alt mr-10"></i>
-                                                Proceed To CheckOut
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                                    </div>*/}
+                {/* </div>
+                      </div>
+                      <div className="form-row row">
+                        <div className="form-group col-lg-6">
+                          <input
+                            required="required"
+                            placeholder="Número, Calle y Colonia"
+                            name="name"
+                            type="text"
+                          />
                         </div>
+                        <div className="form-group col-lg-6">
+                          <input
+                            required="required"
+                            placeholder="Codigo Postal"
+                            name="name"
+                            type="text"
+                          />
+                        </div>
+                      </div>
+                      <div className="form-row">
+                        <div className="form-group col-lg-12">
+                          <button className="btn  btn-sm">
+                            <i className="fi-rs-shuffle mr-10"></i>
+                            Actualizar Dirección
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                    <div className="mb-30 mt-50">
+                      <div className="heading_s1 mb-3">
+                        <h4>Tengo un cupón</h4>
+                      </div>
+                      <div className="total-amount">
+                        <div className="left">
+                          <div className="coupon">
+                            <form action="#" target="_blank">
+                              <div className="form-row row justify-content-center">
+                                <div className="form-group col-lg-6">
+                                  <input
+                                    className="font-medium"
+                                    name="Coupon"
+                                    placeholder="Código de cupón"
+                                  />
+                                </div>
+                                <div className="form-group col-lg-6">
+                                  <button className="btn  btn-sm">
+                                    <i className="fi-rs-label mr-10"></i>
+                                    Aplicar
+                                  </button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                </section>
-            </Layout>
-        </>
-    );
+                  </div>
+                  <div className="col-lg-6 col-md-12">
+                    <div className="border p-md-4 p-30 border-radius cart-totals">
+                      <div className="heading_s1 mb-3">
+                        <h4>Total del pedido</h4>
+                      </div>
+                      <div className="table-responsive">
+                        <table className="table">
+                          <tbody>
+                            <tr>
+                              <td className="cart_total_label">Subtotal</td>
+                              <td className="cart_total_amount">
+                                <span className="font-lg fw-900 text-brand">
+                                  $ {price()}
+                                </span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="cart_total_label">Envío</td>
+                              <td className="cart_total_amount">
+                                <i className="ti-gift mr-5"></i>
+                                Envío Gratis
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="cart_total_label">Total</td>
+                              <td className="cart_total_amount">
+                                <strong>
+                                  <span className="font-xl fw-900 text-brand">
+                                    ${price()}
+                                  </span>
+                                </strong>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <a href="#" className="btn ">
+                        <i className="fi-rs-box-alt mr-10"></i>
+                        Ir al Pago
+                      </a>
+                    </div>
+                  </div>
+                </div> */}
+              </div>
+            </div>
+          </div>
+        </section>
+      </Layout>
+    </>
+  );
 };
 
 const mapStateToProps = (state) => ({
-    cartItems: state.cart,
-    activeCart: state.counter
+  cartItems: state.cart,
+  activeCart: state.counter,
+  totalCartItems: state.cart.length,
 });
 
 const mapDispatchToProps = {
-    closeCart,
-    increaseQuantity,
-    decreaseQuantity,
-    deleteFromCart,
-    openCart,
-    clearCart
+  closeCart,
+  increaseQuantity,
+  decreaseQuantity,
+  deleteFromCart,
+  openCart,
+  clearCart,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

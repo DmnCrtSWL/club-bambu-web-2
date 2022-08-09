@@ -21,16 +21,20 @@ const ThumbSlider = ({ product }) => {
                 thumbs={{ swiper: thumbsSwiper }}
                 className="mySwiper2"
             >
-                {product.gallery.map((item,i) => (
+                <SwiperSlide key={product.id}>
+                    <img src={product.imageUrl} alt="evara" />
+                </SwiperSlide>
+            </Swiper>
+                {/*{product.gallery.map((item,i) => (
                     <SwiperSlide key={i}>
-                        <img src={item.thumb} alt="evara"/>
+                        <img src={item.imageUrl} alt="evara"/>
                         {/* <Zoom
                             img={item.thumb}
                             zoomScale={5}
                             width={500}
                             height={500}
                             ransitionTime={0.5}
-                        /> */}
+                /> 
                     </SwiperSlide>
                 ))}
             </Swiper>
@@ -48,7 +52,7 @@ const ThumbSlider = ({ product }) => {
                         <img src={item.thumb} alt="evara" />
                     </SwiperSlide>
                 ))}
-            </Swiper>
+            </Swiper>*/}
         </div>
     );
 };
