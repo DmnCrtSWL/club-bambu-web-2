@@ -8,24 +8,18 @@ function HeaderLifeStyle() {
 
   //obteniendo datos por atributo
   const getData = async()=>{
-    const auxatributos=[]
-    const atributos=[]
-    const productos = await ecwid.getProducts();
-    const productosParte1 = productos.items
-    productos = await ecwid.getProducts({ offset: 100 });
-    const productosParte2 = productos.items
-    let totalProductos = [];
-    if (productosParte1 && productosParte2) {
-      totalProductos = productosParte1.concat(productosParte2);
-    }
-    totalProductos.map((producto)=>{
-      producto.attributes.map((atributo)=>{
-        if(!auxatributos.includes(atributo.name)){
-          auxatributos.push(atributo.name),
-          atributos.push(atributo)
-        }
-      })
-    })
+    console.log('Atributos')
+    const productos = await ecwid.getClasses();
+    const atributos = productos[0].attributes
+    console.log(atributos)
+    //totalProductos.map((producto)=>{
+      //producto.attributes.map((atributo)=>{
+        //if(!auxatributos.includes(atributo.name)){
+          //auxatributos.push(atributo.name),
+          //atributos.push(atributo)
+        //}
+      //})
+    //})
     setAttributes(atributos)
     setLoading(false)
   }
@@ -66,7 +60,7 @@ function HeaderLifeStyle() {
                 </Link>
               </div>
             </div>
-          ))}
+                ))}
         </div>
       </div>
     </>

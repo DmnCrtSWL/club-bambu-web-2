@@ -8,8 +8,10 @@ function HeaderCategory() {
 
   useEffect(() => {
     (async () => {
-      const categorias = await ecwid.getCategories();
+      const categorias = await ecwid.getCategories({productIds:true, parent: 0});
       setCategorias(categorias.items);
+      console.log('Categorias')
+      console.log(categorias.items)
     })();
   }, []);
 
@@ -48,6 +50,7 @@ function HeaderCategory() {
                       id: l.parentId,
                       title: l.name,
                       slug: l.id,
+                      idProducts: l.productIds ? l.productIds : []
                     },
                   }}
                   // "/categories/[slug]"

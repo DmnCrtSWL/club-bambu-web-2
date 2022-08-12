@@ -21,7 +21,6 @@ const CategoryId = (props) => {
           <div className="container">
             <div className="col-lg-12">
               <h1 className="m-10">Categoría {title}</h1>
-
               <Products />
             </div>
           </div>

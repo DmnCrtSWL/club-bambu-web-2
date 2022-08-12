@@ -15,37 +15,63 @@ function ProductsCategory() {
   //const [productos2, setproductos2] = useState([]);
 
   const getData = async()=>{
-    let currentCategory=[]
     const productos = await ecwid.getProducts();
     const productosParte1 = productos.items
     productos = await ecwid.getProducts({ offset: 100 });
     const productosParte2 = productos.items
-    productos = await ecwid.getProducts({ offset: 200 });
-    const productosParte3 = productos.items
-
     let totalProductos = [];
-    let auxProductos=[];
-    if (productosParte1 && productosParte2 && productosParte3) {
-      auxProductos = productosParte1.concat(productosParte2);
-      totalProductos = auxProductos.concat(productosParte3)
+    if (productosParte1 && productosParte2) {
+      totalProductos = productosParte1.concat(productosParte2);
     }
+
     console.log(productos);
     console.log(productosParte1);
     console.log(productosParte2);
     console.log(totalProductos);
-    totalProductos.map((producto)=>{
-      if(idProducts.includes(String(producto.id))){
-        currentCategory.push(producto)
-      }
-    })
-    setProducts(currentCategory)
+    let currentCategory=[]
+
+    const number = Number(id);
+    const number2 = Number(slug);
+    if (number2) {
+      console.log('Entra por Slug')
+      /*totalProductos.map(producto =>{
+        if(producto.categoryIds.length >1){
+          producto.categoryIds.map(categoria =>{
+            if(categoria === number2){
+              currentCategory.push(producto)
+              console.log(`Encontrado: ${categoria} - ${number2} Producto: ${producto.name}`)
+            }
+          })
+        }
+        else{
+          if(producto.categoryIds[0] === number2){
+            currentCategory.push(producto)
+          }
+        }
+      })*/
+
+      currentCategory = totalProductos.filter(
+        (category) => 
+          category.categoryIds[0] === number2
+      )
+      setProducts(currentCategory)
+    } else {
+      console.log('Entra por id')
+      currentCategory = totalProductos.filter(
+        (category) => category.categoryIds[0] === number
+      );
+      setProducts(currentCategory)
+    }
+    console.log('Productos encontrados')
     console.log(currentCategory)
     setLoading(false)
   }
 
   useEffect(() => {
     getData();
-  }, [idProducts]);
+    console.log('Id de productos')
+    console.log(idProducts)
+  }, [products,id,slug]);
 
   return (
     <>
