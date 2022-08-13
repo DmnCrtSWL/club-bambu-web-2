@@ -209,9 +209,9 @@ input:focus::-moz-placeholder {
 /*
 */
 :root{
-  --verdeClaro1: #36c4c3; /* Cambio por 046963 */
+  --verdeClaro1: #41b9b9; /* Cambio por 046963 */
   --verdeClaro2: #38beba; /* Cambio por 88c1be */
-  --verdeBambu1: #325454; /* Cambio por 088178 */
+  --verdeBambu1: #335455; /* Cambio por 088178 */
   --verdeBambu2: #2d5253; /* Cambio por */
   --verdeFondoClaro: #edf6f6;
 }
