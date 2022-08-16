@@ -37,30 +37,61 @@ function HeaderLifeStyle() {
           id="sliderLifeStyle"
           className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
         >
-          {attributes.map((l, i) => (
-            <div
-              key={i}
-              className=" w-[auto] inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300 text-center text-align "
-            >
-              <div className="flex-row">
+
+          {attributes.map((l, i) => 
+            (
+              <>
+                { ((l.name != 'UPC') && (l.name != 'Brand') && (l.name != 'Tamaño')) &&
+                  <div
+                    key={i}
+                    className=" w-[auto] inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300 text-center text-align "
+                  >
+                    <div className="flex-row">
+                      <Link
+                          href={{
+                            pathname: "/lifestyle/[slug]",
+                            query: {
+                              id: l.id,
+                              title: l.name,
+                              slug: l.id,
+                            },
+                        }}
+                      >
+                        <div className="container " id="item-list">
+                          <img src={`/assets/imgs/theme/icons/${l.name}.svg`} width="32px" height="32px" id='item'/>
+                          <strong>{l.name}</strong>
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
+                }
+              </>
+            )
+          )}
+
+          <div
+            key='equis'
+            className=" w-[auto] inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300 text-center text-align"
+          >
+            <div className="flex-row">
                 <Link
                   href={{
-                    pathname: "/lifestyle/[slug]",
-                    query: {
-                      id: l.id,
-                      title: l.name,
-                      slug: l.id,
-                    },
+                    pathname: "/lifestyle/",
                   }}
                 >
                   <div className="container " id="item-list">
-                    <img src={`/assets/imgs/theme/icons/${l.name}.svg`} width="32px" height="32px" id='item'/>
-                    <strong>{l.name}</strong>
+                    <img src={`/assets/imgs/theme/icons/icon-dribbble.svg`} width="32px" height="32px" id='item'/>
+                    <strong>Filtrar por Calorias</strong>
                   </div>
                 </Link>
               </div>
-            </div>
-                ))}
+          </div>
+
+
+
+
+
+
         </div>
       </div>
     </>

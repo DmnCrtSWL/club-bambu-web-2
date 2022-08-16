@@ -16,11 +16,12 @@ function ProductsCategory() {
 
   const getData = async()=>{
     let currentCategory=[]
-    const productos = await ecwid.getProducts();
+    //Cambiaro por la funcion en utils
+    const productos = await ecwid.getProducts({ enabled: true });
     const productosParte1 = productos.items
-    productos = await ecwid.getProducts({ offset: 100 });
+    productos = await ecwid.getProducts({ offset: 100, enabled: true });
     const productosParte2 = productos.items
-    productos = await ecwid.getProducts({ offset: 200 });
+    productos = await ecwid.getProducts({ offset: 200, enabled: true });
     const productosParte3 = productos.items
 
     let totalProductos = [];
