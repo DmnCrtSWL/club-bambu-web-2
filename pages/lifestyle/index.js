@@ -60,7 +60,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
             producto.attributes.map((atributo) =>{
               if(atributo.name === 'Contenido Energético (kcal)')
               {
-                if(atributo.value >= calculo +20){
+                if(atributo.value <= calculo +20){
                   filtroCalorias.push(producto)
                 }
               }
