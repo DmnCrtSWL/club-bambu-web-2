@@ -39,8 +39,37 @@ const Products = ({ products, productFilters, fetchProduct }) => {
       //setCategorias(categorias.items);
       //const busqueda = await ecwid.getProducts();
       const busqueda = await getProducts.getProductsComplete();
-      const filtro = busqueda;
-      console.log(busqueda)
+      const categoria = await ecwid.getCategories({parent:0, productIds : true});
+      const comida ={}
+      categoria.items.map((categoria) => {
+        if (categoria.name === 'Comidas')
+          comida = categoria
+      });
+      const filtro = [];
+      busqueda.map((producto)=>{
+        if(comida.productIds.includes(producto.id))
+        filtro.push(producto)
+      })
+      console.log('Productos')
+      const filtroCalorias = [];
+      if(productFilters.calories != 0 && productFilters.foods != 0){
+        const calculo = productFilters.calories / productFilters.foods
+        console.log(`Calculo por comida: ${calculo} kcal`)
+         filtro.map((producto)=>{
+          if(producto.attributes.length > 0){
+            producto.attributes.map((atributo) =>{
+              if(atributo.name === 'Contenido Energético (kcal)')
+              {
+                if(atributo.value >= calculo +20){
+                  filtroCalorias.push(producto)
+                }
+              }
+          }) 
+            }
+          })
+        setProductos(filtroCalorias)
+        return
+      }
       /*if (item && search) {
         const currentProducts = filtro.filter((product) => {
           if (
@@ -53,7 +82,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
       }*/
       setProductos(filtro);
     })();
-  }, []);
+  }, [productFilters]);
 
   //   const cratePagination = () => {
   //     // set pagination

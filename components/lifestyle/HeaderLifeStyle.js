@@ -41,7 +41,7 @@ function HeaderLifeStyle() {
           {attributes.map((l, i) => 
             (
               <>
-                { ((l.name != 'UPC') && (l.name != 'Brand') && (l.name != 'Tamaño')) &&
+                { ((l.name != 'UPC') && (l.name != 'Brand') && (l.name != 'Tamaño') && (l.name != 'Contenido Energético (kcal)')) &&
                   <div
                     key={i}
                     className=" w-[auto] inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300 text-center text-align "
@@ -81,7 +81,7 @@ function HeaderLifeStyle() {
                 >
                   <div className="container " id="item-list">
                     <img src={`/assets/imgs/theme/icons/icon-dribbble.svg`} width="32px" height="32px" id='item'/>
-                    <strong>Filtrar por Calorias</strong>
+                    <strong>Filtrar por Contenido Energético (kcal)</strong>
                   </div>
                 </Link>
               </div>
