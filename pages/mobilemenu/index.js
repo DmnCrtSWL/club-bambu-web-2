@@ -16,7 +16,7 @@ const CategoryId = (props) => {
         <section className="product-tabs section-padding position-relative wow fadeIn animated">
           <div className="container">
             <div className="col-lg-12">
-              <h1 className="m-10">Mini Menú</h1>
+              <h1 className="m-10">Menú</h1>
               <Products />
             </div>
           </div>

@@ -9,30 +9,27 @@ import MiniButtonBottom from "../../components/elements/MiniButtonBottom";
 import getProducts from "../../util/getProducts";
 import {
   addToCart,
-  decreaseQuantity,
-  increaseQuantity,
 } from "../../redux/action/cart";
-import { addToCompare } from "../../redux/action/compareAction";
-import { addToWishlist } from "../../redux/action/wishlistAction";
 import { connect } from "react-redux";
+
 const ProductsMobileMenu = ({
   cartItems,
-  addToCompare,
   addToCart,
-  addToWishlist,
-  increaseQuantity,
-  decreaseQuantity,
   quickView,
 }) => {
   const router = useRouter();
   const { id, title, slug, idProducts } = router.query;
   const [products, setProducts] = useState([]);
+  const [categorias, setCategorias] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const getData = async()=>{
     const busqueda = await getProducts.getProductsComplete();
     setProducts(busqueda)
+    const cat = await ecwid.getCategories({productIds:true, parent: 0});
+    setCategorias(cat.items)
     console.log(busqueda)
+    console.log(cat.items)
     setLoading(false)
   }
 
@@ -67,80 +64,119 @@ const ProductsMobileMenu = ({
         </div>
       ):(
         <>
-          {products ? (
+
+          {categorias && (
             <>
-              {products.map((l, i) => (
-                <div key={i} className="col-lg-12 col-md-12 col-12 col-sm-12">
-                  <div className="product-cart-wrap-mobile mb-30">
-                    <div className="row product-content-wrap">
-                    <div className="col product-img-action-wrap">
-                      <div className="product-img product-img-zoom">
-                          <a>
-                            <img
-                              className="default-img"
-                              src={l.imageUrl}
-                              alt=""
-                            />
-                          </a>
+              <div className="relative flex items-center ">
+                <div
+                  id ="slidermobile"
+                  className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
+                >
+                  {categorias.map((c,i) =>(
+                    <div
+                      key={i}
+                      className="w-[220px] inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                    >
+                      <div className="flex-row">
+                        <a 
+                          className="font-bold"
+                          href={`#${c.id}`}
+                          key={c.id}
+                        > 
+                          {c.name} 
+                        </a>
                       </div>
                     </div>
-                    <div className="col product-content-wrap">
-                      <div className="row">
-                        <div className="col">
-                          <div className="product-category">
-                            <a>{/*l.googleItemCondition*/}</a>
-                          </div>
-                          <h2>
-                            <a>{l.name}</a>
-                          </h2>
-                        </div>
-                        <div className="col">
-                          <div className="product-extra-link2">
-                            <button
-                              onClick={(e) => {
-                                handleCart(l);
-                              }}
-                              className="button button-add-to-cart"
-                            >
-                              <strong>+</strong>
-                            </button>
+                  ))}
+                </div>
+              </div>
+          
+              {products ? (
+                <>
+                  {categorias.map((categoria)=> ( 
+                    <section className="" id={categoria.id} >
+                      <div >
+                        {categoria.name}
+                      </div>
+                      
+                      {products.map((l, i) => (
+                        <>
+                          {l.defaultCategoryId === categoria.id && (
+                            <div key={`product${i}`} className="col-lg-12 col-md-12 col-12 col-sm-12">
+                              <div className="product-cart-wrap-mobile mb-30">
+                            <div className="row product-content-wrap">
+                              <div className="col product-img-action-wrap">
+                                <div className="product-img product-img-zoom">
+                                  <a>
+                                    <img
+                                      className="default-img"
+                                      src={l.imageUrl}
+                                      alt=""
+                                    />
+                                  </a>
+                                </div>
+                              </div>
+                              <div className="col product-content-wrap">
+                                <div className="row">
+                                  <div className="col">
+                                    <div className="product-category">
+                                      <a>{`$ ${l.price}`}</a>
+                                    </div>
+                                    <h2>
+                                      <a>{l.name}</a>
+                                    </h2>
+                                    {l.description &&
+                                      <p>
+                                        {l.description.slice(3,-4)}
+                                      </p>
+                                    }
+                                    <div className="">
+                                      <button
+                                        onClick={(e) => {
+                                          handleCart(l);
+                                        }}
+                                        className="button button-add-to-cart"
+                                      >
+                                        <strong>+</strong>
+                                      </button>
+                                    </div>
+                                  </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    </div>
+                      )}
+                      </>
+                      ))}
+                    </section>
+                  ))}
+                </>
+              ) : (
+                <div className="col-12 ">
+                  <div className=" h-20 rounded-xl justify-center flex flex-col items-center p-1">
+                    <MdError size={40} className="mb-5" />
+                    <h4 className="text-center text-xs">
+                      No hay productos de {title}
+                    </h4>
                   </div>
                 </div>
-              ))}
+              )}
             </>
-          ) : (
-            <div className="col-12 ">
-              <div className=" h-20 rounded-xl justify-center flex flex-col items-center p-1">
-                <MdError size={40} className="mb-5" />
-                <h4 className="text-center text-xs">
-                  No hay productos de {title}
-                </h4>
-              </div>
-            </div>
           )}
         </>
-      )}
+      )}  
       <MiniButtonBottom />
     </>
   );
 };
-
 
 const mapStateToProps = (state) => ({
   cartItems: state.cart,
 });
 
 const mapDispatchToProps = {
-  addToCompare,
-  addToWishlist,
   addToCart,
-  increaseQuantity,
-  decreaseQuantity,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductsMobileMenu);

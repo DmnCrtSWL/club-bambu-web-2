@@ -88,18 +88,13 @@ function HeaderLifeStyle() {
               </div>
           </div>
           <div
-            key='calorias'
+            key='mobilemenu'
             className=" w-[auto] inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300 text-center text-align"
           >
             <div className="flex-row">
                 <Link
                   href={{
                     pathname: "/mobilemenu/",
-                    query: {
-                      id: 2,
-                      title: 'Mini Menú Móvil',
-                      slug: 'mini menu',
-                    },
                   }}
                 >
                   <div className="container " id="item-list">
@@ -109,12 +104,6 @@ function HeaderLifeStyle() {
                 </Link>
               </div>
           </div>
-
-
-
-
-
-
         </div>
       </div>
     </>

@@ -1,7 +1,7 @@
 import React from "react";
 import ProductsMobileMenu from "./ProductsMobileMenu";
 
-function Products() {
+function MobileMenu() {
   return (
     <>
       <div className="tab-content wow fadeIn animated">
@@ -14,4 +14,4 @@ function Products() {
     </>
   );
 }
-export default Products;
+export default MobileMenu;

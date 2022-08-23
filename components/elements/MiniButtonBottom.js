@@ -6,18 +6,24 @@ import Search from "../ecommerce/Search";
 const ButtonBottom = ({ totalCartItems,cartItems }) => {
   const [isToggled, setToggled] = useState(false);
   const [scroll, setScroll] = useState(0);
+  const [items, setItems] = useState(0);
 
   useEffect(() => {
-    console.log(totalCartItems);
-    console.log('Articulos en carrito')
-    console.log(cartItems)
+    //console.log(totalCartItems);
+    //console.log('Articulos en carrito')
+    //console.log(cartItems)
+    var articulos = 0
+    cartItems.map((i)=>{
+      articulos= articulos + i.quantity
+    })
+    setItems(articulos)
     document.addEventListener("scroll", () => {
       const scrollCheck = window.scrollY >= 100;
       if (scrollCheck !== scroll) {
         setScroll(scrollCheck);
       }
     });
-  });
+  },[]);
 
   const handleToggle = () => setToggled(!isToggled);
 
@@ -37,7 +43,7 @@ const ButtonBottom = ({ totalCartItems,cartItems }) => {
             <a className="btn ">
               <i className="fi-rs-shopping-bag mr-10"/>
               <span className="pro-count blue">
-                Artículos en Mini Carrito de compras : {totalCartItems}
+                Articulos: {items}
               </span>
             </a>
           </Link>

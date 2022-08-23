@@ -11,12 +11,10 @@ function ProductsCategory() {
   const { id, title, slug, idProducts } = router.query;
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  //const [productos1, setproductos1] = useState([]);
-  //const [productos2, setproductos2] = useState([]);
 
   const getData = async()=>{
     let currentCategory=[]
-    //Cambiaro por la funcion en utils
+    //Cambiarlo por la funcion en utils
     const productos = await ecwid.getProducts({ enabled: true });
     const productosParte1 = productos.items
     productos = await ecwid.getProducts({ offset: 100, enabled: true });
