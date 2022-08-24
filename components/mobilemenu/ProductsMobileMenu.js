@@ -69,15 +69,15 @@ const ProductsMobileMenu = ({
             <>
               <div className="relative flex items-center ">
                 <div
-                  id ="slidermobile"
-                  className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
+                  id ="sliderMobileMenu"
+                  className="sliderMobileMenu w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
                 >
                   {categorias.map((c,i) =>(
                     <div
                       key={i}
-                      className="w-[220px] inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                      className="item-list w-[200px] inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
                     >
-                      <div className="flex-row">
+                      <div className="flex-row text-center" id="item-list">
                         <a 
                           className="font-bold"
                           href={`#${c.id}`}
@@ -95,8 +95,8 @@ const ProductsMobileMenu = ({
                 <>
                   {categorias.map((categoria)=> ( 
                     <section className="" id={categoria.id} >
-                      <div >
-                        {categoria.name}
+                      <div className="container mt-10 mb-5 text-center">
+                        <h2>{categoria.name}</h2>
                       </div>
                       
                       {products.map((l, i) => (
@@ -130,14 +130,14 @@ const ProductsMobileMenu = ({
                                         {l.description.slice(3,-4)}
                                       </p>
                                     }
-                                    <div className="">
+                                    <div className="col text-right mt-10">
                                       <button
                                         onClick={(e) => {
                                           handleCart(l);
                                         }}
-                                        className="button button-add-to-cart"
+                                        className="button button-add-to-cart-mobile"
                                       >
-                                        <strong>+</strong>
+                                        <i className="fi-rs-plus "/>
                                       </button>
                                     </div>
                                   </div>

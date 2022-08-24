@@ -39,7 +39,7 @@ const ButtonBottom = ({ totalCartItems,cartItems }) => {
             left: "0%",
           }}
         >
-          <Link href="/shop-cart">
+          <Link href="mobilemenu/shop-cart">
             <a className="btn ">
               <i className="fi-rs-shopping-bag mr-10"/>
               <span className="pro-count blue">
