@@ -11,6 +11,7 @@ import {
   addToCart,
 } from "../../redux/action/cart";
 import { connect } from "react-redux";
+import { getOffsetTop } from "@mui/material";
 
 const ProductsMobileMenu = ({
   cartItems,
@@ -22,6 +23,17 @@ const ProductsMobileMenu = ({
   const [products, setProducts] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [mobileMenu, setMobileMenu] = useState(false)
+
+  const changeMenuMobile = () =>{
+    if(window.scrollY >= 260){
+      console.log(`cambiando menu`)
+      setMobileMenu(true);
+    }else {
+      setMobileMenu(false);
+    }
+    console.log(`Scroll Y : ${window.scrollY}`)
+  }
 
   const getData = async()=>{
     const busqueda = await getProducts.getProductsComplete();
@@ -34,6 +46,10 @@ const ProductsMobileMenu = ({
   }
 
   const handleCart = (product) => {
+    if(product.options.length > 0) {
+      toast.success('hay opciones Para desplegar El Modal')
+    }
+
     const inCart = cartItems.find((cartItem) => cartItem.id === product.id);
     if (inCart){
       console.log('En contrado')
@@ -47,14 +63,15 @@ const ProductsMobileMenu = ({
   };
 
   useEffect(() => {
+    window.addEventListener('scroll',changeMenuMobile);
     getData();
-  }, [idProducts]);
+  }, []);
 
   return (
     <>
       {loading ?
       (
-        <div className="col-12 ">
+        <div className="col-12">
           <div className=" h-20 rounded-xl justify-center flex flex-col items-center p-1">
             <BeatLoader color={"#325454"} size={10} className="mb-10" />
             <h4 className="text-center text-xs">
@@ -64,18 +81,19 @@ const ProductsMobileMenu = ({
         </div>
       ):(
         <>
-
           {categorias && (
             <>
               <div className="relative flex items-center ">
                 <div
                   id ="sliderMobileMenu"
-                  className="sliderMobileMenu w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
+                  className={mobileMenu ? 
+                    'sliderMobileMenuFixed w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'
+                    :'sliderMobileMenu w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'}
                 >
                   {categorias.map((c,i) =>(
                     <div
                       key={i}
-                      className="item-list w-[200px] inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                      className="item-list w-[210px] inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
                     >
                       <div className="flex-row text-center" id="item-list">
                         <a 
@@ -95,12 +113,12 @@ const ProductsMobileMenu = ({
                 <>
                   {categorias.map((categoria)=> ( 
                     <section className="" id={categoria.id} >
-                      <div className="container mt-10 mb-5 text-center">
+                      <div className="container mt-15 mb-5 text-center">
                         <h2>{categoria.name}</h2>
                       </div>
                       
                       {products.map((l, i) => (
-                        <>
+                        <div>
                           {l.defaultCategoryId === categoria.id && (
                             <div key={`product${i}`} className="col-lg-12 col-md-12 col-12 col-sm-12">
                               <div className="product-cart-wrap-mobile mb-30">
@@ -147,7 +165,7 @@ const ProductsMobileMenu = ({
                         </div>
                       </div>
                       )}
-                      </>
+                      </div>
                       ))}
                     </section>
                   ))}

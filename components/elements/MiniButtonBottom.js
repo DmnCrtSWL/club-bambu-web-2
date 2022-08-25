@@ -37,6 +37,7 @@ const ButtonBottom = ({ totalCartItems,cartItems }) => {
             bottom: "5px",
             right: "0%",
             left: "0%",
+            "z-index":"1000",
           }}
         >
           <Link href="mobilemenu/shop-cart">

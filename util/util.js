@@ -13,6 +13,3 @@ export const deleteProduct = (list, id) => {
     const index = list.findIndex((item) => item.id === id);
     return index;
   };
-  
-
-  

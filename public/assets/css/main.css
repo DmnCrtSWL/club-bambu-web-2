@@ -1741,16 +1741,18 @@ label {
 .sliderMobileMenu{
   background-color: #FFA420;
   align-items: center;
+  border-radius: 20px;
+  height: auto;
+}
+.sliderMobileMenuFixed{
+  background-color: #FFA420;
+  align-items: center;
+  border-radius: 20px;
   position: fixed;
-  top: 225px;
-    left: 0;
-    width: 100%;
-    height: auto;
-    z-index: 999;
-    box-shadow: 0 2px 24px 0 rgb(0 0 0 / 15%);
-    animation: 500ms ease-in-out 0s normal none 1 running fadeInDown;
-    padding-top: 0px;
-    padding-bottom: 0px;
+  top:0px;
+  width: auto;
+  z-index:1000;
+  height: auto;
 }
 #item-list{
   display:flex;
