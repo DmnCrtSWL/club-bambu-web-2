@@ -14,8 +14,12 @@ import { connect } from "react-redux";
 import Modal from "../layout/Modal";
 //import {Modal} from 'react-responsive-modal';
 import { useModal } from "../../hooks/useModal";
-import Select from 'react-select';
 import { size } from "lodash";
+import Radio from '@mui/material/Radio';
+import RadioGroup, {useRadioGroup} from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import { it } from "date-fns/locale";
 
 const ProductsMobileMenu = ({
   cartItems,
@@ -31,12 +35,10 @@ const ProductsMobileMenu = ({
 
   const changeMenuMobile = () =>{
     if(window.scrollY >= 260){
-      console.log(`cambiando menu`)
       setMobileMenu(true);
     }else {
       setMobileMenu(false);
     }
-    console.log(`Scroll Y : ${window.scrollY}`)
   }
 
   const getData = async()=>{
@@ -44,15 +46,15 @@ const ProductsMobileMenu = ({
     setProducts(busqueda)
     const cat = await ecwid.getCategories({productIds:true, parent: 0});
     setCategorias(cat.items)
-    console.log(busqueda)
-    console.log(cat.items)
+    //console.log(busqueda)
+    //console.log(cat.items)
     setLoading(false)
   }
 
   const handleCart = (product) => {
     const inCart = cartItems.find((cartItem) => cartItem.id === product.id);
     if (inCart){
-      console.log('En contrado')
+      //console.log('En contrado')
       addToCart({...product, quantity: inCart.quantity+1});
       toast.success(`Tienes ${inCart.quantity} artículos de ${product.name} en tu carrito!`);
     }
@@ -67,7 +69,7 @@ const ProductsMobileMenu = ({
     getData();
   }, []);
 
-  //________________________________________________________________________Modal
+  //_____________________________________________________________________________________________________Modal
   const [producto,setProducto]=useState({});
   const setOptionsModal=(product)=>{
     setProducto(product)
@@ -82,46 +84,25 @@ const ProductsMobileMenu = ({
     const handleSubmit=(e)=>{
       e.preventDefault();
     }
-
-    const handleChange = (itemOption, choicesTitle) =>{
-      var exist=false;
-      console.log('opcion name:')
-      console.log(choicesTitle)
-      if (options.length>0){
-        options.map(
-          o=>{
-            console.log('Esto: '+ o.key + ' Es igual a: ' + choicesTitle.name)
-            if(o.key === choicesTitle.name){
-              exist=true
-              let newArray = options.filter(item => item !== o)
-              newArray.push({...itemOption, key: choicesTitle.name})
-              setOptions(newArray)
-              console.log('Existe ya en el vector')
-            }
-          }
-          ) 
-        if(!exist){
-          setOptions([...options,{...itemOption, key: choicesTitle.name}])
-        } 
-      }else{
-        setOptions([{...itemOption, key: choicesTitle.name}])
-      }
-      console.log('opciones:')
-      console.log(options)
-    }
-
-    const isChecked=(item)=>{
+    
+    const handleRadioChange = (event) => {
       if(options.length > 0){
-        options.map((o)=>{
-          if(o.text === item.text){
-            return true;
+        options.map((opcion)=>{
+          if(opcion.name === event.target.name){
+            let newArray = options.filter(item => item !== opcion)
+            newArray.push({ name: event.target.name , value: event.target.value})
+            setOptions(newArray)
+          }
+          else{
+            setOptions([...options,{ name: event.target.name , value: event.target.value}])
           }
         })
+      }else{
+        setOptions([...options,{ name: event.target.name , value: event.target.value}])
       }
-      else{
-        return false;
-      }
-    }
+
+      options.map(o=>{toast.success(o.name)})
+    };
 
     return(
       <Modal isOpen={isOpenModalOptions} closeModal={closeModalOptions} openModal={openModalOptions} >
@@ -130,34 +111,30 @@ const ProductsMobileMenu = ({
         {size(producto.options) > 0 && (
           <div>
             <form onSubmit={handleSubmit}>
-              {producto.options.map((opcion, i)=> (
-                <div key={i}>
-                  <h4><strong className="mr-10">{opcion.name}</strong></h4>
-                  {console.log(opcion)}
-                  <br/>
-                  {size(opcion.choices)>0 &&
-                    opcion.choices.map(o => (
-                      <div className="row align-items text-align-center">
-                        <div className="col-3">
-                          <input
-                            type="radio"
-                            id={o.text}
-                            name={o.text}
-                            value={o.priceModifier}
-                            checked={isChecked(o)}
-                            onChange={()=>handleChange(o,opcion)}
-                          />
-                        </div>
-                        <div className="col-9 text-left">
-                          {o.text}
-                        </div>
-                        
-                      </div>
-                    ))
-                  }
-                  <br />
-                </div>
-              ))}
+              <FormControl>
+                {producto.options.map((opcion, i)=> (
+                  <div key={i}>
+                    {console.log('Datos de la opcion:')}
+                    {console.log(opcion)}
+                    <h4><strong className="mr-10">{opcion.name}</strong></h4>
+                    <br/>
+                    {(opcion.type === 'TEXTFIELD') && (
+                        <textarea />
+                    )} 
+                    <RadioGroup
+                      name={opcion.name}
+                      onChange={handleRadioChange}
+                    >
+                      {size(opcion.choices)>0 &&
+                        opcion.choices.map(o => (
+                          <FormControlLabel value={o.text} control={<Radio />} label={o.text} />
+                        ))
+                      }
+                    </RadioGroup>
+                    <br />
+                  </div>
+                ))}
+              </FormControl>
             </form>
           </div>
         )}
@@ -216,7 +193,6 @@ const ProductsMobileMenu = ({
                   ))}
                 </div>
               </div>
-          
               {products ? (
                 <>
                   {categorias.map((categoria)=> ( 
