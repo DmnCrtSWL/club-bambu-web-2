@@ -12,14 +12,12 @@ import {
 } from "../../redux/action/cart";
 import { connect } from "react-redux";
 import Modal from "../layout/Modal";
-//import {Modal} from 'react-responsive-modal';
 import { useModal } from "../../hooks/useModal";
 import { size } from "lodash";
 import Radio from '@mui/material/Radio';
 import RadioGroup, {useRadioGroup} from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import { it } from "date-fns/locale";
 
 const ProductsMobileMenu = ({
   cartItems,
@@ -70,7 +68,7 @@ const ProductsMobileMenu = ({
   }, []);
 
   //_____________________________________________________________________________________________________Modal
-  const [producto,setProducto]=useState({});
+  const [producto,setProducto]=useState([]);
   const setOptionsModal=(product)=>{
     setProducto(product)
     openModalOptions();
@@ -78,11 +76,51 @@ const ProductsMobileMenu = ({
 
   const [isOpenModalOptions, openModalOptions, closeModalOptions] = useModal(false);
 
-  const ModalOptions =({isOpenModalOptions, closeModalOptions, openModalOptions, producto}) => {
+  const ModalOptions =({isOpenModalOptions, closeModalOptions, openModalOptions, producto, handleCart}) => {
     const [options,setOptions] = useState([]);
 
     const handleSubmit=(e)=>{
       e.preventDefault();
+      console.log('Porducto')
+      console.log(producto)
+      let optionsV = [];
+      let price = 0;
+      //____________Setear precio y opciones si es que las tiene
+      if(options.length >0){
+        producto.options.map((opcion)=>{
+          //console.log(opcion)
+          if(opcion.choices){
+            opcion.choices.map(o=>{
+              console.log(opcion),
+              options.map((opc)=> {
+                if(opc.value === o.text){
+                  let opcionSeleccionada = {
+                    ...opcion,
+                    selections: [{
+                      selectionTitle: o.text,
+                      selectionModifier: o.priceModifier,
+                      selectionModifierType: o.priceModifierType
+                    }],
+                  }
+                  optionsV.push(opcionSeleccionada) //agrega las opciones necesarias 
+                  price = price + o.priceModifier //Setea precio si los modificadores tiene un extra
+                }
+              })
+            })
+          }
+        })
+      }
+      //____________ Seteando el producto
+      producto.selectedOptions = optionsV
+      producto.price = producto.price + price
+
+      //____________Enviando producto al carrito
+      console.log('Producto Actualizado')
+      console.log(producto)
+      handleCart(producto);
+      //console.log(options)
+      //console.log(producto)
+      
     }
     
     const handleRadioChange = (event) => {
@@ -114,8 +152,6 @@ const ProductsMobileMenu = ({
               <FormControl>
                 {producto.options.map((opcion, i)=> (
                   <div key={i}>
-                    {console.log('Datos de la opcion:')}
-                    {console.log(opcion)}
                     <h4><strong className="mr-10">{opcion.name}</strong></h4>
                     <br/>
                     {(opcion.type === 'TEXTFIELD') && (
@@ -134,11 +170,12 @@ const ProductsMobileMenu = ({
                     <br />
                   </div>
                 ))}
+
+              <button type="submit">Añadir a Carrito</button>
               </FormControl>
             </form>
           </div>
         )}
-        <button type="submit">Añadir a Carrito</button>
         
       </Modal>
     )
@@ -153,6 +190,7 @@ const ProductsMobileMenu = ({
         closeModalOptions={closeModalOptions} 
         openModalOptions={openModalOptions} 
         producto={producto} 
+        handleCart={handleCart}
       />
       {loading ?
       (

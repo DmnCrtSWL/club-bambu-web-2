@@ -11,6 +11,7 @@ import {
   openCart,
 } from "../../redux/action/cart";
 import { MdError } from "react-icons/md";
+import { useEffect } from "react";
 
 const Cart = ({
   openCart,
@@ -29,6 +30,15 @@ const Cart = ({
 
     return price;
   };
+
+  useEffect(()=>{
+    console.log('Elementos del carrito')
+    cartItems.map(item=>{
+      console.log(item)
+    })
+    console.log('')
+    
+   },[]);
 
   return (
     <>
@@ -71,7 +81,9 @@ const Cart = ({
                     
                     <tbody>
                       {cartItems.map((item, i) => (
+                        
                         <tr key={i}>
+                          {console.log(item)}
                           <td className="text-right" data-title-hidden="Stock">
                             <span className="qty-val">{item.quantity}x</span>
                           </td>
@@ -87,7 +99,7 @@ const Cart = ({
                             {item.selectedOptions && (
                                 <ul className="font-xs"> Opciones:
                                   {item.selectedOptions.map((option,i)=>(
-                                    <li key={i}>{option.value}</li>
+                                    <li key={i}>{option.selections.selectionTitle}</li>
                                   ))}
                                 </ul>
                             )} 

@@ -91,9 +91,6 @@ const ProductDetails = ({
       const producto = await ecwid.getProduct(id);
       setProduct(producto);
       setTotalTemp(producto.price);
-      console.log("Detalle de producto: ")
-      console.log(producto)
-      console.log("Total Temporal:  " + totalTemp)
     })();
   }, [id]);
 

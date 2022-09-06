@@ -88,9 +88,10 @@ const infoComensal = ({ cartItems, clearCart }) => {
         var datoProducto = {};
         var opcionesSeleccionadas=[];
         var datoOpciones={};
+
         cartItems.map(
           (item) => (
-            (item.selectedOptions.map(opcion =>(
+            /*(item.selectedOptions.map(opcion =>(
               datoOpciones={
                 name: opcion.name,
                 selections: [
@@ -107,7 +108,7 @@ const infoComensal = ({ cartItems, clearCart }) => {
               },
               opcionesSeleccionadas.push(datoOpciones)
               )
-            )),
+            )),*/
             (datoProducto = {
               productId: item.id,
               category: item.defaultCategoryId,
@@ -115,7 +116,7 @@ const infoComensal = ({ cartItems, clearCart }) => {
               quantity: item.quantity,
               name: item.name,
               price: item.price,
-              selectedOptions:  opcionesSeleccionadas,
+              selectedOptions:  item.selectedOptions,
             }),
             productos.push(datoProducto)
           )
