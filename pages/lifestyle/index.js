@@ -7,7 +7,7 @@ import Pagination from "../../components/ecommerce/Pagination";
 import PriceRangeSlider from "../../components/ecommerce/PriceRangeSlider";
 import QuickView from "../../components/ecommerce/QuickView";
 import ShowSelect from "../../components/ecommerce/ShowSelect";
-import SingleProduct from "../../components/ecommerce/SingleProduct";
+import SingleProductPlaneer from "../../components/ecommerce/SingleProductPlaneer";
 import SizeFilter from "../../components/ecommerce/SizeFilter";
 import SortSelect from "../../components/ecommerce/SortSelect";
 import WishlistModal from "../../components/ecommerce/WishlistModal";
@@ -18,34 +18,44 @@ import Link from "next/link";
 import ecwid from "../../util/ecwid";
 import { size } from "lodash";
 import getProducts from "../../util/getProducts";
+import { toast } from "react-toastify";
 
 const Products = ({ products, productFilters, fetchProduct }) => {
   const router = useRouter();
-  //const { search, item } = router.query;
-  //   (searchTerm = Router.query.search), (showLimit = 12), (showPagination = 4);
-
-  //   let [pagination, setPagination] = useState([]);
-  //   let [limit, setLimit] = useState(showLimit);
-  //   let [pages, setPages] = useState(Math.ceil(products.items.length / limit));
-  //   let [currentPage, setCurrentPage] = useState(1);
-  //const [categorias, setCategorias] = useState([]);
   const [productos, setProductos] = useState([]);
+  const [active, setActive] = useState('1');
+  const [desayuno, setDesayuno] = useState([]);
+  const [comida, setComida] = useState([]);
+  const [cena, setCena] = useState([]);
+  const [market, setMarket] = useState([]);
+  const [pedidoDiario, setPedidoDiario] = useState([]);
+
+  const changeTab = (numberTab)=>{
+    if(active !== numberTab){
+      setActive(numberTab)
+    }
+  }
 
   useEffect(() => {
     (async () => {
-      // fetchProduct(searchTerm, "/static/product.json", productFilters);
-      // cratePagination();
-      //const categorias = await ecwid.getCategories();
-      //setCategorias(categorias.items);
-      //const busqueda = await ecwid.getProducts();
       const busqueda = await getProducts.getProductsComplete();
       const categoria = await ecwid.getCategories({parent:0, productIds : true});
       const comida ={}
+      const desayuno ={}
+      const cena = {}
+      const market = {}
+      setProductos(busqueda)
       categoria.items.map((categoria) => {
         if (categoria.name === 'Comidas')
           comida = categoria
+        else if (categoria.name === 'Desayunos')
+          desayuno = categoria
+        else if (categoria.name === 'Market')
+          market = categoria
       });
+      cena = comida //
       const filtro = [];
+      //const filtro = busqueda
       busqueda.map((producto)=>{
         if(comida.productIds.includes(producto.id))
         filtro.push(producto)
@@ -60,65 +70,93 @@ const Products = ({ products, productFilters, fetchProduct }) => {
             producto.attributes.map((atributo) =>{
               if(atributo.name === 'Contenido Energético (kcal)')
               {
-                if(atributo.value <= calculo +20){
+                if(atributo.value <= calculo + 20){
                   filtroCalorias.push(producto)
                 }
               }
-          }) 
-            }
+            })}
           })
-        setProductos(filtroCalorias)
-        return
+        setComida(filtroCalorias)
+        setCena(filtroCalorias)
+      }else {
+        setComida(filtro)
+        setCena(filtro)
       }
-      /*if (item && search) {
-        const currentProducts = filtro.filter((product) => {
-          if (
-            product.name.toString().toLowerCase().includes(item.toLowerCase())
-          ) {
-            return product;
-          }
-        });
-        setProductos(currentProducts);
-      }*/
-      setProductos(filtro);
+
+      filtro = [];
+      //const filtro = busqueda
+      busqueda.map((producto)=>{
+        if(desayuno.productIds.includes(producto.id))
+        filtro.push(producto)
+      })
+      filtroCalorias = [];
+      if(productFilters.calories != 0 && productFilters.foods != 0){
+        const calculo = productFilters.calories / productFilters.foods
+        console.log(`Calculo por comida: ${calculo} kcal`)
+         filtro.map((producto)=>{
+          if(producto.attributes.length > 0){
+            producto.attributes.map((atributo) =>{
+              if(atributo.name === 'Contenido Energético (kcal)')
+              {
+                if(atributo.value <= calculo + 20){
+                  filtroCalorias.push(producto)
+                }
+              }
+            })}
+          })
+        setDesayuno(filtroCalorias)
+      }else{
+        setDesayuno(filtro);
+      }
+
+      filtro = [];
+      //const filtro = busqueda
+      busqueda.map((producto)=>{
+        if(market.productIds.includes(producto.id))
+        filtro.push(producto)
+      })
+      filtroCalorias = [];
+      if(productFilters.calories != 0 && productFilters.foods != 0){
+        const calculo = productFilters.calories / productFilters.foods
+        console.log(`Calculo por comida: ${calculo} kcal`)
+         filtro.map((producto)=>{
+          if(producto.attributes.length > 0){
+            producto.attributes.map((atributo) =>{
+              if(atributo.name === 'Contenido Energético (kcal)')
+              {
+                if(atributo.value <= calculo + 20){
+                  filtroCalorias.push(producto)
+                }
+              }
+            })}
+          })
+        setMarket(filtroCalorias)
+      }else{
+        setMarket(filtro);
+      }
+
     })();
   }, [productFilters]);
 
-  //   const cratePagination = () => {
-  //     // set pagination
-  //     let arr = new Array(Math.ceil(products.items.length / limit))
-  //       .fill()
-  //       .map((_, idx) => idx + 1);
+  function handleClick(producto){
+    let bandera = 0;
+    if(size(pedidoDiario) > 0){
+      pedidoDiario.map(pedido=>{
+        if(pedido.name === producto.name){
+          bandera = 1;
+        }
+      })
+      if(bandera === 0){
+        setPedidoDiario([...pedidoDiario, producto])
+        toast.success(`Agregado ${producto.name} en tu pedido del día!`);
+      }
+    }else{
+      setPedidoDiario([...pedidoDiario, producto])
+      toast.success(`Agregado ${producto.name} en tu pedido del día!`);
+      return;
+    }
+  }
 
-  //     setPagination(arr);
-  //     setPages(Math.ceil(products.items.length / limit));
-  //   };
-
-  //   const startIndex = currentPage * limit - limit;
-  //   const endIndex = startIndex + limit;
-  //   const getPaginatedProducts = products.items.slice(startIndex, endIndex);
-
-  //   let start = Math.floor((currentPage - 1) / showPagination) * showPagination;
-  //   let end = start + showPagination;
-  //   const getPaginationGroup = pagination.slice(start, end);
-
-  //   const next = () => {
-  //     setCurrentPage((page) => page + 1);
-  //   };
-
-  //   const prev = () => {
-  //     setCurrentPage((page) => page - 1);
-  //   };
-
-  //   const handleActive = (item) => {
-  //     setCurrentPage(item);
-  //   };
-
-  //   const selectChange = (e) => {
-  //     setLimit(Number(e.target.value));
-  //     setCurrentPage(1);
-  //     setPages(Math.ceil(products.items.length / Number(e.target.value)));
-  //   };
   return (
     <>
       <Layout parent="Inicio" sub="Productos" >
@@ -127,204 +165,197 @@ const Products = ({ products, productFilters, fetchProduct }) => {
             <div className="row">
               <div className="col-lg-12">
                   <LifeStyleFilter />
-              </div>
-              {console.log('Filtros')}
-              {console.log(productFilters)}
-              {/*
-              <div className="col-lg-3 primary-sidebar sticky-sidebar">
-                <div className="widget-category mb-30">
-                  <h5 className="section-title style-1 mb-30 wow fadeIn animated">
-                    Estilo de Vida
-                  </h5>
-                  {categorias.map((l, i) => (
-                    <div
-                      key={i}
-                      className="w-[220px] inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300 "
+              </div> 
+
+
+              <div className="tab-header">
+                <ul className="nav nav-tabs" id="myTabs" role="tablist">
+                  <li className="nav-item" role="presentation">
+                    <button
+                      className={active ==="1" ? "nav-link active" : "nav-link"}
+                      onClick={()=>changeTab("1")}
                     >
-                      <div className="flex-row">
-                        <Link
-                          href={{
-                            pathname: "/lifestyle/[slug]",
-                            query: {
-                              id: l.parentId,
-                              title: l.name,
-                              slug: l.id,
-                            },
-                          }}
-                          // "/categories/[slug]"
-                          // as={`/categories/${category.slug}`}
-                        >
-                          <a className="font-bold">{l.name}</a>
-                        </Link>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                               {/* <div className="sidebar-widget price_range range mb-30">
-                                    <div className="widget-header position-relative mb-20 pb-10">
-                                        <h5 className="widget-title mb-10">
-                                            Fill by price
-                                        </h5>
-                                        <div className="bt-1 border-color-1"></div>
-                                    </div>
+                      Desayunos
+                    </button>
+                  </li>
 
-                                    <div className="price-filter">
-                                        <div className="price-filter-inner">
-                                            <br />
-                                            <PriceRangeSlider />
-                                            <br />
-                                        </div>
-                                    </div>
+                  <li className="nav-item" role="presentation">
+                    <button
+                      className={active ==="2" ? "nav-link active" : "nav-link"}
+                      onClick={()=>changeTab("2")}
+                    >
+                      Comidas
+                    </button>
+                  </li>
 
-                                    <div className="list-group">
-                                        <div className="list-group-item mb-10 mt-10">
-                                            <label className="fw-900">
-                                                Color
-                                            </label>
-                                            <BrandFilter />
-                                            <label className="fw-900 mt-15">
-                                                Item Condition
-                                            </label>
-                                            <SizeFilter />
-                                        </div>
-                                    </div>
-                                    <br />
-                        </div>*/}
+                  <li className="nav-item" role="presentation">
+                    <button
+                      className={active ==="3" ? "nav-link active" : "nav-link"}
+                      onClick={()=>changeTab("3")}
+                    >
+                      Cenas
+                    </button>
+                  </li>
 
-                {/* <div className="sidebar-widget product-sidebar  mb-30 p-30 bg-grey border-radius-10">
-                  <div className="widget-header position-relative mb-20 pb-10">
-                    <h5 className="widget-title mb-10">New products</h5>
-                    <div className="bt-1 border-color-1"></div>
-                  </div>
-                  <div className="single-post clearfix">
-                    <div className="image">
-                      <img src="/assets/imgs/shop/thumbnail-3.jpg" alt="#" />
-                    </div>
-                    <div className="content pt-10">
-                      <h5>
-                        <a>Chen Cardigan</a>
-                      </h5>
-                      <p className="price mb-0 mt-5">$99.50</p>
-                      <div className="product-rate">
-                        <div
-                          className="product-rating"
-                          style={{ width: "90%" }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="single-post clearfix">
-                    <div className="image">
-                      <img src="/assets/imgs/shop/thumbnail-4.jpg" alt="#" />
-                    </div>
-                    <div className="content pt-10">
-                      <h6>
-                        <a>Chen Sweater</a>
-                      </h6>
-                      <p className="price mb-0 mt-5">$89.50</p>
-                      <div className="product-rate">
-                        <div
-                          className="product-rating"
-                          style={{ width: "80%" }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="single-post clearfix">
-                    <div className="image">
-                      <img src="/assets/imgs/shop/thumbnail-5.jpg" alt="#" />
-                    </div>
-                    <div className="content pt-10">
-                      <h6>
-                        <a>Colorful Jacket</a>
-                      </h6>
-                      <p className="price mb-0 mt-5">$25</p>
-                      <div className="product-rate">
-                        <div
-                          className="product-rating"
-                          style={{ width: "60%" }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
-                {/* <div className="banner-img wow fadeIn mb-45 animated d-lg-block d-none">
-                  <img src="/assets/imgs/banner/banner-11.jpg" alt="" />
-                  <div className="banner-text">
-                    <span>Women Zone</span>
-                    <h4>
-                      Save 17% on <br />
-                      Office Dress
-                    </h4>
-                    <Link href="/products">
-                      <a>
-                        Shop Now
-                        <i className="fi-rs-arrow-right"></i>
-                      </a>
-                    </Link>
-                  </div>
-                </div> */}
-             {/* </div> */}
-              <div className="col-lg-12">
-                <div className="shop-product-fillter">
-                  <div className="totall-product">
-                    <p>
-                      Hemos encontrado
-                      <strong className="text-brand">{size(productos)}</strong>
-                      productos para ti!
-                    </p>
-                  </div>
-                  {/* <div className="sort-by-product-area">
-                    <div className="sort-by-cover mr-10">
-                      <ShowSelect
-                        selectChange={selectChange}
-                        showLimit={showLimit}
-                      />
-                    </div>
-                    <div className="sort-by-cover">
-                      <SortSelect />
-                    </div>
-                  </div> */}
-                </div>
-                <div className="row product-grid-3">
-                  {size(productos) === 0 && (
-                    <h3>No se han encontrado productos para {productos} </h3>
-                  )}
-                  {size(productos) > 0 && (
-                    <>
-                      {productos.map((l, i) => (
-                        <div
-                          className="col-lg-3 col-md-4 col-12 col-sm-6"
-                          key={i}
-                        >
-                          <SingleProduct product={l} />
-                          {/* <SingleProductList product={item} /> */}
+                  <li className="nav-item" role="presentation">
+                    <button
+                      className={active ==="4" ? "nav-link active" : "nav-link"}
+                      onClick={()=>changeTab("4")}
+                    >
+                      Snacks
+                    </button>
+                  </li>
+                </ul>
+              </div>
+
+
+              <div className="tab-content wow fadeIn animated">
+
+                <div className={ active ==="1" ? "tab-pane fade show active" : "tab-pane fade"}>
+                  Esto en un div de Desayunos
+                  <div className="product-grid-4 row">
+                    <div className="col-lg-12">
+                      <div className="shop-product-fillter">
+                        <div className="totall-product">
+                          <p>
+                            Hemos encontrado
+                            <strong className="text-brand">{size(desayuno)}</strong>
+                            productos para ti!
+                          </p>
                         </div>
-                      ))}
-                    </>
-                  )}
+                      </div>
+                      <div className="row product-grid-3">
+                        {size(desayuno) === 0 && (
+                          <h3>No se han encontrado productos para {desayuno.name} </h3>
+                        )}
+                        {size(desayuno) > 0 && (
+                          <>
+                            {desayuno.map((l, i) => (
+                              <div
+                                className="col-lg-3 col-md-4 col-12 col-sm-6"
+                                key={i}
+                              >
+                                <SingleProductPlaneer product={l} onClick={handleClick} />
+                              </div>
+                            ))}
+                          </>
+                        )}
+                      </div>
+                    </div>       
+                  </div>
                 </div>
 
-                {/* <div className="pagination-area mt-15 mb-sm-5 mb-lg-0">
-                  <nav aria-label="Page navigation example">
-                    <Pagination
-                      getPaginationGroup={getPaginationGroup}
-                      currentPage={currentPage}
-                      pages={pages}
-                      next={next}
-                      prev={prev}
-                      handleActive={handleActive}
-                    />
-                  </nav>
-                </div> */}
+                <div className={ active ==="2" ? "tab-pane fade show active" : "tab-pane fade"}>
+                  Esto es un div de Comidas
+                  <div className="product-grid-4 row">
+                    <div className="col-lg-12">
+                      <div className="shop-product-fillter">
+                        <div className="totall-product">
+                          <p>
+                            Hemos encontrado
+                            <strong className="text-brand">{size(comida)}</strong>
+                            productos para ti!
+                          </p>
+                        </div>
+                      </div>
+                      <div className="row product-grid-3">
+                        {size(comida) === 0 && (
+                          <h3>No se han encontrado productos para {comida.name} </h3>
+                        )}
+                        {size(comida) > 0 && (
+                          <>
+                            {comida.map((l, i) => (
+                              <div
+                                className="col-lg-3 col-md-4 col-12 col-sm-6"
+                                key={i}
+                              >
+                                <SingleProductPlaneer product={l}  onClick={handleClick}/>
+                              </div>
+                            ))}
+                          </>
+                        )}
+                      </div>
+                    </div>
+                            
+                  </div>
+                </div>
+
+                <div className={ active ==="3" ? "tab-pane fade show active" : "tab-pane fade"}>
+                  Esto es un div de Cenas
+                  <div className="product-grid-4 row">
+                    <div className="col-lg-12">
+                      <div className="shop-product-fillter">
+                        <div className="totall-product">
+                          <p>
+                            Hemos encontrado
+                            <strong className="text-brand">{size(cena)}</strong>
+                            productos para ti!
+                          </p>
+                        </div>
+                      </div>
+                      <div className="row product-grid-3">
+                        {size(cena) === 0 && (
+                          <h3>No se han encontrado productos para {cena.name} </h3>
+                        )}
+                        {size(cena) > 0 && (
+                          <>
+                            {cena.map((l, i) => (
+                              <div
+                                className="col-lg-3 col-md-4 col-12 col-sm-6"
+                                key={i}
+                              >
+                                <SingleProductPlaneer product={l} onClick={handleClick}/>
+                              </div>
+                            ))}
+                          </>
+                        )}
+                      </div>
+                    </div>
+                            
+                  </div>
+                </div>
+
+
+                <div className={ active ==="4" ? "tab-pane fade show active" : "tab-pane fade"}>
+                  Esto es un div de Snack
+                  <div className="product-grid-4 row">
+                    <div className="col-lg-12">
+                      <div className="shop-product-fillter">
+                        <div className="totall-product">
+                          <p>
+                            Hemos encontrado
+                            <strong className="text-brand">{size(market)}</strong>
+                            productos para ti!
+                          </p>
+                        </div>
+                      </div>
+                      <div className="row product-grid-3">
+                        {size(market) === 0 && (
+                          <h3>No se han encontrado productos para {market.name} </h3>
+                        )}
+                        {size(market) > 0 && (
+                          <>
+                            {market.map((l, i) => (
+                              <div
+                                className="col-lg-3 col-md-4 col-12 col-sm-6"
+                                key={i}
+                              >
+                                <SingleProductPlaneer product={l} onClick={handleClick} />
+                              </div>
+                            ))}
+                          </>
+                        )}
+                      </div>
+                    </div>
+                            
+                  </div>
+                </div>
+
+
               </div>
             </div>
           </div>
         </section>
-        {/* <WishlistModal /> */}
-        {/* <CompareModal /> */}
-        {/* <CartSidebar /> */}
-        {/* <QuickView /> */}
       </Layout>
     </>
   );
