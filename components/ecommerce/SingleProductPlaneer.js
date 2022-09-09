@@ -15,9 +15,10 @@ const SingleProduct = ({
   addToWishlist,
   openQuickView,
   onClick,
+  bandera
 }) => {
   const [loading, setLoading] = useState(false);
-
+  const [hiddenCheck, setHiddenCheck] = useState(false);
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
@@ -25,16 +26,22 @@ const SingleProduct = ({
     }, 2000);
   }, []);
 
+  const handelClick=()=>{
+      setHiddenCheck(!hiddenCheck)
+  }
 
   return (
     <>
       {!loading ? (
         <>
-        {console.log(product)}
           <div className="product-cart-wrap mb-30">
             <div className="product-img-action-wrap">
+             
               <div className="product-img product-img-zoom">
-                  <a onClick={()=>onClick(product)} >
+              {hiddenCheck &&
+                <img src={`/assets/imgs/theme/icons/check.svg`} width="32px" height="32px" id='item-check'/>
+              }
+                  <a onClick={()=>{onClick(product),handelClick() }}>
                     <img
                       className="default-img"
                       src={product.imageUrl}
@@ -48,7 +55,7 @@ const SingleProduct = ({
                   <a>{product.googleItemCondition}</a>
               </div>
               <h2>
-                  <a onClick={()=>onClick(product)}>{product.name}</a>
+                  <a onClick={()=>{onClick(product), handelClick()}}>{product.name}</a>
               </h2>
               <div className="product-price">
                 <span>${product.price} </span>

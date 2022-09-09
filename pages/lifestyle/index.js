@@ -29,6 +29,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
   const [cena, setCena] = useState([]);
   const [market, setMarket] = useState([]);
   const [pedidoDiario, setPedidoDiario] = useState([]);
+  const [bandera, setBandera]=useState(0);
 
   const changeTab = (numberTab)=>{
     if(active !== numberTab){
@@ -139,21 +140,24 @@ const Products = ({ products, productFilters, fetchProduct }) => {
   }, [productFilters]);
 
   function handleClick(producto){
-    let bandera = 0;
+    let auxBandera = 0;
     if(size(pedidoDiario) > 0){
       pedidoDiario.map(pedido=>{
         if(pedido.name === producto.name){
-          bandera = 1;
+          auxBandera = 1;
         }
       })
-      if(bandera === 0){
+      if(auxBandera === 0 && (productFilters.foods > size(pedidoDiario))){
         setPedidoDiario([...pedidoDiario, producto])
         toast.success(`Agregado ${producto.name} en tu pedido del día!`);
+      }else if(auxBandera !== 0){
+        let newArray = pedidoDiario.filter(pedido => pedido.name !== producto.name)
+        toast.success(`Eliminando ${producto.name} de tu pedido Diario!`)
+        setPedidoDiario(newArray)
       }
     }else{
       setPedidoDiario([...pedidoDiario, producto])
       toast.success(`Agregado ${producto.name} en tu pedido del día!`);
-      return;
     }
   }
 
@@ -166,7 +170,6 @@ const Products = ({ products, productFilters, fetchProduct }) => {
               <div className="col-lg-12">
                   <LifeStyleFilter />
               </div> 
-
 
               <div className="tab-header">
                 <ul className="nav nav-tabs" id="myTabs" role="tablist">
@@ -235,7 +238,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                                 className="col-lg-3 col-md-4 col-12 col-sm-6"
                                 key={i}
                               >
-                                <SingleProductPlaneer product={l} onClick={handleClick} />
+                                <SingleProductPlaneer product={l} onClick={handleClick}/>
                               </div>
                             ))}
                           </>
@@ -304,7 +307,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                                 className="col-lg-3 col-md-4 col-12 col-sm-6"
                                 key={i}
                               >
-                                <SingleProductPlaneer product={l} onClick={handleClick}/>
+                                <SingleProductPlaneer product={l} onClick={handleClick} />
                               </div>
                             ))}
                           </>
@@ -340,7 +343,7 @@ const Products = ({ products, productFilters, fetchProduct }) => {
                                 className="col-lg-3 col-md-4 col-12 col-sm-6"
                                 key={i}
                               >
-                                <SingleProductPlaneer product={l} onClick={handleClick} />
+                                <SingleProductPlaneer product={l} onClick={handleClick}  />
                               </div>
                             ))}
                           </>

@@ -10765,4 +10765,10 @@ span.fi-rs-apps {
   top: 1rem;
   right: 1rem;
 }
+#item-check{
+  position: absolute;
+  z-index:999;
+  margin: 10px;
+
+}
 /*# sourceMappingURL=main.css.map */
