@@ -14,7 +14,6 @@ const SingleProduct = ({
   addToCompare,
   addToWishlist,
   openQuickView,
-  onClick,
   bandera
 }) => {
   const [loading, setLoading] = useState(false);
@@ -41,7 +40,7 @@ const SingleProduct = ({
               {hiddenCheck &&
                 <img src={`/assets/imgs/theme/icons/check.svg`} width="32px" height="32px" id='item-check'/>
               }
-                  <a onClick={()=>{onClick(product),handelClick() }}>
+                  <a onClick={()=>{handelClick()}}>
                     <img
                       className="default-img"
                       src={product.imageUrl}
@@ -55,7 +54,7 @@ const SingleProduct = ({
                   <a>{product.googleItemCondition}</a>
               </div>
               <h2>
-                  <a onClick={()=>{onClick(product), handelClick()}}>{product.name}</a>
+                  <a onClick={()=>{handelClick()}}>{product.name}</a>
               </h2>
               <div className="product-price">
                 <span>${product.price} </span>

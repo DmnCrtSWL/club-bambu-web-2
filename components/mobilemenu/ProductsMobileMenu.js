@@ -81,8 +81,6 @@ const ProductsMobileMenu = ({
 
     const handleSubmit=(e)=>{
       e.preventDefault();
-      console.log('Porducto')
-      console.log(producto)
       let optionsV = [];
       let price = 0;
       //____________Setear precio y opciones si es que las tiene
@@ -244,32 +242,32 @@ const ProductsMobileMenu = ({
                           {l.defaultCategoryId === categoria.id && (
                             <div key={`product${i}`} className="col-lg-12 col-md-12 col-12 col-sm-12">
                               <div className="product-cart-wrap-mobile mb-30">
-                            <div className="row product-content-wrap">
-                              <div className="col product-img-action-wrap">
-                                <div className="product-img product-img-zoom">
-                                  <a>
-                                    <img
-                                      className="default-img"
-                                      src={l.imageUrl}
-                                      alt=""
-                                    />
-                                  </a>
-                                </div>
-                              </div>
-                              <div className="col product-content-wrap">
-                                <div className="row">
-                                  <div className="col">
-                                    <div className="product-category">
-                                      <a>{`$ ${l.price}`}</a>
+                                <div className="row product-content-wrap">
+                                  <div className="col product-img-action-wrap">
+                                    <div className="product-img product-img-zoom">
+                                      <a>
+                                        <img
+                                          className="default-img"
+                                          src={l.imageUrl}
+                                          alt=""
+                                        />
+                                      </a>
                                     </div>
-                                    <h2>
-                                      <a>{l.name}</a>
-                                    </h2>
-                                    {l.description &&
-                                      <p>
-                                        {l.description.slice(3,-4)}
-                                      </p>
-                                    }
+                                  </div>
+                                  <div className="col product-content-wrap">
+                                    <div className="row">
+                                      <div className="col">
+                                        <div className="product-category">
+                                          <a>{`$ ${l.price}`}</a>
+                                        </div>
+                                        <h2>
+                                          <a>{l.name}</a>
+                                        </h2>
+                                        {l.description &&
+                                          <p>
+                                            {l.description.slice(3,-4)}
+                                          </p>
+                                        }
                                     {(l.options.length)>0 ? 
                                       <div className="col text-right mt-10">
                                         <button
