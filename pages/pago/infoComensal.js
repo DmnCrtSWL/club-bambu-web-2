@@ -5,7 +5,7 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import esLocale from "date-fns/locale/es";
 import { createTheme } from "@material-ui/core";
-import { ThemeProvider } from "@material-ui/styles";
+//import { ThemeProvider } from "@material-ui/styles";
 import { UseLocalStorage } from "../../components/pago/UseLocalStorage";
 import { isEmpty, size } from "lodash";
 import { toast } from "react-toastify";
@@ -31,6 +31,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TextField } from "@mui/material";
 import BeatLoader from "react-spinners/BeatLoader";
+
 
 const infoComensal = ({ cartItems, clearCart }) => {
   const router = useRouter();
