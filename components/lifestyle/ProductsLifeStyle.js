@@ -15,16 +15,19 @@ function ProductsLifeStyle() {
   const getData = async()=>{
     setLoading(true)
     const auxProductos = []
-    const productos = await ecwid.getProducts();
+    const productos = await ecwid.getProducts({enable:true});
     const productosParte1 = productos.items
-    productos = await ecwid.getProducts({ offset: 100 });
+    productos = await ecwid.getProducts({ offset: 100, enabled: true });
     const productosParte2 = productos.items
     let totalProductos = [];
     if (productosParte1 && productosParte2) {
       totalProductos = productosParte1.concat(productosParte2);
     }
     const atributo = title;
+    console.log(`Titulo ${title}`)
     totalProductos.map(producto =>{
+      console.log(`Atributo : ${producto.attributes}`)
+      //console.log(producto)
       if(producto.attributes != 0){
         producto.attributes.map((atribute) =>{
           if(atribute.name === atributo){
@@ -37,10 +40,11 @@ function ProductsLifeStyle() {
     })
     setProducts(auxProductos)
     setLoading(false)
+    console.log(totalProductos)
   }
 
   useEffect(() => {
-    getData()
+    getData();
   }, [id, slug]);
 
   return (

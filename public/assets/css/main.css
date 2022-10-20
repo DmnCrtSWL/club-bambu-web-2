@@ -1716,17 +1716,17 @@ label {
 
 /* COMPONENTS / LifeStyle*/
 #sliderLifeStyle{
-  background-color: #36C4C3;
+  background-color: var(--verdeFondoClaro);
   align-items: center;
 }
 #item-list{
   display:flex;
   justify-content: center;
   align-items:center;
-  color:#000;
   background-color: #EDF5F5;
   border-radius: 25px;
 }
+
 #item-list:hover{
   background-color: #FDE1BD;
   color: rgb(0,0,0,0.7);
@@ -1736,16 +1736,15 @@ label {
   margin-right: 5px;
 }
 
-
 /* COMPONENTS / MobileMenu*/
 .sliderMobileMenu{
-  background-color: #36C4C3;
+  background-color: var(--verdeFondoClaro);
   align-items: center;
   border-radius: 20px;
   height: auto;
 }
 .sliderMobileMenuFixed{
-  background-color: #FDE1BD;
+  background-color: var(--verdeFondoClaro);
   align-items: center;
   border-radius: 20px;
   position: fixed;
@@ -1754,22 +1753,6 @@ label {
   z-index:1000;
   height: auto;
 }
-#item-list{
-  display:flex;
-  justify-content: center;
-  align-items:center;
-  color: #FFF;
-  background-color: #36C4C3;
-  border-radius: 25px;
-}
-/*#item-list:hover{
-  background-color: #FDE1BD;
-  color: #DBEDEA;
-}
-#item{
-  color:#DBEDEA;
-  margin-right: 5px;
-}*/
 
 /*COMPONENTS -> SLIDER*/
 

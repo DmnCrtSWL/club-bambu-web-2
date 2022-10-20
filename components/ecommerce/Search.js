@@ -58,7 +58,7 @@ const Search = () => {
             onKeyDown={handleInput}
             onChange={(e) => setSearchTerm(e.target.value)}
             type="text"
-            placeholder="¿Qué estás buscando?"
+            placeholder="¿Cuál es tu antojo?"
           />
         </form>
       ) : (

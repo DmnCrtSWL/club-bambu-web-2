@@ -13,7 +13,7 @@ const MobileMenu = ({ isToggled, toggleClick, HeaderLifeStyle}) => {
 
   useEffect(() => {
     (async () => {
-      const categorias = await ecwid.getCategories();
+      const categorias = await ecwid.getCategories({parent:0, productIds: true});
       setCategories(categorias.items);
     })();
   }, []);
@@ -88,7 +88,7 @@ const MobileMenu = ({ isToggled, toggleClick, HeaderLifeStyle}) => {
               <div className="main-categori-wrap mobile-header-border">
                 <Link href="/">
                   <a className="categori-button-active-2">
-                    <span className="fi-rs-apps"></span> Categorías Bambu
+                    <span className="fi-rs-apps"></span> Categorías Bambú
                   </a>
                 </Link>
                 {categories.map((category, i) => (
@@ -97,9 +97,10 @@ const MobileMenu = ({ isToggled, toggleClick, HeaderLifeStyle}) => {
                       href={{
                         pathname: "/categories/[slug]",
                         query: {
-                          id: category.parentId,
-                          title: category.name,
-                          slug: category.id,
+                            id: category.parentId,
+                            title: category.name,
+                            slug: category.id,
+                            idProducts: category.productIds ? category.productIds : []
                         },
                       }}
                       //   as={`/categories/${category.slug}`}

@@ -42,9 +42,8 @@ const ButtonBottom = ({ totalCartItems,cartItems }) => {
         >
           <Link href="mobilemenu/shop-cart">
             <a className="btn ">
-              <i className="fi-rs-shopping-bag mr-10"/>
               <span className="pro-count blue">
-                Articulos: {items}
+                ¡Tienes artículos en tu canasta!
               </span>
             </a>
           </Link>

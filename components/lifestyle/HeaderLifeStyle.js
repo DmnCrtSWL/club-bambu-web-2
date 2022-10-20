@@ -98,7 +98,7 @@ function HeaderLifeStyle() {
                 >
                   <div className="container " id="item-list">
                     <img src={`/assets/imgs/theme/icons/phone.svg`} width="32px" height="32px" id='item'/>
-                    <strong>Mini Menú Móvil</strong>
+                    <strong>La Carta</strong>
                   </div>
                 </Link>
               </div>
