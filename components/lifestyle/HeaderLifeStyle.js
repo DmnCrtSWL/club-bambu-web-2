@@ -81,7 +81,7 @@ function HeaderLifeStyle() {
                 >
                   <div className="container " id="item-list">
                     <img src={`/assets/imgs/theme/icons/Calendario.svg`} width="32px" height="32px" id='item'/>
-                    <strong>Planeer</strong>
+                    <strong>Planner</strong>
                   </div>
                 </Link>
               </div>
