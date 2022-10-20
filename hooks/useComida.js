@@ -121,7 +121,7 @@ const useComida = (initialValue) => {
       const dia = fechaInicial.getDate();
       const mes = fechaInicial.getMonth();
       const año = fechaInicial.getFullYear();
-      const auxDiasAgenda = 30
+      const auxDiasAgenda = 30 //Controla el numero de dias que se va a agendar
       const auxFecha = fechaInicial
       const diaSemana= datos.numeroDia
       //console.log(diaSemana)
@@ -152,6 +152,8 @@ const useComida = (initialValue) => {
             //console.log(data)
             //registrar Orden en Ewcid
             const resp = await ecwid.addOrder(data);
+            console.log(resp)
+            console.log('Entrondo a ECWID')
           }
           auxFecha=addDays(new Date(auxFecha.getFullYear(),auxFecha.getMonth(), auxFecha.getDate()),1)
         }

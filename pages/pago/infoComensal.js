@@ -46,7 +46,7 @@ const infoComensal = ({ cartItems, clearCart }) => {
     round(moment(), moment.duration(30, "minutes"), "ceil")
   );
   const [hour, setHour] = UseLocalStorage("hour", "");
-  const [adress, setAdress] = UseLocalStorage("adress", "");
+  const [adress, setAdress] = UseLocalStorage("adress", "Prueba");
   //const [comments, setComments] = UseLocalStorage("comments", "");
   const [comments, setComments] = useState("");
   const stripePromise = loadStripe("<pulishable_api_key>");

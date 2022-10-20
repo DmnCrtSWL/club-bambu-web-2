@@ -1,4 +1,3 @@
-
 const Modal = ({ children, isOpen, closeModal }) => {
   const handelModalContainerClick = (e) => e.stopPropagation();
 

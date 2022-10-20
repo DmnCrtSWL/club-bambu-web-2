@@ -13,26 +13,17 @@ import Modal from '../../components/layout/Modal';
 import useComida from '../../hooks/useComida';
 import { 
   Box, 
-  Stepper, 
-  Step, 
-  StepContent, 
-  StepLabel, 
-  Button, 
-  Paper, 
-  Typography, 
+  Button,  
   MobileStepper,
-  Input,
-  InputLabel,
   InputAdornment,
   FormControl,
   TextField,
   FormGroup,
   FormControlLabel,
-  Checkbox
+  Checkbox,
 } from '@mui/material/';
-import { createTheme } from '@mui/material/styles';
-import {Person} from '@mui/icons-material/';
-import { MenuItem, Select } from "@material-ui/core";
+import {Person, SportsRugbySharp} from '@mui/icons-material/';
+import { MenuItem, Select} from "@material-ui/core";
 import { MdError } from "react-icons/md";
 import BeatLoader from "react-spinners/BeatLoader";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -45,14 +36,48 @@ import moment from "moment";
 import { addDays } from "date-fns";
 import { isEmpty } from "lodash";
 import { validateEmail } from "../../util/validations";
-import Autocomplete from "react-google-autocomplete";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
   CardElement,
 } from "@stripe/react-stripe-js";
 import { MobileDatePicker } from "@mui/x-date-pickers";
-//import { ThemeProvider } from "@material-ui/styles";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette:{
+    primary:{
+      main:'#2d5253'
+    },
+    secondary:{
+      main:'#edf6f6'
+    },
+  },
+  components: {
+    MuiMobileStepper:{
+      styleOverrides:{
+      }
+    },
+    MuiLinearProgress:{
+      styleOverrides:{
+        root:{
+          backgroundColor:'#edf6f6',
+          borderRadius:"5px",
+        },
+        bar:{
+          backgroundColor:'#2d5253',
+        }
+      }
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: '#2d5253',
+        },
+      },
+    },
+  },
+})
 
 
 const Planeer = ({ products, productFilters, fetchProduct }) => {
@@ -76,9 +101,10 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
   const [methodPayCash, setMethodPayCash] = useState(true);
   const [methodPayCard, setMethodPayCard] = useState(false);
   const [date, setDate] = UseLocalStorage("date",moment(), moment.duration(30, "minutes"), "ceil");
-  const [adress, setAdress] = UseLocalStorage("adress", "");
+  const [adress, setAdress] = useState("");
   const [comments, setComments] = useState("");
   const stripePromise = loadStripe("<pulishable_api_key>");
+
   const [days, setDays]=useState({
     lunes: true,
     martes: true,
@@ -89,22 +115,6 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
   }); //cambiar a false
   const {lunes, martes, miercoles, jueves, viernes, sabado} = days;
   const error = [lunes, martes, miercoles, jueves, viernes, sabado].filter((v)=>v).length !== 2;
-  const theme = createTheme({
-    palette: {
-      primary: {
-        light: '#757ce8',
-        main: '#3f50b5',
-        dark: '#002884',
-        contrastText: '#fff',
-      },
-      secondary: {
-        light: '#ff7961',
-        main: '#f44336',
-        dark: '#ba000d',
-        contrastText: '#000',
-      },
-    }
-  ,});
 
   const handleFoodsPlus = () => {
     setFoodsNumbers((prevFoodsNumbers) => prevFoodsNumbers + 1);
@@ -126,6 +136,11 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
 
   const handleChangeCalories=(event)=>{
     setCalories(event.target.value);
+  }
+
+  const handleChangeAdress=(event)=>{
+    setAdress(event.target.value);
+    console.log(adress)
   }
 
   const handleChangeCheckBox = (event) =>{
@@ -247,7 +262,6 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
               comments: '',
               numeroDia:4
           })
-
         }
         if(days.viernes){
           console.log('viernes')
@@ -261,7 +275,6 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
               comments: '',
               numeroDia:5
           })
-
         }
         if(days.sabado){
           console.log('sabado')
@@ -275,7 +288,6 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
               comments: '',
               numeroDia:6
           })
-
         }
       }
     }
@@ -285,7 +297,7 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
     (async () => {
       setLoading(true);
       const busqueda = await getProducts.getProductsComplete();
-      const categoria = await ecwid.getCategories({parent:0, productIds : true});
+      //const categoria = await ecwid.getCategories({parent:0, productIds : true});
       setProductos(busqueda);
       const filtro = [];
       const filtroCalorias = [];
@@ -415,11 +427,13 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
               </div>
             </div>
           ):(
-            <>
+            <div>
+              <h3>Selecciona {foodsNumbers} comidas para tu pedido diario.</h3>
+            <div className="py-3">
               {products.length > 0 ? (
-                <>
+                <div className="row">
                   {products.map((l, i) => (
-                    <div key={i} className="col-lg-3 col-md-5 col-12 col-sm-6">
+                    <div key={i} className="col-lg-6 col-md-6 col-6 col-sm-6">
                       {checkStatusProducts(l) &&
                         <img src={`/assets/imgs/theme/icons/check.svg`} width="32px" height="32px" id='item-check' />
                       }
@@ -449,7 +463,7 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
                       </div>
                     </div>
                   ))}
-                </>
+                </div>
               ) : (
                 <div className="col-12">
                   <div className=" h-20 rounded-xl justify-center flex flex-col items-center p-1">
@@ -460,7 +474,8 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
                   </div>
                 </div>
               )}
-            </>
+            </div>
+            </div>
           )
           }
         </>
@@ -471,30 +486,31 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
 
   return (
     <>
-      <Layout parent="Inicio" sub="Productos" >
-        <section className="mt-50 mb-50">
-          <div className="container">
-            <div className="row">
-              <Box sx={{ flexGrow: 1 }}>
-                <MobileStepper
-                  variant="progress"
-                  steps={9}
-                  position="static"
-                  activeStep={activeStep}
-                  sx={{ flexGrow: 1 }}
-                  nextButton={
-                    <Button size="small" onClick={handleNext} disabled={activeStep === 8}>
-                      Siguiente
-                    </Button>
-                  }
-                  backButton={
-                    <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                      Atrás
-                    </Button>
-                  }
-                />  
-                {activeStep === 0 &&
-                  <Box sx={{ height: 255, width: '100%', p: 10}}>
+      <Layout parent="Inicio" sub="Planner Semanal" >
+        <div className="container">
+          <ThemeProvider theme={theme}>
+            <Box sx={{ flexGrow: 1}}>
+              <MobileStepper
+                variant="progress"
+                steps={8}
+                position="static"
+                activeStep={activeStep}
+                sx={{ 
+                  flexGrow: 1,
+                }}
+                nextButton={
+                  <Button onClick={handleNext} disabled={activeStep === 7}>
+                    Siguiente
+                  </Button>
+                }
+                backButton={
+                  <Button onClick={handleBack} disabled={activeStep === 0}>
+                    Atrás
+                  </Button>
+                }
+              />  
+              {activeStep === 0 &&
+                  <Box sx={{ py: 5}}>
                     <div className="container">
                       <div className="row align-items-center text-center">
                         <div className="row align-items-center text-center">
@@ -507,10 +523,10 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
                           <h1 className="text-brand">de <strong className="fw-900 text-brand">Club Bambu </strong></h1>
                         </div>
                         <div className="row pt-10 text-center align-items-center">
-                          <div className="col-lg-4 col-md-5 col-12 col-sm-12 pt-2"><h3 className="text-brand"><a>¿Qué es?</a></h3></div>
-                          <div className="col-lg-4 col-md-5 col-12 col-sm-12 pt-2"><h3 className="text-brand"><a>¿Cómo funciona?</a></h3></div>
-                          <div className="col-lg-4 col-md-5 col-12 col-sm-12 pt-2"><h3 className="text-brand"><a>Ayuda</a></h3></div>
-                          <div className="cart-action text-center p-8">
+                          <div className="col-lg-4 col-md-4 col-12 col-sm-12 pt-2"><h3 className="text-brand"><a>¿Qué es?</a></h3></div>
+                          <div className="col-lg-4 col-md-4 col-12 col-sm-12 pt-2"><h3 className="text-brand"><a>¿Cómo funciona?</a></h3></div>
+                          <div className="col-lg-4 col-md-4 col-12 col-sm-12 pt-2"><h3 className="text-brand"><a>Ayuda</a></h3></div>
+                          <div className="cart-action text-center py-8">
                             <a className="btn " onClick={handleNext}>¡Comenzar Ahora!</a>
                           </div>
                         </div>
@@ -521,16 +537,16 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
                 }
 
                 {activeStep ===1 &&
-                  <Box sx={{ height: 255, width: '100%', p: 10}}>
+                  <Box sx={{ py: 5}}>
                     <div className="container">
                       <div className="row align-items-center text-center">
                         <div className="">
-                          <h2 className="">el primer paso...</h2>
+                          <h2 className="">El primer paso...</h2>
                         </div>
                         <div className="pt-10">
                           <h1 className="text-brand fw-900">¿Cuál es tu nombre completo?</h1>
                         </div>
-                        <div className="row pt-10 text-center">
+                        <div className="row py-10 text-center">
                           <TextField
                             id="standard-size-normal"
                             label=""
@@ -547,9 +563,6 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
                             color="success"
                             focused
                           />
-                          <div className="cart-action text-center p-8">
-                            <a className="btn " onClick={handleNext}>¡Comenzar Ahora!</a>
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -557,7 +570,7 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
                 }
 
                 {activeStep ===2 &&
-                 <Box sx={{ height: 255, width: '100%', p: 10}}>
+                 <Box sx={{py: 5}}>
                  <div className="container">
                    <div className="row align-items-center text-center">
                      <div className="">
@@ -566,36 +579,33 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
                      <div className="pt-10">
                        <h1 className="text-brand fw-900">Selecciona los días de la semana en los que te quieres nutrir</h1>
                      </div>
-
-                     <div className="row pt-10 text-center">
+                     <div className="row py-10 text-center">
                       <FormControl
                         required
                         error={error}
                         component="fieldset"
-                        sx={{ m:3 }}
+                        sx={{ m:3}}
                         variant="standard"
                       >
                         <FormGroup>
                           <FormControlLabel
-                            control={
-                              <Checkbox checked={lunes} onChange={handleChangeCheckBox} name="lunes" />
-                            }
+                            control={ <Checkbox sx={{color: '#2d5253', '&.Mui-checked':{color: '#2d5253'} }} checked={lunes} onChange={handleChangeCheckBox} name="lunes" />}
                             label="Lunes"
                           />
                           <FormControlLabel 
-                            control={<Checkbox checked={martes} onChange={handleChangeCheckBox} name ="martes" />}
+                            control={<Checkbox sx={{color: '#2d5253', '&.Mui-checked':{color: '#2d5253'} }} checked={martes} onChange={handleChangeCheckBox} name ="martes" />}
                             label="Martes"/>
                           <FormControlLabel 
-                            control={<Checkbox checked={miercoles} onChange={handleChangeCheckBox} name ="miercoles" />}
+                            control={<Checkbox sx={{color: '#2d5253', '&.Mui-checked':{color: '#2d5253'} }} checked={miercoles} onChange={handleChangeCheckBox} name ="miercoles" />}
                             label="Miercoles"/>
                           <FormControlLabel 
-                            control={<Checkbox checked={jueves} onChange={handleChangeCheckBox} name ="jueves" />}
+                            control={<Checkbox sx={{color: '#2d5253', '&.Mui-checked':{color: '#2d5253'} }} checked={jueves} onChange={handleChangeCheckBox} name ="jueves" />}
                             label="Jueves"/>
                           <FormControlLabel 
-                            control={<Checkbox checked={viernes} onChange={handleChangeCheckBox} name ="viernes" />}
+                            control={<Checkbox sx={{color: '#2d5253', '&.Mui-checked':{color: '#2d5253'} }} checked={viernes} onChange={handleChangeCheckBox} name ="viernes" />}
                             label="Viernes"/>
                           <FormControlLabel 
-                            control={<Checkbox checked={sabado} onChange={handleChangeCheckBox} name ="sabado" />}
+                            control={<Checkbox sx={{color: '#2d5253', '&.Mui-checked':{color: '#2d5253'} }} checked={sabado} onChange={handleChangeCheckBox} name ="sabado" />}
                             label="Sabado"/>
                           </FormGroup>
                       </FormControl>
@@ -606,7 +616,7 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
                 }
 
                 {activeStep === 3 &&
-                  <Box sx={{ height: 255, width: '100%', p: 10}}>
+                  <Box sx={{ py: 5}}>
                     <div className="container">
                     <div className="row align-items-center text-center">
                       <div className="">   
@@ -625,7 +635,7 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
                 }
 
                 {activeStep === 4 &&
-                  <Box sx={{ height: 300, width: '100%', p: 10}}>
+                  <Box sx={{py: 5}}>
                     <div className="container">
                       <div className="row align-items-center text-center">
                         <div className="">
@@ -635,12 +645,13 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
                           <h1 className="text-brand"><strong className="fw-900">Selecciona el rango de calorías indicado para ti </strong></h1>
                         </div>
                         <div className="p-5">
-                          <FormControl sx={{ m:1, minWidth: 220}}>
+                          <FormControl sx={{ m:1, minWidth: 300 }}>
                             <Select
                               value={calories}
                               onChange={handleChangeCalories}
                               defaultValue={1000}
-                              inputProps={{'aria-label': 'Without label'}}
+                              inputProps={{'aria-label': 'Without label' }}
+                              color="success"
                             >
                               <MenuItem value={1000}>1000 Kcal</MenuItem>
                               <MenuItem value={2000}>2000 Kcal</MenuItem>
@@ -657,7 +668,7 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
                 }
 
                 {activeStep === 5 &&
-                  <Box sx={{ height: 255, width: '100%', p: 10}}>
+                  <Box sx={{ py: 5}}>
                     <div className="container">
                       <div className="row align-items-center text-center">
                         <div className="">
@@ -684,7 +695,7 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
                               {Object.entries(days).map((dia,key)=>(
                                 <>
                                   {(dia[1] == true) && 
-                                    <div key={key} className="col-lg-3 col-md-5 col-12 col-sm-6">
+                                    <div key={key} className="col-lg-4 col-md-3 col-6 col-sm-6">
                                       <div className="product-cart-wrap mb-30">
                                         <div className="product-content-wrap">
                                           <div className="product-category">
@@ -724,7 +735,7 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
                 }
 
                 {activeStep === 6 &&
-                  <Box sx={{ height: 255, width: '100%', p: 10}}>    
+                  <Box sx={{ py: 5}}>    
                     {loading === true ? (
                       <div className="col-12">
                         <div className=" h-20 rounded-xl justify-center flex flex-col items-center p-1">
@@ -826,13 +837,167 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
                                     <h4 className="font-normal mb-5 my-4">
                                       Dirección de entrega*
                                     </h4>
-                                    <input
+                                    <FormControl sx={{ m:1, minWidth: 300}}>
+                                      <Select
+                                        native
+                                        value={adress}
+                                        onChange={handleChangeAdress}
+                                        label="Elige un punto de entrega"
+                                        inputProps={{'aria-label': 'Without label'}}
+                                        
+                                      >
+                                        <optgroup label='Lomas Studio'>
+                                          <option value='Administración, Lomas Estudio '>Administración</option>
+                                          <option value='Ballet, Lomas Estudio '>Ballet</option>
+                                          <option value='Carrito Bambú, Lomas Estudio '>Carrito Bambú</option>
+                                          <option value='Comedor, Lomas Estudio '>Comedor</option>
+                                          <option value='Estacionamiento, Lomas Estudio '>Estacionamiento</option>
+                                          <option value='Gradas de gimnasia, Lomas Estudio'>Gradas de gimnasia</option>
+                                          <option value='Kinder, Lomas Estudio'>Kinder</option>
+                                          <option value='Recepción, Lomas Estudio'>Recepción</option>
+                                          <option value='Tae Kwon Do, Lomas Estudio'>Tae Know Do</option>
+                                          <option value='Vigilancia, Lomas Estudio'>Vigilancia</option>
+                                        </optgroup>
+                                        <optgroup label='Torre Falcón'>
+                                          <option 
+                                            value='Piso 12 (Uno TV), Presa Falcón 150, Col. Irrigación, Miguel Hidalgo, 11500 Ciudad de México, CDMX'
+                                          >
+                                            Piso 15 (Uno TV)
+                                          </option>
+                                        </optgroup>
+                                        <optgroup label='Torre Telcel'>
+                                          <option value={'Piso 13, Torre Telcel'}>Piso 13</option>
+                                        </optgroup>
+                                        <optgroup label='Torre Zurich'>
+                                          <option 
+                                            value='ZTE, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            ZTE
+                                          </option>
+                                          <option 
+                                            value='Carso, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            Carso
+                                          </option>
+                                          <option 
+                                            value='Ctin, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            Ctin
+                                          </option>
+                                          <option 
+                                            value='Chemours, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            Chemours
+                                          </option>
+                                          <option 
+                                            value='Ocupado, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            Ocupado
+                                          </option>
+                                          <option 
+                                            value='Weatherford, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            Weatherford
+                                          </option>
+                                          <option 
+                                            value='Grupak (Piso 7), Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            Grupak (Piso 7)
+                                          </option>
+                                          <option 
+                                            value='Los Mexgas, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            Los Mexgas
+                                          </option>
+                                          <option 
+                                            value='La Costeña, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            La Costeña
+                                          </option>
+                                          <option 
+                                            value='Intercam, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            Intercam
+                                          </option>
+                                          <option 
+                                            value='Grupo Piagui, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            Grupo Piagui
+                                          </option>
+                                          <option 
+                                            value='X-Elio, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            X-Elio
+                                          </option>
+                                          <option 
+                                            value='Grupak (Piso 11), Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            Grupak (Piso 11)
+                                          </option>
+                                          <option 
+                                            value='Telling Device, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            Telling Device
+                                          </option>
+                                          <option 
+                                            value='Royal Canin, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            Royal Canin
+                                          </option>
+                                          <option 
+                                            value='Flores Lozano, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            Flores Lozano
+                                          </option>
+                                          <option 
+                                            value='Inpros, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            Inpros
+                                          </option>
+                                          <option 
+                                            value='Peñaranda, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            Peñaranda
+                                          </option>
+                                          <option 
+                                            value='Inverse, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            Inverse
+                                          </option>
+                                          <option 
+                                            value='Commscope, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            Commscope
+                                          </option>
+                                          <option 
+                                            value='Principal México, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            Principal México
+                                          </option>
+                                          <option 
+                                            value='EGT México, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            EGT México
+                                          </option>
+                                          <option 
+                                            value='Ordás Howden, Torre Frisco, C. Lago Zurich 245, Amp Granada, Miguel Hidalgo, 11529 Ciudad de México, CDMX'
+                                          >
+                                            Ordás Howden
+                                          </option>
+
+                                        </optgroup>
+                                        <optgroup label='Otras'>
+                                          <option value={'Esto es una opcion indiviual5'}>Opcion 1</option>
+                                        </optgroup>
+                                      </Select>
+                                    </FormControl>
+                                    {/*<input
                                       className="w-full"
                                       onChange={(e) => setAdress(e.target.value)}
                                       name="addres"
                                       type="text"
                                       value={adress}
-                                    />
+                                      />*/}
                                 </form>
                                 <div className="cart-action text-center">
                                   <a className="btn " onClick={() => sendForm()}>
@@ -863,9 +1028,8 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
                 }
 
               </Box>
-            </div>
+              </ThemeProvider>
           </div>
-        </section>
       </Layout>
 
       <ModalPlanner
