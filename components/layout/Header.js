@@ -72,6 +72,7 @@ const Header = ({
   return (
     <>
       <header className={`header-area ${headerStyle} header-height-2`}>
+
         {/* <div className="header-top header-top-ptb-1 d-none d-lg-block">
                     <div className="container">
                         <div className="row align-items-center">
@@ -247,7 +248,8 @@ const Header = ({
                             alt="Evara"
                             src="/assets/imgs/theme/icons/icon-cart.svg"
                           />*/}
-                          <i className="fi-rs-shopping-bag mr-10"></i>
+                          {/*<i className="fi-rs-shopping-bag mr-10"></i>*/}
+                          <i className="fa-utensils mr-10"></i>
                           <span className="pro-count blue">
                             {totalCartItems}
                           </span>

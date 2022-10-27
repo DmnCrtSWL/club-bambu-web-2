@@ -54,7 +54,7 @@ const ProductsMobileMenu = ({
     if (inCart){
       //console.log('En contrado')
       addToCart({...product, quantity: inCart.quantity+1});
-      toast.success(`Tienes ${inCart.quantity} artículos de ${product.name} en tu carrito!`);
+      //toast.success(`Tienes ${inCart.quantity} artículos de ${product.name} en tu carrito!`);
     }
     else{
       addToCart({...product, quantity: 1});
@@ -137,7 +137,7 @@ const ProductsMobileMenu = ({
         setOptions([...options,{ name: event.target.name , value: event.target.value}])
       }
 
-      options.map(o=>{toast.success(o.name)})
+      //options.map(o=>{toast.success(o.name)})
     };
 
     return(
