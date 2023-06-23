@@ -39,8 +39,6 @@ const ProductDetails = ({
     //setProduct({...product, selectedOptions: options})
     //setProduct({...product, options})
     //setProduct([...product,  options])
-    console.log('Producto con opciones:')
-    console.log(product);
     addToCart(product);
     toast.success("Add to Cart !");
   };
@@ -395,7 +393,6 @@ const ProductDetails = ({
                           {options.map((option, i)=>(
                             <div key={i}>
                               <h4>{option.value} --- {option.priceModifier}</h4>
-                              {console.log('opciones' , option)}
                             </div>
                           ))}
                           <h2>Total: {totalTemp}</h2>

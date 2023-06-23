@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { updateProductFilters } from "../../redux/action/productFiltersAction";
 
 const SizeFilter = ({ updateProductFilters }) => {
-    // console.log(updateProductFilters);
 
     const sizes = [
         {value: "s"},
@@ -11,8 +10,6 @@ const SizeFilter = ({ updateProductFilters }) => {
         {value: "l"},
         {value: "xl"},
     ];
-
-    
 
     const [selectedSizes, setSizes] = useState([]);
     const [active, setActive] = useState(0);

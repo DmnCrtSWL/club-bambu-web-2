@@ -28,17 +28,15 @@ function ProductsCategory() {
       auxProductos = productosParte1.concat(productosParte2);
       totalProductos = auxProductos.concat(productosParte3)
     }
-    console.log(productos);
-    console.log(productosParte1);
-    console.log(productosParte2);
-    console.log(totalProductos);
+    console.log('idProducts: ', idProducts);
     totalProductos.map((producto)=>{
-      if(idProducts.includes(String(producto.id))){
-        currentCategory.push(producto)
+      if(idProducts){
+        if(idProducts.includes(String(producto.id))){
+          currentCategory.push(producto)
+        }
       }
     })
     setProducts(currentCategory)
-    console.log(currentCategory)
     setLoading(false)
   }
 
@@ -60,7 +58,6 @@ function ProductsCategory() {
         </div>
       ):(
         <>
-          {console.log(products.length)}
           {products ? (
             <>
               {products.map((l, i) => (

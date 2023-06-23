@@ -9,8 +9,6 @@ SwiperCore.use([Navigation]);
 const NewArrival = () => {
     const [newArrival, setNewArrival] = useState([]);
 
-    // console.log(newArrival);
-
     useEffect(() => {
         fetchProducts();
     }, []);

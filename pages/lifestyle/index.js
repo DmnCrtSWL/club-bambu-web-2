@@ -140,7 +140,6 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
 
   const handleChangeAdress=(event)=>{
     setAdress(event.target.value);
-    console.log(adress)
   }
 
   const handleChangeCheckBox = (event) =>{
@@ -209,7 +208,6 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
       if (methodPayCard === true) {
         handleSubmit();
       } else {
-        console.log(days)
         if(days.lunes){
           imprimirCheckoutLunes({
             paymentMethod: methodPayCash ? "Cash" : "Card",
@@ -223,7 +221,6 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
           })
         }
         if(days.martes){
-          console.log('martes')
           imprimirCheckoutMartes({
             paymentMethod: methodPayCash ? "Cash" : "Card",
               name: name,
@@ -237,7 +234,6 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
 
         }
         if(days.miercoles){
-          console.log('miercoles')
           imprimirCheckoutMiercoles({
             paymentMethod: methodPayCash ? "Cash" : "Card",
               name: name,
@@ -251,7 +247,6 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
 
         }
         if(days.jueves){
-          console.log('jueves')
           imprimirCheckoutJueves({
             paymentMethod: methodPayCash ? "Cash" : "Card",
               name: name,
@@ -264,7 +259,6 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
           })
         }
         if(days.viernes){
-          console.log('viernes')
           imprimirCheckoutViernes({
             paymentMethod: methodPayCash ? "Cash" : "Card",
               name: name,
@@ -277,7 +271,6 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
           })
         }
         if(days.sabado){
-          console.log('sabado')
           imprimirCheckoutSabado({
             paymentMethod: methodPayCash ? "Cash" : "Card",
               name: name,
@@ -551,7 +544,7 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
                             id="standard-size-normal"
                             label=""
                             value={name}
-                            onChange={(e)=>{setName(e.target.value),console.log(name)}}
+                            onChange={(e)=>{setName(e.target.value)}}
                             InputProps={{
                               startAdornment: (
                                 <InputAdornment position="start">
@@ -1020,7 +1013,6 @@ const Planeer = ({ products, productFilters, fetchProduct }) => {
                         <div className="">
                           <h2 className="fw-900">Paso:{activeStep}</h2>
                           Gracias por tu compra te llegara un ticket y los datos de tus pedidos por correo electronico
-                          {console.log(date)}
                         </div>
                       </div>
                     </div>

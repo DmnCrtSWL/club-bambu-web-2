@@ -10,8 +10,6 @@ function HeaderCategory() {
     (async () => {
       const categorias = await ecwid.getCategories({productIds:true, parent: 0});
       setCategorias(categorias.items);
-      console.log('Categorias')
-      console.log(categorias.items)
     })();
   }, []);
 

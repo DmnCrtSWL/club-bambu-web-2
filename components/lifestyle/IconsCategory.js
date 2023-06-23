@@ -13,7 +13,6 @@ function IconsCategory() {
     (async () => {
       const categorias = await ecwid.getCategories();
       setCategorias(categorias.items);
-      console.log(categorias);
     })();
   }, []);
 

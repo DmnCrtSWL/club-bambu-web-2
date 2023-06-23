@@ -12,7 +12,6 @@ import Layout from "../../components/layout/Layout";
 import { fetchProduct } from "../../redux/action/product";
 
 const ProductsFullWidth = ({ products, productFilters, fetchProduct }) => {
-    // console.log(products);
 
     let Router = useRouter(),
         searchTerm = Router.query.search,

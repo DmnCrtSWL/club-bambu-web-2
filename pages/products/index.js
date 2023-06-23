@@ -47,7 +47,6 @@ const Products = ({ products, productFilters, fetchProduct }) => {
         });
         setProductos(currentProducts);
       }
-      //   console.log(busqueda);
     })();
   }, [item]);
 

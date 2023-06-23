@@ -24,10 +24,7 @@ function ProductsLifeStyle() {
       totalProductos = productosParte1.concat(productosParte2);
     }
     const atributo = title;
-    console.log(`Titulo ${title}`)
     totalProductos.map(producto =>{
-      console.log(`Atributo : ${producto.attributes}`)
-      //console.log(producto)
       if(producto.attributes != 0){
         producto.attributes.map((atribute) =>{
           if(atribute.name === atributo){
@@ -40,7 +37,6 @@ function ProductsLifeStyle() {
     })
     setProducts(auxProductos)
     setLoading(false)
-    console.log(totalProductos)
   }
 
   useEffect(() => {

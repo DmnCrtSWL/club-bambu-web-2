@@ -71,7 +71,6 @@ const infoProductos = () => {
         </div>
         ):(
           <>
-          {console.log(order)}
             <Layout parent="Inicio" sub="Mis pedidos" subChild="Detalles">
         {order ? (
           <section className="mt-50 mb-50">

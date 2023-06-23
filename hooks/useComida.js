@@ -124,7 +124,6 @@ const useComida = (initialValue) => {
       const auxDiasAgenda = 30 //Controla el numero de dias que se va a agendar
       const auxFecha = fechaInicial
       const diaSemana= datos.numeroDia
-      //console.log(diaSemana)
       products.map(async(producto, index)=>{
         for(let aumentoDia = 1; aumentoDia <= auxDiasAgenda; aumentoDia++){
           if(getDay(auxFecha) === diaSemana)
@@ -148,12 +147,8 @@ const useComida = (initialValue) => {
             data.pickupTime= diaAgendado
             data.orderComments= datos.comments
             data.tax=0
-            //console.log('Dato a enviar a ECWID')
-            //console.log(data)
             //registrar Orden en Ewcid
             const resp = await ecwid.addOrder(data);
-            console.log(resp)
-            console.log('Entrondo a ECWID')
           }
           auxFecha=addDays(new Date(auxFecha.getFullYear(),auxFecha.getMonth(), auxFecha.getDate()),1)
         }

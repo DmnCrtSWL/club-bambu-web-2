@@ -32,11 +32,8 @@ const Cart = ({
   };
 
   useEffect(()=>{
-    console.log('Elementos del carrito')
     cartItems.map(item=>{
-      console.log(item)
     })
-    console.log('')
     
    },[]);
 
@@ -83,7 +80,6 @@ const Cart = ({
                       {cartItems.map((item, i) => (
                         
                         <tr key={i}>
-                          {console.log(item)}
                           <td className="text-right" data-title-hidden="Stock">
                             <span className="qty-val">{item.quantity}x</span>
                           </td>

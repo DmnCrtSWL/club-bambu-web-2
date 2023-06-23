@@ -24,22 +24,16 @@ function ProductsCategory() {
       totalProductos = productosParte1.concat(productosParte2);
     }
 
-    console.log(productos);
-    console.log(productosParte1);
-    console.log(productosParte2);
-    console.log(totalProductos);
     let currentCategory=[]
 
     const number = Number(id);
     const number2 = Number(slug);
     if (number2) {
-      console.log('Entra por Slug')
       /*totalProductos.map(producto =>{
         if(producto.categoryIds.length >1){
           producto.categoryIds.map(categoria =>{
             if(categoria === number2){
               currentCategory.push(producto)
-              console.log(`Encontrado: ${categoria} - ${number2} Producto: ${producto.name}`)
             }
           })
         }
@@ -56,21 +50,16 @@ function ProductsCategory() {
       )
       setProducts(currentCategory)
     } else {
-      console.log('Entra por id')
       currentCategory = totalProductos.filter(
         (category) => category.categoryIds[0] === number
       );
       setProducts(currentCategory)
     }
-    console.log('Productos encontrados')
-    console.log(currentCategory)
     setLoading(false)
   }
 
   useEffect(() => {
     getData();
-    console.log('Id de productos')
-    console.log(idProducts)
   }, [products,id,slug]);
 
   return (
@@ -87,7 +76,6 @@ function ProductsCategory() {
         </div>
       ):(
         <>
-          {console.log(products.length)}
           {products ? (
             <>
               {products.map((l, i) => (

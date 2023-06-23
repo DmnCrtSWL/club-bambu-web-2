@@ -8,10 +8,8 @@ function HeaderLifeStyle() {
 
   //obteniendo datos por atributo
   const getData = async()=>{
-    console.log('Atributos')
     const productos = await ecwid.getClasses();
-    const atributos = productos[0].attributes
-    console.log(atributos)
+    const atributos = productos[0].attributes;
     //totalProductos.map((producto)=>{
       //producto.attributes.map((atributo)=>{
         //if(!auxatributos.includes(atributo.name)){

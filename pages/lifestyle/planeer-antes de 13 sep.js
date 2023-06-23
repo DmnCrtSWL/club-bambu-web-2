@@ -60,11 +60,9 @@ const Products = ({ products, productFilters, fetchProduct }) => {
         if(comida.productIds.includes(producto.id))
         filtro.push(producto)
       })
-      console.log('Productos')
       const filtroCalorias = [];
       if(productFilters.calories != 0 && productFilters.foods != 0){
         const calculo = productFilters.calories / productFilters.foods
-        console.log(`Calculo por comida: ${calculo} kcal`)
          filtro.map((producto)=>{
           if(producto.attributes.length > 0){
             producto.attributes.map((atributo) =>{
@@ -92,7 +90,6 @@ const Products = ({ products, productFilters, fetchProduct }) => {
       filtroCalorias = [];
       if(productFilters.calories != 0 && productFilters.foods != 0){
         const calculo = productFilters.calories / productFilters.foods
-        console.log(`Calculo por comida: ${calculo} kcal`)
          filtro.map((producto)=>{
           if(producto.attributes.length > 0){
             producto.attributes.map((atributo) =>{
@@ -118,7 +115,6 @@ const Products = ({ products, productFilters, fetchProduct }) => {
       filtroCalorias = [];
       if(productFilters.calories != 0 && productFilters.foods != 0){
         const calculo = productFilters.calories / productFilters.foods
-        console.log(`Calculo por comida: ${calculo} kcal`)
          filtro.map((producto)=>{
           if(producto.attributes.length > 0){
             producto.attributes.map((atributo) =>{

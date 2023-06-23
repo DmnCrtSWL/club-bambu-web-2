@@ -12,7 +12,6 @@ function misPedidos() {
   useEffect(() => {
     const pedidos = JSON.parse(localStorage.getItem("orderId"));
     sethistorial(pedidos);
-    console.log(pedidos);
   }, []);
 
   return (

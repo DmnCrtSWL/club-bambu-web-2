@@ -8,7 +8,6 @@ const ButtonBottom = ({ totalCartItems }) => {
   const [scroll, setScroll] = useState(0);
 
   useEffect(() => {
-    console.log(totalCartItems);
     document.addEventListener("scroll", () => {
       const scrollCheck = window.scrollY >= 100;
       if (scrollCheck !== scroll) {

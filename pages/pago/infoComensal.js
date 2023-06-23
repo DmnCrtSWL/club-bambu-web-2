@@ -58,7 +58,6 @@ const infoComensal = ({ cartItems, clearCart }) => {
   useEffect(() => {
     cartItems.map((item) => setTotal((total += item.price * item.quantity)));
     setLoading(false);
-    console.log(cartItems)
   }, [cartItems]);
 
   const sendForm = async () => {
@@ -122,7 +121,6 @@ const infoComensal = ({ cartItems, clearCart }) => {
             productos.push(datoProducto)
           )
         );
-        console.log(productos);
         //_____________________________Formateando fecha
         const fecha = new Date(date);
         const dia = fecha.getDate();
@@ -169,15 +167,12 @@ const infoComensal = ({ cartItems, clearCart }) => {
           orderComments: comments,
         };
         //registrar Orden en Ewcid
-        console.log(data)
         const resp = await ecwid.addOrder(data);
         vector = [
           ...orderId,
           { orderId: resp.id, name: name, phone: phone, email: email },
         ];
         setOrderId(vector);
-        console.log("Actualizando Order");
-        console.log(orderId);
         if (orderId) {
           clearCart();
         }
@@ -221,7 +216,6 @@ const infoComensal = ({ cartItems, clearCart }) => {
       toast.error("Error en la compra");
       console.log("[error]", error);
     } else {
-      console.log("[PaymentMethod]", paymentMethod);
       //const paymentMethod = methodPayCard ? "Card" : "Cash"
       var productos = [];
       var datoProducto = {};
@@ -290,8 +284,6 @@ const infoComensal = ({ cartItems, clearCart }) => {
         { orderId: resp.id, name: name, phone: phone, email: email },
       ];
       setOrderId(vector);
-      console.log("Actualizando Order");
-      console.log(orderId);
       if (orderId) {
         clearCart();
       }

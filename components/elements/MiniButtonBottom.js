@@ -9,9 +9,6 @@ const ButtonBottom = ({ totalCartItems,cartItems }) => {
   const [items, setItems] = useState(0);
 
   useEffect(() => {
-    //console.log(totalCartItems);
-    //console.log('Articulos en carrito')
-    //console.log(cartItems)
     var articulos = 0
     cartItems.map((i)=>{
       articulos= articulos + i.quantity

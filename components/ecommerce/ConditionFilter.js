@@ -5,7 +5,6 @@ import { updateProductFilters } from "../../redux/action/productFiltersAction";
 import CheckBox from "./Checkbox";
 
 const ContitionFilter = ({ updateProductFilters }) => {
-    // console.log(updateProductFilters);
 
     const [sizes, setSizeCheckbox] = useState([
         { value: "new" },

@@ -51,8 +51,6 @@ const ProductDetails = ({
     (async () => {
       const producto = await ecwid.getProduct(id);
       setProduct(producto);
-      console.log("producto Detail: ")
-      console.log(producto)
     })();
   }, [id]);
 

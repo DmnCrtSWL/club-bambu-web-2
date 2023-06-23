@@ -44,15 +44,12 @@ const ProductsMobileMenu = ({
     setProducts(busqueda)
     const cat = await ecwid.getCategories({productIds:true, parent: 0});
     setCategorias(cat.items)
-    //console.log(busqueda)
-    //console.log(cat.items)
     setLoading(false)
   }
 
   const handleCart = (product) => {
     const inCart = cartItems.find((cartItem) => cartItem.id === product.id);
     if (inCart){
-      //console.log('En contrado')
       addToCart({...product, quantity: inCart.quantity+1});
       //toast.success(`Tienes ${inCart.quantity} artículos de ${product.name} en tu carrito!`);
     }
@@ -86,10 +83,8 @@ const ProductsMobileMenu = ({
       //____________Setear precio y opciones si es que las tiene
       if(options.length >0){
         producto.options.map((opcion)=>{
-          //console.log(opcion)
           if(opcion.choices){
             opcion.choices.map(o=>{
-              console.log(opcion),
               options.map((opc)=> {
                 if(opc.value === o.text){
                   let opcionSeleccionada = {
@@ -113,11 +108,7 @@ const ProductsMobileMenu = ({
       producto.price = producto.price + price
 
       //____________Enviando producto al carrito
-      console.log('Producto Actualizado')
-      console.log(producto)
       handleCart(producto);
-      //console.log(options)
-      //console.log(producto)
       
     }
     
